@@ -1,0 +1,8 @@
+ALTERAÇÃO DESTA VERSÃO
+- Mantido o jogo-base que já estava funcionando.
+- Removida a associação por emoji.
+- Fase 1 usa a nova arte aprovada em PNG nativo.
+- A, E, I, O e U já fazem parte da própria ilustração com ABELHA, ELEFANTE, ILHA, OLHO e UVA.
+- As cinco áreas da própria imagem são clicáveis; não há segunda imagem, letra ou cartão por cima.
+- Mantidas as 10 atividades e a progressão automática para a Fase 2.
+- Mantidos nome, personagem, som, mapa, estrelas e demais fases.

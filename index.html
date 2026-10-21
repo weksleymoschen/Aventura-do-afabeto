@@ -268,6 +268,34 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 
 
 .hdAvatar.sel,.hdAvatar.selected{outline:none!important;box-shadow:none!important;}
+
+/* FASE 1 — ARTE APROVADA INCORPORADA AO JOGO */
+#stage:has(.vowelHitLayer) #stageArt{
+ object-fit:contain!important;object-position:center!important;
+ filter:none!important;transform:none!important;image-rendering:auto!important;
+}
+#stage:has(.vowelHitLayer) .panel{
+ position:absolute!important;inset:0!important;padding:0!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+ pointer-events:none!important;overflow:visible!important;
+}
+#stage:has(.vowelHitLayer) .progress,
+#stage:has(.vowelHitLayer) .stageTitle,
+#stage:has(.vowelHitLayer) .mascot{display:none!important}
+#stage:has(.vowelHitLayer) .top{
+ position:absolute!important;z-index:80!important;left:0!important;right:0!important;top:0!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+.vowelHitLayer{position:absolute;inset:0;z-index:50;pointer-events:none}
+.vowelPictureHit{
+ position:absolute;border:0;background:transparent;box-shadow:none;border-radius:3vw;
+ cursor:pointer;pointer-events:auto;touch-action:manipulation;
+}
+.vowelPictureHit:hover{background:rgba(255,255,255,.06)}
+.vowelPictureHit:active{background:rgba(255,223,64,.13)}
+.vowelPictureHit.good{outline:.45vw solid #35d45a;outline-offset:-.45vw}
+.vowelPictureHit.bad{animation:shake .22s 2}
+
 </style>
 </head>
 <body><div id="shell"><main id="gameframe">
@@ -321,7 +349,7 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 </main></div>
 <script>
 const worlds=["","FLORESTA DAS VOGAIS","VILA DOS SONS","MONTANHA DAS SÍLABAS","CASTELO DAS SÍLABAS","CASTELO DAS PALAVRAS"];
-const arts=["","floresta_profissional.png","vila_hd.jpg","montanha.webp","castelo_silabas.webp","castelo_palavras.webp"];
+const arts=["","floresta_vogais_pro.png","vila_hd.jpg","montanha.webp","castelo_silabas.webp","castelo_palavras.webp"];
 const Q={
 1:[
 {p:"Encontre a letra A!",pic:"🌳 🦋",o:["E","A","O"],a:"A"},
@@ -448,55 +476,51 @@ function begin(){
  show("map");
 }
 
+
+
+
 function render(){
  const q=Q[S.world][S.q];
- if(!q){ finishWorld(); return; }
-
+ if(!q){finishWorld();return;}
  const stars=document.getElementById("stars");
  const counter=document.getElementById("counter");
  const bar=document.getElementById("bar");
- if(stars) stars.textContent=S.stars;
- if(counter) counter.textContent=`${S.q+1}/10`;
- if(bar) bar.style.width=`${S.q*10}%`;
-
+ if(stars)stars.textContent=S.stars;
+ if(counter)counter.textContent=`${S.q+1}/10`;
+ if(bar)bar.style.width=`${S.q*10}%`;
  const content=document.getElementById("content");
- if(!content) return;
+ if(!content)return;
 
- // Fase 1: interação incorporada ao cenário, sem cartões circulares sobre as toras.
  if(S.world===1){
-   const options=[...q.o];
-   const logSpots=[
-     {x:38,y:51},{x:56.5,y:43.5},{x:75,y:51},
-     {x:34,y:75.5},{x:56.5,y:75.5}
+   const correct=(q.a||"").toString().trim().toUpperCase();
+   const targets=[
+     {v:"A",x:20.0,y:29.0,w:27.0,h:31.0},
+     {v:"E",x:44.0,y:29.0,w:25.0,h:31.0},
+     {v:"I",x:69.0,y:29.0,w:28.0,h:31.0},
+     {v:"O",x:30.0,y:61.0,w:28.0,h:34.0},
+     {v:"U",x:59.0,y:61.0,w:28.0,h:34.0}
    ];
-   let h=`<div class="forestPrompt">${q.p}</div><div class="forestTargets">`;
-   options.forEach((v,i)=>{
-     const s=logSpots[i]||logSpots[i%logSpots.length];
-     h+=`<button type="button" class="letterOnLog" data-value="${v}"
-          aria-label="Resposta ${v}" style="left:${s.x}%;top:${s.y}%"
-          onclick="answer(this)">${v}</button>`;
+   let h=`<div class="vowelHitLayer">`;
+   targets.forEach(t=>{
+      h+=`<button type="button" class="vowelPictureHit" data-value="${t.v}"
+       aria-label="Letra ${t.v}" style="left:${t.x}%;top:${t.y}%;width:${t.w}%;height:${t.h}%"
+       onclick="answer(this)"></button>`;
    });
    h+=`</div>`;
    content.innerHTML=h;
    return;
  }
 
- // Demais fases: painel funcional limpo e legível.
- let h=`<div class="prompt">${q.p}</div>`;
- h+=`<div class="visual">${q.pic?`<div class="emoji" aria-hidden="true">${q.pic}</div>`:""}${q.label?`<div class="wordpic">${q.label}</div>`:""}</div>`;
-
+ let h=`<div class="prompt">${q.p}</div><div class="visual"><div class="emoji">${q.pic||""}</div>${q.label?`<div class="wordpic">${q.label}</div>`:""}</div>`;
  if(q.build){
-   h+=`<div class="slots" id="slots">Toque nas sílabas na ordem</div>`;
-   h+=`<div class="tiles">${q.o.map(x=>`<button type="button" class="tile" onclick="pickBuild('${x}',this)">${x}</button>`).join("")}</div>`;
+   h+=`<div class="slots" id="slots">Toque nas sílabas na ordem</div><div class="tiles">${q.o.map(x=>`<button class="tile" onclick="pickBuild('${x}',this)">${x}</button>`).join("")}</div>`;
  }else if(q.letters){
-   h+=`<div class="slots" id="slots">Monte a palavra</div>`;
-   h+=`<div class="tiles">${q.letters.map(x=>`<button type="button" class="tile" onclick="pickLetter('${x}',this)">${x}</button>`).join("")}</div>`;
+   h+=`<div class="slots" id="slots">Monte a palavra</div><div class="tiles">${q.letters.map(x=>`<button class="tile" onclick="pickLetter('${x}',this)">${x}</button>`).join("")}</div>`;
  }else{
-   h+=`<div class="answers">${q.o.map(x=>`<button type="button" class="answer" data-value="${x}" onclick="answer(this)">${x}</button>`).join("")}</div>`;
+   h+=`<div class="answers">${q.o.map(x=>`<button class="answer" data-value="${x}" onclick="answer(this)">${x}</button>`).join("")}</div>`;
  }
  content.innerHTML=h;
 }
-
 function answer(el){let q=Q[S.world][S.q],v=el.dataset.value;if(v===q.a){el.classList.add("good");success()}else{el.classList.add("bad");tone(180,.14,.045);toast("🌟 Quase! Tente outra vez.");setTimeout(()=>el.classList.remove("bad"),600)}}
 function pickBuild(v,el){let q=Q[S.world][S.q];S.sel.push(v);el.style.visibility="hidden";document.getElementById("slots").textContent=S.sel.join(" + ");if(S.sel.length===q.build.length){S.sel.join("|")===q.build.join("|")?success():retry()}}
 function pickLetter(v,el){let q=Q[S.world][S.q];S.sel.push(v);el.style.visibility="hidden";document.getElementById("slots").textContent=S.sel.join(" ");if(S.sel.length===q.word.length){S.sel.join("")===q.word?success():retry()}}
@@ -515,25 +539,22 @@ function success(){
  },700)
 }
 function finishWorld(){
- if(!S.done.includes(S.world)) S.done.push(S.world);
-
+ if(!S.done.includes(S.world))S.done.push(S.world);
  if(S.world<5){
    const next=S.world+1;
    S.unlocked=Math.max(S.unlocked,next);
-   save(); updateMap(); confetti(55);
-   toast(`🏅 FASE ${S.world} CONCLUÍDA! Indo para a próxima...`);
+   save();updateMap();confetti(55);
+   toast("🏅 FASE CONCLUÍDA! Próxima aventura...");
    setTimeout(()=>{
-     S.world=next; S.q=0; S.sel=[]; lockedAnswer=false;
+     S.world=next;S.q=0;S.sel=[];lockedAnswer=false;
      const art=document.getElementById("stageArt");
-     if(art) art.src=`assets/${arts[next]}`;
+     if(art)art.src=`assets/${arts[next]}`;
      const title=document.getElementById("worldTitle");
-     if(title) title.textContent=worlds[next];
-     show("stage");
-     render();
-   },800);
+     if(title)title.textContent=worlds[next];
+     show("stage");render();
+   },900);
  }else{
-   save(); confetti(90);
-   setTimeout(finishGame,700);
+   save();confetti(90);setTimeout(finishGame,700);
  }
 }
 function finishGame(){show("final");document.getElementById("finalTitle").textContent=`PARABÉNS, ${S.name.toUpperCase()}!`;document.getElementById("finalText").textContent=`Você concluiu toda a Aventura do Alfabeto e conquistou ${S.stars} estrelas!`;confetti(80)}
