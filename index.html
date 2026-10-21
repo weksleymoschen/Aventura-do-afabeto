@@ -48,13 +48,14 @@ button,input{font-family:inherit}.top{position:absolute;z-index:20;top:1.4%;left
 }
 .hdName:focus{box-shadow:0 0 0 .22vw #fff,0 0 1vw #38baff}
 .hdAvatars{
-position:absolute;z-index:62;
-left:22.5%;top:45.5%;width:58%;height:24%;
+position:absolute;z-index:1002;
+left:23.7%;top:56.2%;width:41.3%;height:17.1%;
 display:flex;gap:1.2%;pointer-events:auto
 }
 .hdAvatar{
-height:100%;flex:1;border:.28vw solid transparent;border-radius:1.25vw;
-background:transparent;cursor:pointer;pointer-events:auto
+height:100%;flex:1;border:0!important;border-radius:1.25vw;
+background:transparent!important;cursor:pointer;pointer-events:auto!important;
+touch-action:manipulation;-webkit-tap-highlight-color:transparent!important
 }
 .hdAvatar.sel{border-color:#ffd126;box-shadow:0 0 0 .2vw #fff,0 0 .8vw #ffd126}
 .hdStart{
@@ -457,6 +458,53 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
  position:absolute!important;left:1.2%!important;top:2%!important;bottom:auto!important;z-index:1200!important;
 }
 
+
+/* PERSONAGENS — hotspots exatamente sobre os quatro cartões */
+.hdAvatar,.hdAvatar:hover,.hdAvatar:active,.hdAvatar:focus,.hdAvatar:focus-visible,
+.hdAvatar.sel,.hdAvatar.selected{
+ outline:none!important;border:0!important;box-shadow:none!important;background:transparent!important;
+}
+.hdAvatar::before,.hdAvatar::after,.hdAvatar.sel::before,.hdAvatar.sel::after,
+.hdAvatar.selected::before,.hdAvatar.selected::after{content:none!important;display:none!important}
+
+/* FASE 1 — uma única associação correta por atividade */
+#stage.fase1Aprovada #stageArt{
+ content:none!important;
+}
+#stage.fase1Aprovada .panel{
+ position:absolute!important;inset:0!important;padding:0!important;background:transparent!important;
+ border:0!important;box-shadow:none!important;pointer-events:none!important;
+}
+#stage.fase1Aprovada .progress,#stage.fase1Aprovada .stageTitle,#stage.fase1Aprovada .mascot{display:none!important}
+.phase1Prompt{
+ position:absolute;z-index:80;left:29%;top:7%;width:49%;min-height:9%;
+ display:flex;align-items:center;justify-content:center;text-align:center;
+ background:rgba(255,255,255,.96);border:4px solid #54c5ff;border-radius:28px;
+ color:#0b376f;font-weight:1000;font-size:clamp(22px,2.2vw,38px);padding:.5% 1%;
+ pointer-events:none;
+}
+.phase1Choices{
+ position:absolute;z-index:75;left:24%;right:5%;top:27%;bottom:9%;
+ display:grid;grid-template-columns:repeat(3,1fr);gap:3%;align-items:center;pointer-events:none;
+}
+.phase1Pair{
+ height:72%;border:7px solid #f0b52e;border-radius:50px;background:#fff3c8;
+ box-shadow:0 10px 0 #b66a18,0 12px 22px rgba(0,0,0,.2);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+ cursor:pointer;pointer-events:auto;touch-action:manipulation;overflow:hidden;padding:3%;
+}
+.phase1Pair .pairLetter{
+ font-size:clamp(62px,8vw,125px);line-height:.85;font-weight:1000;color:#164d9c;
+ text-shadow:0 4px 0 #fff;
+}
+.phase1Pair img{width:72%;height:52%;object-fit:contain;filter:none!important}
+.phase1Pair .pairWord{
+ font-size:clamp(17px,1.8vw,30px);font-weight:1000;color:#4b250b;
+ background:#ffc85c;border:3px solid #b86c1c;border-radius:14px;padding:2% 8%;
+}
+.phase1Pair.good{border-color:#2dd455!important;box-shadow:0 0 0 8px #fff,0 0 0 14px #2dd455!important}
+.phase1Pair.bad{animation:shake .22s 2}
+
 </style>
 </head>
 <body><div id="shell"><main id="gameframe">
@@ -659,23 +707,43 @@ function render(){
 
  if(S.world===1){
    const art=document.getElementById("stageArt");
-   if(art && !art.src.includes("fase1_floresta_aprovada.png"))
-      art.src="assets/fase1_floresta_aprovada.png";
+   if(art) art.src="assets/floresta_vogais_pro.png";
 
-   /* Coordenadas sobre os 5 discos da arte 1536x1024:
-      A/Abelha, E/Elefante, I/Ilha, O/Olho, U/Uva */
-   const cards=[
-     ["A",20.5,28.2,22.0,31.0],
-     ["E",43.4,28.2,22.5,31.0],
-     ["I",68.8,28.2,22.5,31.0],
-     ["O",30.0,59.2,25.0,34.5],
-     ["U",58.3,59.2,25.0,34.5]
+   const assoc={
+     A:{img:"fase1_obj_A.png",word:"ABELHA"},
+     E:{img:"fase1_obj_E.png",word:"ELEFANTE"},
+     I:{img:"fase1_obj_I.png",word:"ILHA"},
+     O:{img:"fase1_obj_O.png",word:"OLHO"},
+     U:{img:"fase1_obj_U.png",word:"UVA"}
+   };
+   const correct=(q.a||"").toUpperCase();
+
+   // Em cada atividade há exatamente UMA associação letra-imagem correta.
+   // As outras duas alternativas usam imagens trocadas.
+   const letters=["A","E","I","O","U"];
+   const wrongLetters=letters.filter(v=>v!==correct);
+   const d1=wrongLetters[(S.q*2)%wrongLetters.length];
+   const d2=wrongLetters[(S.q*2+1)%wrongLetters.length];
+   const imageKeys=letters.filter(v=>v!==d1 && v!==d2 && v!==correct);
+   const wrongImg1=imageKeys[0]||letters.find(v=>v!==d1 && v!==correct);
+   const wrongImg2=imageKeys[1]||letters.find(v=>v!==d2 && v!==correct && v!==wrongImg1);
+
+   let choices=[
+     {value:correct,letter:correct,img:correct,word:assoc[correct].word},
+     {value:d1,letter:d1,img:wrongImg1,word:assoc[wrongImg1].word},
+     {value:d2,letter:d2,img:wrongImg2,word:assoc[wrongImg2].word}
    ];
-   let h=`<div class="fase1ClickLayer">`;
-   cards.forEach(([v,x,y,w,hh])=>{
-      h+=`<button type="button" class="fase1Card" data-value="${v}"
-           aria-label="${v}" onclick="answer(this)"
-           style="left:${x}%;top:${y}%;width:${w}%;height:${hh}%"></button>`;
+   // varia a posição da resposta correta entre as atividades
+   const shift=S.q%3;
+   choices=choices.slice(shift).concat(choices.slice(0,shift));
+
+   let h=`<div class="phase1Prompt">${q.p}</div><div class="phase1Choices">`;
+   choices.forEach(c=>{
+      h+=`<button type="button" class="phase1Pair" data-value="${c.value}" onclick="answer(this)">
+        <span class="pairLetter">${c.letter}</span>
+        <img src="assets/${assoc[c.img].img}" alt="${assoc[c.img].word}">
+        <span class="pairWord">${assoc[c.img].word}</span>
+      </button>`;
    });
    h+=`</div>`;
    content.innerHTML=h;
