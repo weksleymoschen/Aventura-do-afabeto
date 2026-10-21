@@ -1,0 +1,21 @@
+REVISÃO DAS ASSOCIAÇÕES VISUAIS
+
+FASE 1
+- A de ABELHA
+- E de ELEFANTE
+- I de ILHA
+- O de OLHO
+- U de UVA
+As imagens ilustradas já existentes foram mantidas e as instruções agora também dizem a associação.
+
+FASE 2
+- Corrigido o erro mostrado: BOLA não exibe mais uma CASA.
+- A imagem principal da questão B agora é BOLA.
+- Revisadas as associações: GATO, PATO, CASA, MALA, SAPO, DADO, LUA, FLOR e RATO.
+- Acrescentado o nome correspondente junto à imagem para impedir ambiguidade.
+
+FASES 3, 4 e 5
+- Revisadas as relações entre palavra e imagem.
+- Acrescentado rótulo textual correspondente nas imagens principais para evitar associação errada.
+
+Nenhuma alteração foi feita na progressão, mapa, botões, personagens ou regras do jogo.
