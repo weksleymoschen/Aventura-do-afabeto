@@ -319,6 +319,84 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 .assocOnLog.good{outline:.4vw solid #35d45a;outline-offset:.15vw;border-radius:2vw}
 .assocOnLog.bad{animation:shake .22s 2}
 
+
+/* ===== CORREÇÃO FINAL FASE 1: CINCO ASSOCIAÇÕES VISUAIS ===== */
+#stage:has(.vowelAssociationGrid) .panel{
+ position:absolute!important;inset:0!important;background:transparent!important;border:0!important;
+ box-shadow:none!important;padding:0!important;overflow:visible!important;pointer-events:none!important;
+}
+#stage:has(.vowelAssociationGrid) .progress,
+#stage:has(.vowelAssociationGrid) .stageTitle,
+#stage:has(.vowelAssociationGrid) .mascot{display:none!important}
+#stage:has(.vowelAssociationGrid) .forestPrompt{
+ left:27%!important;top:3%!important;width:46%!important;height:10%!important;
+}
+.vowelAssociationGrid{
+ position:absolute;z-index:55;left:18%;right:5%;top:18%;bottom:4%;
+ display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr;
+ gap:2.5% 2%;pointer-events:none;
+}
+.vowelAssocCard{
+ border:0;background:transparent;padding:0;cursor:pointer;pointer-events:auto;touch-action:manipulation;
+ min-width:0;min-height:0;border-radius:2vw;overflow:hidden;
+}
+.vowelAssocCard:nth-child(1){grid-column:1/3}
+.vowelAssocCard:nth-child(2){grid-column:3/5}
+.vowelAssocCard:nth-child(3){grid-column:5/7}
+.vowelAssocCard:nth-child(4){grid-column:2/4}
+.vowelAssocCard:nth-child(5){grid-column:4/6}
+.vowelAssocCard img{width:100%;height:100%;object-fit:contain;display:block;filter:none!important}
+.vowelAssocCard:hover{transform:scale(1.025)}
+.vowelAssocCard.good{outline:.45vw solid #32d257;outline-offset:-.3vw}
+.vowelAssocCard.bad{animation:shake .22s 2}
+
+/* VOLTAR: canto inferior esquerdo, fora da pergunta e dos contadores */
+#stage .top .icon:first-child{
+ position:fixed!important;left:1.2%!important;top:auto!important;bottom:2%!important;
+ z-index:1200!important;min-width:125px!important;
+}
+
+/* ===== FASE 2: IMAGEM E PALAVRA NO MESMO CARTÃO ===== */
+#stage:has(.imageWordAnswers) .visual{display:none!important}
+.imageWordAnswers{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:2.2%;
+ width:92%;margin:4% auto 0;
+}
+.imageWordCard{
+ min-height:190px!important;display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:center!important;gap:8px!important;
+ background:#fff!important;border:4px solid #c8a3ff!important;border-radius:24px!important;
+}
+.choicePic{font-size:clamp(58px,7vw,100px);line-height:1}
+.choiceWord{font-size:clamp(24px,3vw,42px);font-weight:1000;color:#071f48}
+
+
+/* CORREÇÃO PONTUAL — seleção de personagem */
+.hdAvatar:focus,
+.hdAvatar:focus-visible,
+.hdAvatar.sel:focus,
+.hdAvatar.selected:focus{
+ outline:none!important;
+ outline-offset:0!important;
+ box-shadow:none!important;
+}
+.hdAvatar.sel,
+.hdAvatar.selected{
+ outline:none!important;
+ box-shadow:none!important;
+}
+/* Destaque somente dentro do cartão realmente escolhido */
+.hdAvatar.sel::after,
+.hdAvatar.selected::after{
+ content:"";
+ position:absolute;
+ inset:3%;
+ border:5px solid #ffd83d;
+ border-radius:18px;
+ pointer-events:none;
+}
+.hdAvatar{position:relative}
+
 </style>
 </head>
 <body><div id="shell"><main id="gameframe">
@@ -515,18 +593,32 @@ function render(){
  if(!content)return;
 
  if(S.world===1){
-   const options=[...q.o];
-   const spots=[
-     {x:38,y:51},{x:56.5,y:43.5},{x:75,y:51},
-     {x:34,y:75.5},{x:56.5,y:75.5}
+   const cards=[
+    ["A","vogal_A_v2.png"],["E","vogal_E_v2.png"],["I","vogal_I_v2.png"],
+    ["O","vogal_O_v2.png"],["U","vogal_U_v2.png"]
    ];
-   const assoc={A:"assoc_A.png",E:"assoc_E.png",I:"assoc_I.png",O:"assoc_O.png",U:"assoc_U.png"};
-   let h=`<div class="forestPrompt">${q.p}</div><div class="forestTargets">`;
-   options.forEach((v,i)=>{
-      const s=spots[i]||spots[i%spots.length];
-      h+=`<button type="button" class="assocOnLog" data-value="${v}"
-       aria-label="${v}" style="left:${s.x}%;top:${s.y}%"
-       onclick="answer(this)"><img src="assets/${assoc[v]}" alt="${v}"></button>`;
+   let h=`<div class="forestPrompt">${q.p}</div><div class="vowelAssociationGrid">`;
+   cards.forEach(([v,img])=>{
+     h+=`<button type="button" class="vowelAssocCard" data-value="${v}" onclick="answer(this)" aria-label="${v}">
+       <img src="assets/${img}?v=2" alt="${v}">
+     </button>`;
+   });
+   h+=`</div>`;
+   content.innerHTML=h;
+   return;
+ }
+
+ if(S.world===2){
+   const parse=(x)=>{
+     const parts=x.split(" ");
+     return {icon:parts.shift(),word:parts.join(" ")};
+   };
+   let h=`<div class="prompt">${q.p}</div><div class="imageWordAnswers">`;
+   q.o.forEach(x=>{
+     const a=parse(x);
+     h+=`<button type="button" class="imageWordCard answer" data-value="${x}" onclick="answer(this)">
+       <span class="choicePic">${a.icon}</span><span class="choiceWord">${a.word}</span>
+     </button>`;
    });
    h+=`</div>`;
    content.innerHTML=h;

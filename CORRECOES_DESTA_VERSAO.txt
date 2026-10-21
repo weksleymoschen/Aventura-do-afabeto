@@ -1,0 +1,27 @@
+CORREÇÕES DESTA VERSÃO
+
+1. FASE 1
+- Exibe permanentemente cinco associações ilustradas e clicáveis:
+  A – ABELHA
+  E – ELEFANTE
+  I – ILHA
+  O – OLHO
+  U – UVA
+- Os cinco cartões usam a referência visual aprovada.
+- Não depende mais das três letras simples nas toras para mostrar as associações.
+- Cada cartão inteiro é clicável e responde à atividade.
+
+2. BOTÃO VOLTAR
+- Reposicionado para o canto inferior esquerdo.
+- Não cobre a pergunta, o contador ou as associações.
+
+3. FASE 2
+- Questão B revisada explicitamente: BOLA = ⚽.
+- Removida a imagem central independente, que podia contradizer as alternativas.
+- Cada alternativa agora leva sua própria imagem junto da palavra:
+  ⚽ BOLA / 🐱 GATO / 🦆 PATO.
+- O mesmo padrão é aplicado às demais questões da Fase 2.
+
+4. VALIDAÇÃO
+- JavaScript validado sem erro de sintaxe.
+- Nenhuma alteração na progressão automática ou nas demais regras do jogo.
