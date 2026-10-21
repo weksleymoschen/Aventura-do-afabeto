@@ -296,6 +296,29 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 .vowelPictureHit.good{outline:.45vw solid #35d45a;outline-offset:-.45vw}
 .vowelPictureHit.bad{animation:shake .22s 2}
 
+
+/* Associação visual: letra + animal/objeto + palavra, sem alterar o restante do jogo */
+#stage:has(.assocOnLog) .panel{
+ position:absolute!important;inset:0!important;background:transparent!important;
+ border:0!important;box-shadow:none!important;padding:0!important;pointer-events:none!important;
+}
+#stage:has(.assocOnLog) .progress,
+#stage:has(.assocOnLog) .stageTitle,
+#stage:has(.assocOnLog) .mascot{display:none!important}
+#stage:has(.assocOnLog) .forestTargets{position:absolute;inset:0;z-index:45;pointer-events:none}
+.assocOnLog{
+ position:absolute;transform:translate(-50%,-50%);
+ width:17%;height:19%;border:0;background:transparent;box-shadow:none;
+ padding:0;cursor:pointer;pointer-events:auto;touch-action:manipulation;
+}
+.assocOnLog img{
+ width:100%;height:100%;object-fit:contain;display:block;
+ filter:none!important;transform:none!important;image-rendering:auto!important;
+}
+.assocOnLog:hover{transform:translate(-50%,-50%) scale(1.05)}
+.assocOnLog.good{outline:.4vw solid #35d45a;outline-offset:.15vw;border-radius:2vw}
+.assocOnLog.bad{animation:shake .22s 2}
+
 </style>
 </head>
 <body><div id="shell"><main id="gameframe">
@@ -492,19 +515,18 @@ function render(){
  if(!content)return;
 
  if(S.world===1){
-   const correct=(q.a||"").toString().trim().toUpperCase();
-   const targets=[
-     {v:"A",x:20.0,y:29.0,w:27.0,h:31.0},
-     {v:"E",x:44.0,y:29.0,w:25.0,h:31.0},
-     {v:"I",x:69.0,y:29.0,w:28.0,h:31.0},
-     {v:"O",x:30.0,y:61.0,w:28.0,h:34.0},
-     {v:"U",x:59.0,y:61.0,w:28.0,h:34.0}
+   const options=[...q.o];
+   const spots=[
+     {x:38,y:51},{x:56.5,y:43.5},{x:75,y:51},
+     {x:34,y:75.5},{x:56.5,y:75.5}
    ];
-   let h=`<div class="vowelHitLayer">`;
-   targets.forEach(t=>{
-      h+=`<button type="button" class="vowelPictureHit" data-value="${t.v}"
-       aria-label="Letra ${t.v}" style="left:${t.x}%;top:${t.y}%;width:${t.w}%;height:${t.h}%"
-       onclick="answer(this)"></button>`;
+   const assoc={A:"assoc_A.png",E:"assoc_E.png",I:"assoc_I.png",O:"assoc_O.png",U:"assoc_U.png"};
+   let h=`<div class="forestPrompt">${q.p}</div><div class="forestTargets">`;
+   options.forEach((v,i)=>{
+      const s=spots[i]||spots[i%spots.length];
+      h+=`<button type="button" class="assocOnLog" data-value="${v}"
+       aria-label="${v}" style="left:${s.x}%;top:${s.y}%"
+       onclick="answer(this)"><img src="assets/${assoc[v]}" alt="${v}"></button>`;
    });
    h+=`</div>`;
    content.innerHTML=h;

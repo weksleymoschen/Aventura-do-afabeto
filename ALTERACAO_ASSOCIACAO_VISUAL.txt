@@ -1,0 +1,10 @@
+ALTERAÇÃO PONTUAL
+Na Fase 1, as respostas agora mostram associação visual:
+A – ABELHA
+E – ELEFANTE
+I – ILHA
+O – OLHO
+U – UVA
+
+Cada conjunto é clicável e mantém a mesma lógica de resposta.
+Nenhuma outra fase, progressão, botão, mapa ou regra do jogo foi alterada.
