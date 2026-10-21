@@ -1,0 +1,11 @@
+VERSÃO TESTE PRO HD
+
+- Primeira tela preservada.
+- Não inicia sem digitar o nome.
+- Botão VOLTAR real dentro das fases.
+- Removida a grande camada branca/translúcida que embaçava o cenário.
+- Floresta e Vila usam novas artes HD derivadas da referência aprovada.
+- Imagens salvas com JPEG quality 98 e sem chroma subsampling.
+- CSS sem blur e sem filtros de desfoque.
+- Imagens mantêm proporção; não são esticadas.
+- Os elementos clicáveis ficam separados do fundo ilustrado.

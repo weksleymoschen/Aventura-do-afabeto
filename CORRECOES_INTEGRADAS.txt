@@ -1,0 +1,7 @@
+TESTE INTEGRADO
+- Floresta em PNG lossless, sem JPEG/blur.
+- Letras clicáveis incorporadas visualmente em toras.
+- Removidos painel leitoso, mascote duplicado e controles fictícios na fase.
+- Botão voltar permanece funcional.
+- Avanço após 10 atividades corrigido e próxima fase desbloqueada.
+- Contagem limitada a 50 estrelas.

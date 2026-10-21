@@ -1,0 +1,12 @@
+VERSÃO TESTE HD — AVENTURA DO ALFABETO
+
+Correções:
+- tela inicial usa a nova arte profissional em resolução nativa 1536x1024;
+- imagem preservada em proporção 3:2;
+- object-fit: contain (sem esticar e sem cortar);
+- personagens são os próprios desenhos HD da arte, sem recortes deformados;
+- seleção feita por áreas transparentes sobre cada personagem;
+- campo de nome inicia sempre vazio com 'Digite seu nome';
+- foco automático no campo do nome;
+- botão COMEÇAR e MÚSICA funcionam sobre a própria arte;
+- restante das 50 atividades foi mantido para teste.

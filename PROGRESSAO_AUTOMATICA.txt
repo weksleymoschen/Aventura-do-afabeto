@@ -1,0 +1,8 @@
+PROGRESSÃO AUTOMÁTICA
+1. Concluiu as 10 atividades da Floresta das Vogais -> abre Vila dos Sons.
+2. Concluiu Vila dos Sons -> abre Montanha das Sílabas.
+3. Concluiu Montanha das Sílabas -> abre Castelo das Sílabas.
+4. Concluiu Castelo das Sílabas -> abre Castelo das Palavras.
+5. Concluiu Castelo das Palavras -> abre a tela final de conclusão.
+
+O mapa continua disponível pelo botão VOLTAR/MAPA, mas não interrompe a sequência normal.

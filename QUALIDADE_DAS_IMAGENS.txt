@@ -1,0 +1,25 @@
+AUDITORIA DE ASSETS
+
+arte_integrada_master.png: 1536×1024 (PNG)
+avatar1.webp: 320×320 (WEBP)
+avatar2.webp: 320×320 (WEBP)
+avatar3.webp: 320×320 (WEBP)
+avatar4.webp: 320×320 (WEBP)
+capa.webp: 1200×800 (WEBP)
+castelo_palavras.webp: 1200×800 (WEBP)
+castelo_silabas.webp: 1200×800 (WEBP)
+final.webp: 1200×800 (WEBP)
+floresta.webp: 1200×800 (WEBP)
+floresta_hd.jpg: 768×512 (JPEG)
+floresta_integrada.png: 768×512 (PNG)
+floresta_profissional.png: 1536×1024 (PNG)
+mapa.webp: 1200×800 (WEBP)
+mapa_profissional.png: 1536×1024 (PNG)
+montanha.webp: 1200×800 (WEBP)
+referencia_fases_hd.jpg: 1536×1024 (JPEG)
+selecao.webp: 1200×800 (WEBP)
+tela_inicial_hd.jpg: 1536×1024 (JPEG)
+vila.webp: 1200×800 (WEBP)
+vila_hd.jpg: 768×512 (JPEG)
+
+As artes de tela são renderizadas preservando a proporção; não são esticadas.

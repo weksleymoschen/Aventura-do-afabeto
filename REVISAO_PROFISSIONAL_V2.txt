@@ -1,0 +1,10 @@
+CORREÇÕES V2
+- Mapa substituído por arte HD nativa, sem ampliar screenshot.
+- object-fit: contain; nenhuma imagem é esticada.
+- Mapa usa hotspots transparentes: a própria ilustração funciona como interface.
+- Contador 0/50 é HTML dinâmico e atualiza com o progresso.
+- Floresta usa cenário HD limpo com toras vazias.
+- Letras ficam diretamente dentro das toras; removidos círculos/cartões sobrepostos.
+- Botões visuais do mapa têm áreas clicáveis sobre a própria arte.
+- Progressão automática entre fases mantida.
+- Sem blur/filtros.

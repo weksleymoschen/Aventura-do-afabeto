@@ -1,0 +1,13 @@
+ERRO IDENTIFICADO:
+Os eventos dos quatro personagens eram registrados antes de os botões existirem no DOM.
+Assim, clicar no personagem não alterava S.avatar. O botão COMEÇAR verificava S.avatar,
+encontrava null e bloqueava o avanço.
+
+CORREÇÃO:
+- Personagens agora têm onclick direto e confiável.
+- COMEÇAR usa onclick direto.
+- SOM usa onclick direto.
+- Removidos listeners duplicados.
+- COMEÇAR só bloqueia quando realmente falta nome ou personagem.
+- Ao iniciar, nome e avatar são atualizados antes de abrir o mapa.
+- Áreas clicáveis receberam z-index alto para não ficarem atrás da arte.

@@ -1,0 +1,15 @@
+CAUSA REAL DO BOTÃO COMEÇAR NÃO AVANÇAR
+
+A função begin() estava sendo executada, porém chamava updateMap().
+As funções updateMap() e openWorld() haviam sido removidas acidentalmente em uma reconstrução anterior.
+O navegador gerava ReferenceError e interrompia a execução antes de abrir o mapa.
+
+CORRIGIDO:
+- updateMap() restaurada.
+- openWorld() restaurada.
+- begin() simplificada.
+- área clicável do COMEÇAR alinhada ao botão verde da arte.
+- pointerup usado como evento universal para mouse/touch.
+- mapa pode abrir corretamente.
+- mundos podem ser abertos pelo mapa.
+- sintaxe JavaScript validada com Node.
