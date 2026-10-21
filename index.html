@@ -350,7 +350,7 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 .vowelAssocCard.good{outline:.45vw solid #32d257;outline-offset:-.3vw}
 .vowelAssocCard.bad{animation:shake .22s 2}
 
-/* VOLTAR: canto inferior esquerdo, fora da pergunta e dos contadores */
+/* ←: canto inferior esquerdo, fora da pergunta e dos contadores */
 #stage .top .icon:first-child{
  position:fixed!important;left:1.2%!important;top:auto!important;bottom:2%!important;
  z-index:1200!important;min-width:125px!important;
@@ -397,6 +397,66 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 }
 .hdAvatar{position:relative}
 
+
+/* ===== CORREÇÕES VISUAIS DEFINITIVAS ===== */
+.hdAvatar,.hdAvatar:hover,.hdAvatar:active,.hdAvatar:focus,.hdAvatar:focus-visible,
+.hdAvatar.sel,.hdAvatar.selected,.hdAvatar.sel:focus,.hdAvatar.selected:focus{
+ outline:0!important;outline:none!important;outline-offset:0!important;
+ box-shadow:none!important;border:0!important;background:transparent!important;
+ -webkit-tap-highlight-color:transparent!important;
+}
+.hdAvatar::before,.hdAvatar::after,
+.hdAvatar.sel::before,.hdAvatar.sel::after,
+.hdAvatar.selected::before,.hdAvatar.selected::after{
+ content:none!important;display:none!important;border:0!important;outline:0!important;box-shadow:none!important;
+}
+
+/* Botão voltar: apenas seta, sem palavra ← */
+#stage .top .icon:first-child,
+#map .icon:first-child{
+ width:74px!important;min-width:74px!important;height:68px!important;
+ padding:0!important;border-radius:20px!important;
+ font-size:0!important;line-height:0!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ background:linear-gradient(#ffbf24,#ff991c)!important;
+ border:4px solid #fff!important;box-shadow:0 5px 0 #c8680a!important;
+}
+#stage .top .icon:first-child::after,
+#map .icon:first-child::after{
+ content:"←"!important;display:block!important;
+ font-size:42px!important;line-height:1!important;font-weight:1000!important;color:#fff!important;
+}
+
+/* FASE 1 = a própria imagem aprovada é o jogo */
+#stage.fase1Aprovada #stageArt{
+ content:url("assets/fase1_floresta_aprovada.png")!important;
+ width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;
+ filter:none!important;transform:none!important;image-rendering:auto!important;
+}
+#stage.fase1Aprovada .panel{
+ position:absolute!important;inset:0!important;padding:0!important;margin:0!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+ pointer-events:none!important;overflow:visible!important;
+}
+#stage.fase1Aprovada .progress,
+#stage.fase1Aprovada .stageTitle,
+#stage.fase1Aprovada .mascot{display:none!important}
+#stage.fase1Aprovada .forestPrompt{display:none!important}
+.fase1ClickLayer{position:absolute;inset:0;z-index:60;pointer-events:none}
+.fase1Card{
+ position:absolute;border:0!important;background:transparent!important;box-shadow:none!important;
+ outline:0!important;padding:0!important;cursor:pointer;pointer-events:auto;touch-action:manipulation;
+ -webkit-tap-highlight-color:transparent!important;
+}
+.fase1Card:focus,.fase1Card:focus-visible{outline:0!important;box-shadow:none!important}
+.fase1Card.good{box-shadow:inset 0 0 0 8px #2fd35a!important;border-radius:50%!important}
+.fase1Card.bad{animation:shake .22s 2}
+
+/* Mantém a seta da fase sem cobrir a arte principal */
+#stage.fase1Aprovada .top .icon:first-child{
+ position:absolute!important;left:1.2%!important;top:2%!important;bottom:auto!important;z-index:1200!important;
+}
+
 </style>
 </head>
 <body><div id="shell"><main id="gameframe">
@@ -437,7 +497,7 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 
 <section id="stage" class="screen">
 <img id="stageArt" class="art" src="assets/floresta_vogais_pro.png" alt=""><div class="dim"></div>
-<div class="top"><button class="icon" onclick="show('map')" aria-label="Voltar ao mapa">← VOLTAR</button><div class="hud"><span class="chip namechip"><span id="hudName">Aventureiro</span></span><span class="chip">⭐ <span id="stars">0</span> • <span id="counter">1/10</span></span><button class="icon" onclick="toggleMusic()">🎵</button></div></div>
+<div class="top"><button class="icon" onclick="show('map')" aria-label="Voltar ao mapa">←</button><div class="hud"><span class="chip namechip"><span id="hudName">Aventureiro</span></span><span class="chip">⭐ <span id="stars">0</span> • <span id="counter">1/10</span></span><button class="icon" onclick="toggleMusic()">🎵</button></div></div>
 <div class="stageTitle"><div id="worldTitle" class="wood"></div></div>
 <div class="mascot"><img id="mascotImg" src="assets/avatar1.webp" alt=""></div>
 <div class="panel"><div class="progress"><i id="bar"></i></div><div id="content"></div></div>
@@ -543,7 +603,7 @@ function openWorld(n){
  S.sel=[];
  lockedAnswer=false;
  const art=document.getElementById("stageArt");
- if(art) art.src=`assets/${arts[n]}`;
+ if(art) art.src=n===1?"assets/fase1_floresta_aprovada.png":`assets/${arts[n]}`;
  const title=document.getElementById("worldTitle");
  if(title) title.textContent=worlds[n];
  show("stage");
@@ -583,49 +643,47 @@ function begin(){
 function render(){
  const q=Q[S.world][S.q];
  if(!q){finishWorld();return;}
+
+ const stage=document.getElementById("stage");
+ if(stage) stage.classList.toggle("fase1Aprovada",S.world===1);
+
  const stars=document.getElementById("stars");
  const counter=document.getElementById("counter");
  const bar=document.getElementById("bar");
  if(stars)stars.textContent=S.stars;
  if(counter)counter.textContent=`${S.q+1}/10`;
  if(bar)bar.style.width=`${S.q*10}%`;
+
  const content=document.getElementById("content");
  if(!content)return;
 
  if(S.world===1){
+   const art=document.getElementById("stageArt");
+   if(art && !art.src.includes("fase1_floresta_aprovada.png"))
+      art.src="assets/fase1_floresta_aprovada.png";
+
+   /* Coordenadas sobre os 5 discos da arte 1536x1024:
+      A/Abelha, E/Elefante, I/Ilha, O/Olho, U/Uva */
    const cards=[
-    ["A","vogal_A_v2.png"],["E","vogal_E_v2.png"],["I","vogal_I_v2.png"],
-    ["O","vogal_O_v2.png"],["U","vogal_U_v2.png"]
+     ["A",20.5,28.2,22.0,31.0],
+     ["E",43.4,28.2,22.5,31.0],
+     ["I",68.8,28.2,22.5,31.0],
+     ["O",30.0,59.2,25.0,34.5],
+     ["U",58.3,59.2,25.0,34.5]
    ];
-   let h=`<div class="forestPrompt">${q.p}</div><div class="vowelAssociationGrid">`;
-   cards.forEach(([v,img])=>{
-     h+=`<button type="button" class="vowelAssocCard" data-value="${v}" onclick="answer(this)" aria-label="${v}">
-       <img src="assets/${img}?v=2" alt="${v}">
-     </button>`;
+   let h=`<div class="fase1ClickLayer">`;
+   cards.forEach(([v,x,y,w,hh])=>{
+      h+=`<button type="button" class="fase1Card" data-value="${v}"
+           aria-label="${v}" onclick="answer(this)"
+           style="left:${x}%;top:${y}%;width:${w}%;height:${hh}%"></button>`;
    });
    h+=`</div>`;
    content.innerHTML=h;
    return;
  }
 
- if(S.world===2){
-   const parse=(x)=>{
-     const parts=x.split(" ");
-     return {icon:parts.shift(),word:parts.join(" ")};
-   };
-   let h=`<div class="prompt">${q.p}</div><div class="imageWordAnswers">`;
-   q.o.forEach(x=>{
-     const a=parse(x);
-     h+=`<button type="button" class="imageWordCard answer" data-value="${x}" onclick="answer(this)">
-       <span class="choicePic">${a.icon}</span><span class="choiceWord">${a.word}</span>
-     </button>`;
-   });
-   h+=`</div>`;
-   content.innerHTML=h;
-   return;
- }
-
- let h=`<div class="prompt">${q.p}</div><div class="visual"><div class="emoji">${q.pic||""}</div>${q.label?`<div class="wordpic">${q.label}</div>`:""}</div>`;
+ let h=`<div class="prompt">${q.p}</div>`;
+ h+=`<div class="visual"><div class="emoji">${q.pic||""}</div>${q.label?`<div class="wordpic">${q.label}</div>`:""}</div>`;
  if(q.build){
    h+=`<div class="slots" id="slots">Toque nas sílabas na ordem</div><div class="tiles">${q.o.map(x=>`<button class="tile" onclick="pickBuild('${x}',this)">${x}</button>`).join("")}</div>`;
  }else if(q.letters){
@@ -634,8 +692,7 @@ function render(){
    h+=`<div class="answers">${q.o.map(x=>`<button class="answer" data-value="${x}" onclick="answer(this)">${x}</button>`).join("")}</div>`;
  }
  content.innerHTML=h;
-}
-function answer(el){let q=Q[S.world][S.q],v=el.dataset.value;if(v===q.a){el.classList.add("good");success()}else{el.classList.add("bad");tone(180,.14,.045);toast("🌟 Quase! Tente outra vez.");setTimeout(()=>el.classList.remove("bad"),600)}}
+}function answer(el){let q=Q[S.world][S.q],v=el.dataset.value;if(v===q.a){el.classList.add("good");success()}else{el.classList.add("bad");tone(180,.14,.045);toast("🌟 Quase! Tente outra vez.");setTimeout(()=>el.classList.remove("bad"),600)}}
 function pickBuild(v,el){let q=Q[S.world][S.q];S.sel.push(v);el.style.visibility="hidden";document.getElementById("slots").textContent=S.sel.join(" + ");if(S.sel.length===q.build.length){S.sel.join("|")===q.build.join("|")?success():retry()}}
 function pickLetter(v,el){let q=Q[S.world][S.q];S.sel.push(v);el.style.visibility="hidden";document.getElementById("slots").textContent=S.sel.join(" ");if(S.sel.length===q.word.length){S.sel.join("")===q.word?success():retry()}}
 function retry(){tone(180,.14,.045);toast("✨ Vamos tentar novamente!");S.sel=[];setTimeout(render,650)}
@@ -662,7 +719,7 @@ function finishWorld(){
    setTimeout(()=>{
      S.world=next;S.q=0;S.sel=[];lockedAnswer=false;
      const art=document.getElementById("stageArt");
-     if(art)art.src=`assets/${arts[next]}`;
+     if(art)art.src=next===1?"assets/fase1_floresta_aprovada.png":`assets/${arts[next]}`;
      const title=document.getElementById("worldTitle");
      if(title)title.textContent=worlds[next];
      show("stage");render();
@@ -702,3 +759,4 @@ document.addEventListener("pointerup",(e)=>{
 });
 
 </script></main></div></body></html>
+<!-- WM: correções visuais consolidadas -->

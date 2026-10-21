@@ -1,0 +1,30 @@
+CORREÇÕES DESTA VERSÃO
+
+1. TELA INICIAL
+- Removido definitivamente o retângulo amarelo grande.
+- Hotspots dos personagens não exibem outline, focus ring, pseudo-elemento ou caixa.
+- A escolha continua funcional sem desenhar uma caixa por cima da arte.
+
+2. BOTÃO VOLTAR
+- Removida a palavra VOLTAR.
+- Agora aparece apenas uma seta branca em botão laranja compacto, como solicitado.
+- Mantida a função de retorno.
+
+3. FASE 1
+- Usa exatamente a imagem enviada/aprovada: 'Floresta das Vogais_ Aventura Colorida.png'.
+- A arte fica incorporada ao jogo em resolução 1536x1024.
+- A/ABELHA, E/ELEFANTE, I/ILHA, O/OLHO e U/UVA fazem parte da própria arte.
+- Os cinco discos são clicáveis por hotspots transparentes.
+- Nenhum cartão, emoji ou letra é desenhado por cima.
+- A imagem usa object-fit: contain, sem esticar, sem blur e sem recorte artificial.
+
+4. PRESERVADO
+- Nome obrigatório.
+- Escolha de personagem.
+- Botão começar.
+- Som.
+- Mapa.
+- Estrelas.
+- 10 atividades por fase.
+- Progressão automática entre fases.
+- Demais fases e lógica do jogo.
