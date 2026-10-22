@@ -1,10 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340">
-<rect x="90" y="135" width="240" height="175" rx="12" fill="#ffd58c" stroke="#8c4b25" stroke-width="9"/>
-<polygon points="55,150 210,42 365,150" fill="#ef553f" stroke="#963323" stroke-width="10"/>
-<rect x="177" y="215" width="66" height="95" rx="28" fill="#875139"/>
-<rect x="183" y="92" width="54" height="78" fill="#ffe28c" stroke="#8c4b25" stroke-width="8"/>
-<path d="M210 18v74M182 42h56" stroke="#70401f" stroke-width="12" stroke-linecap="round"/>
-<circle cx="210" cy="164" r="25" fill="#70d1ff" stroke="#3677a3" stroke-width="7"/>
-<rect x="112" y="190" width="45" height="48" rx="7" fill="#6fcfff" stroke="#3977a1" stroke-width="6"/>
-<rect x="263" y="190" width="45" height="48" rx="7" fill="#6fcfff" stroke="#3977a1" stroke-width="6"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="24" y="40" width="52" height="46" fill="#f4d27a" stroke="#8d5524" stroke-width="3"/><path d="M18 42L50 15L82 42" fill="#e95d3e" stroke="#8d5524" stroke-width="4"/><rect x="44" y="58" width="13" height="28" fill="#7d4d31"/><path d="M50 15V4M44 9h12" stroke="#8d5524" stroke-width="3"/></svg>

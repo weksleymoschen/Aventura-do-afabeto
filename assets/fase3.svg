@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"><defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#39c9ff"/><stop offset="1" stop-color="#dff9ff"/></linearGradient>
+    <linearGradient id="grass" x2="0" y2="1"><stop stop-color="#6ce35b"/><stop offset="1" stop-color="#0c8b51"/></linearGradient>
+    <linearGradient id="snow" x2="0" y2="1"><stop stop-color="#eefcff"/><stop offset="1" stop-color="#9ad8ef"/></linearGradient>
+    <linearGradient id="sand" x2="0" y2="1"><stop stop-color="#ffe894"/><stop offset="1" stop-color="#efbd59"/></linearGradient>
+    </defs><rect width="1600" height="900" fill="url(#sky)"/><path d="M0 520Q220 330 430 520Q650 310 860 520Q1080 350 1300 520Q1450 410 1600 520V900H0Z" fill="url(#grass)"/>
+        <path d="M650 900Q780 690 920 900Z" fill="#e6c27a"/>
+        <g stroke="#7c421b" stroke-width="10"><g fill="#ffd06c"><rect x="130" y="410" width="230" height="220"/><path d="M100 420l145-120 145 120z" fill="#e75b32"/></g>
+        <g fill="#f3b95d"><rect x="1030" y="390" width="250" height="240"/><path d="M990 405l165-135 165 135z" fill="#7c4fd1"/></g>
+        <g fill="#ffe18b"><rect x="520" y="440" width="210" height="190"/><path d="M490 450l135-105 135 105z" fill="#2f9e5b"/></g></g>
+        <g fill="#fff"><circle cx="1300" cy="120" r="38"/><circle cx="1340" cy="110" r="52"/><circle cx="1390" cy="125" r="34"/></g></svg>

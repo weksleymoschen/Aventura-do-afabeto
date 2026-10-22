@@ -1,0 +1,14 @@
+AUDITORIA — RECOMEÇO TOTAL
+[OK] JavaScript válido
+[OK] projeto novo sem código antigo
+[OK] capa sem UI embutida
+[OK] 4 avatares reais e alinhados
+[OK] nome e botão são controles reais
+[OK] começar abre fase 1
+[OK] 5 cenários independentes
+[OK] 25 atividades
+[OK] imagens de associação vetoriais
+[OK] mapa clicável
+[OK] música de fundo
+[OK] progressão automática
+[OK] sem arquivos ausentes

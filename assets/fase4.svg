@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"><defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#39c9ff"/><stop offset="1" stop-color="#dff9ff"/></linearGradient>
+    <linearGradient id="grass" x2="0" y2="1"><stop stop-color="#6ce35b"/><stop offset="1" stop-color="#0c8b51"/></linearGradient>
+    <linearGradient id="snow" x2="0" y2="1"><stop stop-color="#eefcff"/><stop offset="1" stop-color="#9ad8ef"/></linearGradient>
+    <linearGradient id="sand" x2="0" y2="1"><stop stop-color="#ffe894"/><stop offset="1" stop-color="#efbd59"/></linearGradient>
+    </defs><rect width="1600" height="900" fill="#45cfff"/><circle cx="1340" cy="130" r="78" fill="#ffe66c"/>
+        <path d="M0 580Q300 520 600 590T1200 570T1600 590V900H0Z" fill="#20aee0"/>
+        <path d="M200 690Q520 420 900 690Q1160 500 1450 690V900H200Z" fill="url(#sand)"/>
+        <path d="M350 680q-20-250 75-400" stroke="#8c5725" stroke-width="38" fill="none"/>
+        <path d="M410 300q-150-55-190 60q120-20 190 25M420 300q145-60 205 45q-130-5-205 40M415 295q45-120 140-80q-65 50-100 120" fill="#2ebd55"/>
+        <path d="M1080 650q-10-180 70-300" stroke="#8c5725" stroke-width="30" fill="none"/><path d="M1135 360q-120-40-150 55q95-15 150 20M1140 360q120-45 160 40q-95 0-155 35" fill="#2ebd55"/></svg>
