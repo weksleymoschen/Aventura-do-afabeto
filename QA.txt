@@ -1,8 +1,5 @@
 25 atividades: OK
-5 fases: OK
-nome editável: OK
-6 avatares: OK
-avatar escolhido: OK
-progressão 25: OK
-fim após 25: OK
-sem rede externa: OK
+associação: OK
+transição: OK
+GitHub Pages: OK
+sem URLs externas: OK
