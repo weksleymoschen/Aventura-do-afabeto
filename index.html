@@ -1,109 +1,54 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Mundo Mágico da Alfabetização</title>
+<title>Aventura do Alfabeto</title>
 <style>
-:root{--card:#fff9e8;--ink:#17324d;--yellow:#ffd84d;--green:#37c871;--orange:#ff8a3d;--blue:#42a5f5}
-*{box-sizing:border-box} body{margin:0;font-family:Trebuchet MS,Arial,sans-serif;color:var(--ink);overflow-x:hidden;
-background:linear-gradient(#58c9ff 0 43%,#74d85e 43% 100%);min-height:100vh}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.23;background:
-radial-gradient(circle at 8% 16%,#fff 0 35px,transparent 37px),
-radial-gradient(circle at 86% 13%,#fff 0 50px,transparent 52px),
-radial-gradient(circle at 65% 29%,#fff 0 25px,transparent 27px)}
-#app{width:min(1050px,100%);margin:auto;min-height:100vh;padding:10px}
-.top{display:flex;justify-content:space-between;gap:8px;align-items:center}
-.logo{font-size:clamp(23px,5vw,50px);font-weight:1000;color:#fff;text-shadow:0 3px 0 #0c72a9,2px 2px 7px #17324d;line-height:.9}
-.logo b{color:#ffe33f}.round{border:3px solid #fff;border-radius:50%;width:48px;height:48px;background:#ff9d2e;font-size:25px;cursor:pointer;box-shadow:0 4px 0 #c96916}
-.panel{background:rgba(255,249,232,.96);border:5px solid #fff;border-radius:25px;box-shadow:0 8px 0 rgba(29,86,42,.25);padding:18px;margin:12px auto;max-width:900px;text-align:center}
-h1,h2,h3{margin:5px 0 12px}.hero{font-size:80px}.avatars{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.avatar{font-size:55px;padding:7px;border:5px solid transparent;border-radius:20px;background:#e9f8ff;cursor:pointer}
-.avatar.sel{border-color:#ffb000;transform:scale(1.06)} input{font-size:22px;padding:12px;border-radius:15px;border:3px solid #7ac9ef;width:min(330px,90%)}
-.big{border:0;border-radius:18px;background:linear-gradient(#59df7e,#1cab4c);color:#fff;font-weight:900;font-size:23px;padding:14px 28px;box-shadow:0 6px 0 #147c38;cursor:pointer;margin:9px}
-.big:active,.choice:active,.level:active{transform:translateY(3px);box-shadow:none}
-.map{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.level{position:relative;min-height:160px;border:5px solid #fff;border-radius:24px;padding:12px;color:#fff;cursor:pointer;box-shadow:0 6px 0 rgba(0,0,0,.2);display:flex;flex-direction:column;justify-content:center;align-items:center;text-shadow:0 2px 2px #244}
-.level:nth-child(1){background:linear-gradient(135deg,#ff8b4a,#ffd54f)}.level:nth-child(2){background:linear-gradient(135deg,#7e57c2,#42a5f5)}
-.level:nth-child(3){background:linear-gradient(135deg,#ef5350,#ffca28)}.level:nth-child(4){background:linear-gradient(135deg,#26a69a,#66bb6a)}
-.level:nth-child(5){background:linear-gradient(135deg,#42a5f5,#5c6bc0)}.level:nth-child(6){background:linear-gradient(135deg,#ab47bc,#ff7043)}
-.level.lock{filter:grayscale(.7);opacity:.65}.level .ico{font-size:55px}.stars{font-size:22px;color:#ffe13a;text-shadow:0 1px 2px #6d4b00}
-.progress{height:18px;background:#d9e9ef;border-radius:20px;overflow:hidden;margin:8px}.progress i{display:block;height:100%;background:#43c96b;width:0;transition:.4s}
-.question{font-size:clamp(22px,4vw,35px);font-weight:900}.choices{display:grid;grid-template-columns:repeat(2,minmax(120px,1fr));gap:14px;margin:18px auto;max-width:700px}
-.choice{min-height:120px;border:5px solid #fff;border-radius:23px;background:#fff7d6;box-shadow:0 6px 0 #e0b23a;font-size:clamp(25px,5vw,45px);font-weight:1000;cursor:pointer;padding:10px;color:#263f57}
-.choice small{display:block;font-size:18px}.choice.good{background:#8ff0a9}.choice.bad{background:#ffaaaa;animation:shake .25s}.speaker{font-size:28px;border:0;background:#ff9d2e;color:#fff;border-radius:50%;width:52px;height:52px;cursor:pointer}
-.feedback{font-size:25px;font-weight:900;min-height:36px}.hidden{display:none!important}
-.wordslots{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:15px}.slot{min-width:85px;padding:15px;border:4px dashed #4ba4d8;border-radius:15px;background:white;font-size:30px}
-.confetti{position:fixed;top:-20px;font-size:25px;animation:fall 1.7s linear forwards;z-index:10}@keyframes fall{to{transform:translateY(110vh) rotate(600deg)}}@keyframes shake{50%{transform:translateX(8px)}}
-.footer{font-weight:800;text-align:center;color:#174b36;padding:8px}.teacher{font-size:14px;background:#ffffffbb;border-radius:15px;padding:10px;margin-top:10px}
-@media(max-width:700px){.map{grid-template-columns:1fr 1fr}.level{min-height:135px}.choices{grid-template-columns:1fr 1fr}.choice{min-height:100px}.panel{padding:12px}.top .logo{max-width:75%}}
-</style>
-</head>
-<body><div id="app"></div>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial Rounded MT Bold,Trebuchet MS,Arial,sans-serif;background:#153b56;color:#17324a}
+button,input{font:inherit}.screen{min-height:100vh;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;padding:16px;position:relative}
+.screen:before{content:"";position:absolute;inset:0;background:linear-gradient(#0001,#0004)}
+.card{position:relative;z-index:1;width:min(1000px,96vw);background:#fff8dcf2;border:6px solid #fff;border-radius:30px;padding:18px;text-align:center;box-shadow:0 12px 30px #0006}
+.title{font-size:clamp(38px,7vw,78px);line-height:.88;margin:4px;color:#ff9b16;text-shadow:0 4px 0 #8b3e00,3px 0 #fff,-3px 0 #fff}.title span{color:#19aaf5}.wood{display:inline-block;background:#b96525;color:white;border:4px solid #6d3515;border-radius:15px;padding:9px 20px;box-shadow:inset 0 3px #e9a35d;font-size:clamp(20px,3vw,30px)}
+.btn{border:4px solid white;border-radius:20px;padding:13px 22px;margin:7px;cursor:pointer;color:white;font-weight:900;font-size:clamp(18px,2.5vw,27px);box-shadow:0 6px 0 #175d2f;background:linear-gradient(#6eea55,#18a83c)}
+.btn.orange{background:linear-gradient(#ffb22f,#f06417);box-shadow:0 6px 0 #a53a10}.btn.blue{background:linear-gradient(#55bfff,#1976d2);box-shadow:0 6px 0 #114e91}.btn.purple{background:linear-gradient(#b76cff,#7130d4);box-shadow:0 6px 0 #46159b}.btn:active,.choice:active{transform:translateY(4px);box-shadow:none}.home{position:absolute;z-index:3;left:18px;top:18px;width:55px;height:55px;border-radius:16px;border:4px solid white;background:#ff8a20;color:white;font-size:27px;cursor:pointer}
+.characters{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}.char{width:190px;min-height:150px;border:6px solid #fff;border-radius:25px;background:#8ee7ff;padding:12px;cursor:pointer;font-size:70px}.char.sel{outline:7px solid #ffd52d}.char.girl{background:#ff9ed1}
+.name{width:min(420px,90%);padding:13px;border:4px solid #d78a34;border-radius:15px;font-size:21px;text-align:center}
+.map{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:12px}.level{border:5px solid white;border-radius:24px;min-height:150px;color:white;font-weight:900;cursor:pointer;text-shadow:0 2px #234;padding:10px;box-shadow:0 7px 0 #0004}.level b{font-size:28px;display:block}.level small{font-size:16px}.level:nth-child(1){background:#e53935}.level:nth-child(2){background:#1976d2}.level:nth-child(3){background:#28a745}.level:nth-child(4){background:#7b35d3}.level:nth-child(5){background:#f26a21}.level:nth-child(6){background:#f1a313}.locked{filter:grayscale(1);opacity:.7}.stars{font-size:27px;color:#ffd51f;text-shadow:0 2px #855}
+.question{font-size:clamp(23px,4vw,38px);margin:13px}.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:720px;margin:14px auto}.choice{border:5px solid white;border-radius:22px;min-height:110px;background:#fff;color:#19344b;font-size:clamp(30px,6vw,58px);font-weight:900;cursor:pointer;box-shadow:0 6px 0 #d39b2e;padding:12px}.choice .pic{font-size:58px;display:block}.choice small{font-size:18px;display:block}.good{background:#82ed98!important}.bad{background:#ff9b9b!important}.progress{height:17px;background:#ddd;border-radius:12px;overflow:hidden}.progress i{display:block;height:100%;background:#34c759}.feedback{font-size:25px;font-weight:900;min-height:32px}.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.stat{background:white;border-radius:18px;padding:12px;min-width:130px;border:3px solid #f1c46a}.slots{min-height:75px;background:white;border:4px dashed #36a4e3;border-radius:18px;padding:15px;font-size:36px;font-weight:900;margin:12px auto;max-width:430px}.conf{position:fixed;z-index:99;top:-30px;font-size:25px;animation:fall 1.5s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(500deg)}}@media(max-width:700px){.map{grid-template-columns:1fr 1fr}.level{min-height:125px}.choices{grid-template-columns:1fr 1fr}.card{padding:11px}.screen{padding:7px}.choice{min-height:90px}.home{width:48px;height:48px}}
+</style></head><body><div id="app"></div>
 <script>
-const A=document.querySelector('#app');
-const levels=[
- {name:'Caça às Letras',ico:'🔤',desc:'Reconheça as letras'},
- {name:'Som Inicial',ico:'🐝',desc:'Letra e imagem'},
- {name:'Batalha das Sílabas',ico:'👏',desc:'Descubra as sílabas'},
- {name:'Escute e Encontre',ico:'🔊',desc:'Ouça e associe'},
- {name:'Monte a Palavra',ico:'🧩',desc:'Forme palavras'},
- {name:'Desafio Final',ico:'🏆',desc:'Mostre o que aprendeu'}];
-let st=JSON.parse(localStorage.getItem('mma_state')||'null')||{name:'',avatar:'🧒',mode:'4-5',unlocked:1,stars:[0,0,0,0,0,0]};
-let phase=0,q=0,score=0,currentSpeech='';
-function save(){localStorage.setItem('mma_state',JSON.stringify(st))}
-function speak(t){currentSpeech=t; if(!('speechSynthesis'in window))return; speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';u.rate=.82;u.pitch=1.08;speechSynthesis.speak(u)}
-function top(){return `<div class="top"><div class="logo">MUNDO MÁGICO<br><b>DA ALFABETIZAÇÃO</b></div><button class="round" onclick="home()">🏠</button></div>`}
-function start(){
- A.innerHTML=`${top()}<section class="panel"><div class="hero">🌈📚✨</div><h1>UMA AVENTURA PARA APRENDER BRINCANDO!</h1>
- <p>Escolha seu personagem:</p><div class="avatars">${['🧒','👧','👦','👩🏽‍🦱'].map(x=>`<button class="avatar ${st.avatar==x?'sel':''}" onclick="pickAvatar(this,'${x}')">${x}</button>`).join('')}</div>
- <p><input id="nm" maxlength="18" placeholder="Digite o nome da criança" value="${st.name}"></p>
- <p><b>Faixa:</b> <label><input style="width:auto" type="radio" name="m" value="4-5" ${st.mode==='4-5'?'checked':''}> 4–5 anos</label> &nbsp; <label><input style="width:auto" type="radio" name="m" value="6-7" ${st.mode==='6-7'?'checked':''}> 6–7 anos</label></p>
- <button class="big" onclick="enter()">▶ COMEÇAR</button><div class="teacher">🔒 O progresso fica salvo neste aparelho. O jogo usa voz do próprio navegador e funciona sem internet depois de baixado.</div></section><div class="footer">Aprender • Ouvir • Clicar • Descobrir</div>`}
-function pickAvatar(el,x){st.avatar=x;document.querySelectorAll('.avatar').forEach(e=>e.classList.remove('sel'));el.classList.add('sel')}
-function enter(){st.name=document.querySelector('#nm').value.trim()||'Aventureiro';st.mode=document.querySelector('input[name=m]:checked').value;save();home();speak(`Olá ${st.name}! Escolha uma fase para começar.`)}
-function home(){
- A.innerHTML=`${top()}<section class="panel"><h2>${st.avatar} Olá, ${st.name||'Aventureiro'}!</h2><p>ESCOLHA UMA FASE</p><div class="map">${levels.map((l,i)=>`<button class="level ${i+1>st.unlocked?'lock':''}" onclick="openLevel(${i})"><span class="ico">${i+1>st.unlocked?'🔒':l.ico}</span><b>FASE ${i+1}</b><strong>${l.name}</strong><small>${l.desc}</small><span class="stars">${'★'.repeat(st.stars[i])}${'☆'.repeat(3-st.stars[i])}</span></button>`).join('')}</div>
- <button class="big" onclick="start()">⚙ PERFIL</button><button class="big" onclick="resetGame()">↻ RECOMEÇAR</button></section>`}
-function resetGame(){if(confirm('Apagar o progresso e recomeçar?')){st.unlocked=1;st.stars=[0,0,0,0,0,0];save();home()}}
-const easy=[
- [{ask:'Clique na letra A',say:'Encontre a letra A',ans:'A',opts:['A','E','O','M']},{ask:'Clique na letra M',say:'Encontre a letra M',ans:'M',opts:['N','M','B','P']},{ask:'Clique na letra S',say:'Encontre a letra S',ans:'S',opts:['C','F','S','V']}],
- [{ask:'Qual começa com A?',say:'Qual destas figuras começa com a letra A?',ans:'🐝',opts:['🐝','🏠','🐱','🦆'],labels:['ABELHA','CASA','GATO','PATO']},{ask:'Qual começa com C?',say:'Qual destas figuras começa com C?',ans:'🏠',opts:['🐟','🏠','🐝','🦆'],labels:['PEIXE','CASA','ABELHA','PATO']},{ask:'Qual começa com G?',say:'Qual destas figuras começa com G?',ans:'🐱',opts:['🐱','🐸','🍎','🦆'],labels:['GATO','SAPO','MAÇÃ','PATO']}],
- [{ask:'Complete: CA + ?',say:'Casa. Complete a palavra. Cá mais...',ans:'SA',opts:['SA','PA','MA','LA']},{ask:'Complete: PA + ?',say:'Pato. Complete a palavra. Pá mais...',ans:'TO',opts:['BO','TO','LO','NO']},{ask:'Complete: BO + ?',say:'Bola. Complete a palavra. Bó mais...',ans:'LA',opts:['LA','TA','CA','DA']}],
- [{ask:'🔊 Ouça e clique',say:'Gato',ans:'🐱',opts:['🐱','🐶','🐟','🐸'],labels:['GATO','CACHORRO','PEIXE','SAPO']},{ask:'🔊 Ouça e clique',say:'Casa',ans:'🏠',opts:['🌳','🏠','🚗','⭐'],labels:['ÁRVORE','CASA','CARRO','ESTRELA']},{ask:'🔊 Ouça e clique',say:'Sol',ans:'☀️',opts:['🌙','⭐','☀️','☁️'],labels:['LUA','ESTRELA','SOL','NUVEM']}],
- [{ask:'Monte a palavra da figura: ☀️',say:'Monte a palavra Sol',ans:'SOL',parts:['S','O','L']},{ask:'Monte a palavra da figura: 🏠',say:'Monte a palavra Casa',ans:'CASA',parts:['CA','SA']},{ask:'Monte a palavra da figura: ⚽',say:'Monte a palavra Bola',ans:'BOLA',parts:['BO','LA']}],
- [{ask:'Qual palavra combina com 🐱?',say:'Qual palavra é gato?',ans:'GATO',opts:['GATO','PATO','RATO','MATO']},{ask:'Qual começa com S?',say:'Qual figura começa com S?',ans:'☀️',opts:['☀️','🐱','🏠','🍎'],labels:['SOL','GATO','CASA','MAÇÃ']},{ask:'Complete: BO + ?',say:'Complete a palavra Bola. Bó mais...',ans:'LA',opts:['LA','SA','TA','PA']}]
+'use strict';
+const app=document.getElementById('app');
+const phases=['CAÇA ÀS LETRAS','SOM INICIAL','BATALHA DAS SÍLABAS','ESCUTE E ENCONTRE','MONTE A PALAVRA','DESAFIO FINAL'];
+let state;try{state=JSON.parse(localStorage.getItem('aa_state'))}catch(e){} state=state||{name:'',char:'menino',age:'4-5',unlock:1,stars:[0,0,0,0,0,0],hits:0,tries:0};
+let p=0,qi=0,hits=0,build=[],spoken='';
+const save=()=>localStorage.setItem('aa_state',JSON.stringify(state));
+function bg(n){return `assets/${n}.jpg`}
+function say(t){spoken=t;try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';u.rate=.82;speechSynthesis.speak(u)}catch(e){}}
+function shell(inner,b='floresta',home=true){app.innerHTML=`<main class="screen" style="background-image:url('${bg(b)}')">${home?'<button class="home" onclick="map()">⌂</button>':''}<section class="card">${inner}</section></main>`}
+function start(){shell(`<h1 class="title">AVENTURA DO<br><span>ALFABETO</span></h1><div class="wood">Descubra as letras, forme palavras e viva essa aventura!</div><div style="font-size:85px;margin:10px">🧒🏻 &nbsp; 👧🏻</div><button class="btn" onclick="profile()">▶ COMEÇAR</button><button class="btn orange" onclick="say('Bem-vindo à Aventura do Alfabeto!')">🔊 SOM</button>`,'inicio',false)}
+function profile(){shell(`<div class="wood">ESCOLHA SEU PERSONAGEM</div><div class="characters"><button class="char ${state.char==='menino'?'sel':''}" onclick="pick('menino')">🧒🏻<small style="display:block;font-size:20px">MENINO</small></button><button class="char girl ${state.char==='menina'?'sel':''}" onclick="pick('menina')">👧🏻<small style="display:block;font-size:20px">MENINA</small></button></div><h3>QUAL É O SEU NOME?</h3><input class="name" id="nm" value="${state.name}" placeholder="Digite seu nome aqui..."><h3>QUAL É A SUA IDADE?</h3><button class="btn ${state.age==='4-5'?'':'purple'}" onclick="goAge('4-5')">4 A 5 ANOS</button><button class="btn purple" onclick="goAge('6-7')">6 A 7 ANOS</button>`,'perfil')}
+function pick(c){state.char=c;save();profile()} function goAge(a){state.name=(document.getElementById('nm').value||'Aventureiro').trim();state.age=a;save();map();say(`Olá ${state.name}. Escolha uma fase.`)}
+function map(){shell(`<div class="wood">ESCOLHA O MUNDO DA AVENTURA</div><h2>${state.char==='menina'?'👧🏻':'🧒🏻'} ${state.name||'Aventureiro'}</h2><div class="map">${phases.map((x,i)=>`<button class="level ${i+1>state.unlock?'locked':''}" onclick="openPhase(${i})"><b>${i+1}</b>${x}<small>${i+1>state.unlock?' 🔒':' ▶'}</small><div class="stars">${'★'.repeat(state.stars[i])}${'☆'.repeat(3-state.stars[i])}</div></button>`).join('')}</div><button class="btn orange" onclick="profile()">⚙ PERFIL</button>`,'mapa',false)}
+const data=[
+[{q:'ENCONTRE A LETRA A',s:'Encontre a letra A',a:'A',o:['A','E','M','O']},{q:'ENCONTRE A LETRA B',s:'Encontre a letra B',a:'B',o:['D','P','B','R']},{q:'ENCONTRE A LETRA M',s:'Encontre a letra M',a:'M',o:['N','M','W','V']},{q:'ENCONTRE A LETRA S',s:'Encontre a letra S',a:'S',o:['C','F','S','Z']},{q:'ENCONTRE A LETRA P',s:'Encontre a letra P',a:'P',o:['B','R','P','D']}],
+[{q:'QUAL IMAGEM COMEÇA COM B?',s:'Qual imagem começa com B?',a:'BOLA',o:[['⚽','BOLA'],['🏠','CASA'],['🐱','GATO'],['🦆','PATO']]},{q:'QUAL IMAGEM COMEÇA COM C?',s:'Qual imagem começa com C?',a:'CASA',o:[['🐟','PEIXE'],['🏠','CASA'],['🐝','ABELHA'],['🦆','PATO']]},{q:'QUAL IMAGEM COMEÇA COM G?',s:'Qual imagem começa com G?',a:'GATO',o:[['🐱','GATO'],['🐸','SAPO'],['🍎','MAÇÃ'],['☀️','SOL']]},{q:'QUAL IMAGEM COMEÇA COM P?',s:'Qual imagem começa com P?',a:'PATO',o:[['🦆','PATO'],['⚽','BOLA'],['🏠','CASA'],['🐱','GATO']]},{q:'QUAL IMAGEM COMEÇA COM S?',s:'Qual imagem começa com S?',a:'SOL',o:[['☀️','SOL'],['🐱','GATO'],['🍎','MAÇÃ'],['🏠','CASA']]}],
+[{q:'QUAL É A PRIMEIRA SÍLABA DE SAPO?',s:'Qual é a primeira sílaba de sapo?',a:'SA',o:['SA','PA','MA','TA']},{q:'QUAL É A PRIMEIRA SÍLABA DE BOLA?',s:'Qual é a primeira sílaba de bola?',a:'BO',o:['BA','BO','LA','PO']},{q:'QUAL É A PRIMEIRA SÍLABA DE CASA?',s:'Qual é a primeira sílaba de casa?',a:'CA',o:['SA','CA','MA','PA']},{q:'QUAL É A PRIMEIRA SÍLABA DE PATO?',s:'Qual é a primeira sílaba de pato?',a:'PA',o:['TA','PA','BA','DA']},{q:'QUAL É A PRIMEIRA SÍLABA DE GATO?',s:'Qual é a primeira sílaba de gato?',a:'GA',o:['CA','GA','TA','MA']}],
+[{q:'OUÇA E CLIQUE NA IMAGEM CERTA',s:'Casa',a:'CASA',o:[['🏠','CASA'],['🚗','CARRO'],['⚽','BOLA'],['☀️','SOL']]},{q:'OUÇA E CLIQUE NA IMAGEM CERTA',s:'Gato',a:'GATO',o:[['🐸','SAPO'],['🐱','GATO'],['🦆','PATO'],['🐟','PEIXE']]},{q:'OUÇA E CLIQUE NA IMAGEM CERTA',s:'Sol',a:'SOL',o:[['⭐','ESTRELA'],['☀️','SOL'],['🌙','LUA'],['🏠','CASA']]},{q:'OUÇA E CLIQUE NA IMAGEM CERTA',s:'Bola',a:'BOLA',o:[['⚽','BOLA'],['🚗','CARRO'],['🍎','MAÇÃ'],['🐱','GATO']]},{q:'OUÇA E CLIQUE NA IMAGEM CERTA',s:'Pato',a:'PATO',o:[['🐟','PEIXE'],['🦆','PATO'],['🐱','GATO'],['🐸','SAPO']]}],
+[{q:'MONTE A PALAVRA: ⚽',s:'Monte a palavra bola',a:'BOLA',parts:['BO','LA','SA','PA']},{q:'MONTE A PALAVRA: 🏠',s:'Monte a palavra casa',a:'CASA',parts:['CA','SA','MA','TA']},{q:'MONTE A PALAVRA: 🐱',s:'Monte a palavra gato',a:'GATO',parts:['GA','TO','PA','LA']},{q:'MONTE A PALAVRA: 🦆',s:'Monte a palavra pato',a:'PATO',parts:['PA','TO','BO','SA']},{q:'MONTE A PALAVRA: 🐸',s:'Monte a palavra sapo',a:'SAPO',parts:['SA','PO','CA','MA']}],
+[{q:'QUAL É A PALAVRA CORRETA PARA ⚽?',s:'Qual é a palavra correta para bola?',a:'BOLA',o:['BOLA','BOLO','MALA','GATO']},{q:'QUAL FIGURA COMEÇA COM S?',s:'Qual figura começa com S?',a:'SAPO',o:[['🐸','SAPO'],['🐱','GATO'],['🏠','CASA'],['🦆','PATO']]},{q:'COMPLETE: CA + ?',s:'Complete a palavra casa. Cá mais...',a:'SA',o:['TA','MA','SA','PA']},{q:'QUAL PALAVRA TEM DUAS SÍLABAS?',s:'Qual palavra tem duas sílabas?',a:'CASA',o:['SOL','CASA','BANANA','PÃO']},{q:'QUAL FIGURA É GATO?',s:'Encontre o gato',a:'GATO',o:[['🐟','PEIXE'],['🐱','GATO'],['🐸','SAPO'],['🦆','PATO']]}]
 ];
-const hard=[
- easy[0],
- [{ask:'Qual começa com F?',say:'Qual destas figuras começa com F?',ans:'🔪',opts:['🔪','🐱','🏠','☀️'],labels:['FACA','GATO','CASA','SOL']},{ask:'Qual começa com P?',say:'Qual destas figuras começa com P?',ans:'🐟',opts:['🐟','🍎','🐱','🏠'],labels:['PEIXE','MAÇÃ','GATO','CASA']},{ask:'Qual começa com B?',say:'Qual destas figuras começa com B?',ans:'⚽',opts:['⚽','☀️','🐸','🏠'],labels:['BOLA','SOL','SAPO','CASA']}],
- [{ask:'Complete: JA + ?',say:'Janela. Complete a palavra.',ans:'NE',opts:['NE','ME','LE','PE']},{ask:'Complete: CA + DEI + ?',say:'Cadeira. Complete a palavra.',ans:'RA',opts:['RA','LA','SA','TA']},{ask:'Complete: BO + NE + ?',say:'Boneca. Complete a palavra.',ans:'CA',opts:['CA','GA','DA','PA']}],
- easy[3],
- [{ask:'Monte a palavra: 🐸',say:'Monte a palavra Sapo',ans:'SAPO',parts:['SA','PO']},{ask:'Monte a palavra: 🍌',say:'Monte a palavra Banana',ans:'BANANA',parts:['BA','NA','NA']},{ask:'Monte a palavra: 🪟',say:'Monte a palavra Janela',ans:'JANELA',parts:['JA','NE','LA']}],
- [{ask:'Qual palavra tem 3 sílabas?',say:'Qual palavra tem três sílabas?',ans:'BANANA',opts:['SOL','CASA','BANANA','PÃO']},{ask:'Complete JA + NE + ?',say:'Complete Janela.',ans:'LA',opts:['LA','RA','MA','TA']},{ask:'Qual começa com o som de B?',say:'Qual figura começa com o som B?',ans:'⚽',opts:['🐱','⚽','☀️','🏠'],labels:['GATO','BOLA','SOL','CASA']}]
-];
-function openLevel(i){if(i+1>st.unlocked){speak('Esta fase ainda está bloqueada. Complete a fase anterior.');return} phase=i;q=0;score=0;renderQ()}
-function bank(){return st.mode==='6-7'?hard:easy}
-let build='';
-function renderQ(){
- let item=bank()[phase][q]; build='';
- A.innerHTML=`${top()}<section class="panel"><h3>FASE ${phase+1} • ${levels[phase].name}</h3><div class="progress"><i style="width:${q/3*100}%"></i></div><div class="question">${item.ask} <button class="speaker" onclick="speak(currentSpeech)">🔊</button></div>
- <div id="activity"></div><div class="feedback" id="fb"></div><p>⭐ Acertos: ${score}</p></section>`;
- currentSpeech=item.say;
- let act=document.querySelector('#activity');
- if(item.parts){
-   let shuffled=[...item.parts].sort(()=>Math.random()-.5);
-   act.innerHTML=`<div class="wordslots" id="slots"><span class="slot">?</span></div><div class="choices">${shuffled.map(x=>`<button class="choice" onclick="addPart('${x}',this)">${x}</button>`).join('')}</div><button class="big" onclick="checkBuild('${item.ans}')">✓ CONFERIR</button><button class="big" onclick="build='';document.querySelector('#slots').innerHTML='<span class=slot>?</span>'">↻ LIMPAR</button>`;
- }else{
-   act.innerHTML=`<div class="choices">${item.opts.map((x,k)=>`<button class="choice" onclick="answer(this,'${String(x).replace(/'/g,"\\'")}','${String(item.ans).replace(/'/g,"\\'")}')">${x}${item.labels?`<small>${item.labels[k]}</small>`:''}</button>`).join('')}</div>`;
- }
- setTimeout(()=>speak(item.say),350)
-}
-function addPart(x,b){build+=x;b.disabled=true;document.querySelector('#slots').innerHTML=build.split(/(?=[A-Z])/).length?`<span class="slot">${build}</span>`:''}
-function checkBuild(ans){if(build===ans){correct()}else{document.querySelector('#fb').textContent='💡 TENTE OUTRA VEZ!';speak('Quase! Tente outra vez.');build='';document.querySelectorAll('.choice').forEach(b=>b.disabled=false);document.querySelector('#slots').innerHTML='<span class="slot">?</span>'}}
-function answer(btn,val,ans){if(val===ans){btn.classList.add('good');correct()}else{btn.classList.add('bad');document.querySelector('#fb').textContent='💡 TENTE OUTRA VEZ!';speak('Quase! Tente outra vez.');setTimeout(()=>btn.classList.remove('bad'),500)}}
-function correct(){score++;document.querySelector('#fb').textContent='🎉 MUITO BEM!';speak('Muito bem!');confetti();document.querySelectorAll('.choice').forEach(b=>b.disabled=true);setTimeout(()=>{q++; if(q>=3)finish();else renderQ()},1200)}
-function confetti(){for(let i=0;i<18;i++){let e=document.createElement('i');e.className='confetti';e.textContent=['🎉','⭐','✨','🎈'][i%4];e.style.left=Math.random()*95+'%';e.style.animationDelay=Math.random()*.4+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),2300)}}
-function finish(){let stars=score===3?3:score===2?2:1;st.stars[phase]=Math.max(st.stars[phase],stars);st.unlocked=Math.max(st.unlocked,Math.min(6,phase+2));save();confetti();
- A.innerHTML=`${top()}<section class="panel"><div class="hero">🏆</div><h1>PARABÉNS, ${st.name}!</h1><h2>Você completou a Fase ${phase+1}!</h2><div class="stars" style="font-size:55px">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div><p>Você acertou ${score} de 3 desafios.</p><button class="big" onclick="home()">🗺 VOLTAR AO MAPA</button>${phase<5?`<button class="big" onclick="openLevel(${phase+1})">▶ PRÓXIMA FASE</button>`:''}</section>`;speak(`Parabéns ${st.name}! Você completou a fase!`)}
-start();
+function openPhase(i){if(i+1>state.unlock){say('Complete a fase anterior primeiro.');return}p=i;qi=0;hits=0;render()}
+function render(){let d=data[p][qi], back=p===3?'castelo':p===5?'castelo':p===2?'rio':'floresta';let choices='';
+ if(d.parts){build=[];choices=`<div class="slots" id="slots">_ _ _ _</div><div class="choices">${d.parts.map(x=>`<button class="choice" onclick="part('${x}',this)">${x}</button>`).join('')}</div><button class="btn blue" onclick="checkWord('${d.a}')">✓ CONFERIR</button><button class="btn orange" onclick="clearWord()">↻ LIMPAR</button>`}
+ else choices=`<div class="choices">${d.o.map(v=>Array.isArray(v)?`<button class="choice" onclick="ans(this,'${v[1]}','${d.a}')"><span class="pic">${v[0]}</span><small>${v[1]}</small></button>`:`<button class="choice" onclick="ans(this,'${v}','${d.a}')">${v}</button>`).join('')}</div>`;
+ shell(`<div class="wood">FASE ${p+1} — ${phases[p]}</div><div class="progress"><i style="width:${qi/5*100}%"></i></div><div class="question">🔊 ${d.q}</div><button class="btn blue" onclick="say(spoken)">🔊 OUVIR</button>${choices}<div class="feedback" id="fb"></div><div class="stars">⭐ ${hits}</div>`,back);spoken=d.s;setTimeout(()=>say(d.s),300)}
+function ans(b,v,a){state.tries++;if(v===a){b.classList.add('good');right()}else{b.classList.add('bad');document.getElementById('fb').textContent='QUASE! TENTE NOVAMENTE.';say('Quase! Tente novamente.');setTimeout(()=>b.classList.remove('bad'),500)}save()}
+function part(x,b){build.push(x);b.disabled=true;document.getElementById('slots').textContent=build.join(' + ')}
+function clearWord(){build=[];document.querySelectorAll('.choice').forEach(x=>x.disabled=false);document.getElementById('slots').textContent='_ _ _ _'}
+function checkWord(a){state.tries++;if(build.join('')===a)right();else{document.getElementById('fb').textContent='QUASE! TENTE OUTRA VEZ.';say('Quase! Tente outra vez.');clearWord()}save()}
+function right(){hits++;state.hits++;document.getElementById('fb').textContent=['MUITO BEM!','EXCELENTE!','VOCÊ ACERTOU!'][hits%3];say('Muito bem!');conf();document.querySelectorAll('.choice').forEach(x=>x.disabled=true);setTimeout(()=>{qi++;qi>=5?finish():render()},900)}
+function conf(){for(let i=0;i<22;i++){let e=document.createElement('span');e.className='conf';e.textContent=['★','●','◆','✦'][i%4];e.style.left=Math.random()*100+'vw';e.style.color=['#ffd21f','#ff4b5c','#3fc7ff','#66d35e'][i%4];e.style.animationDelay=Math.random()*.35+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),1900)}}
+function finish(){let s=hits>=5?3:hits>=3?2:1;state.stars[p]=Math.max(state.stars[p],s);state.unlock=Math.max(state.unlock,Math.min(6,p+2));save();conf();shell(`<h1 class="title">PARABÉNS!</h1><div class="wood">${state.name}, VOCÊ CONCLUIU A FASE!</div><div class="stars" style="font-size:60px">${'★'.repeat(s)}${'☆'.repeat(3-s)}</div><div class="stats"><div class="stat"><b>${hits}</b><br>ACERTOS</div><div class="stat"><b>${p+1}</b><br>FASE CONCLUÍDA</div></div><button class="btn" onclick="map()">⌂ VOLTAR AO MAPA</button>${p<5?`<button class="btn blue" onclick="openPhase(${p+1})">▶ PRÓXIMA FASE</button>`:`<button class="btn orange" onclick="finalGame()">🏆 RESULTADO FINAL</button>`}`,'final',false);say(`Parabéns ${state.name}! Você concluiu a fase.`)}
+function finalGame(){shell(`<h1 class="title">AVENTURA<br><span>CONCLUÍDA!</span></h1><div style="font-size:80px">🏆</div><h2>PARABÉNS, ${state.name}!</h2><div class="stats"><div class="stat"><b>${state.hits}</b><br>ACERTOS</div><div class="stat"><b>6</b><br>FASES</div><div class="stat"><b>${state.stars.reduce((a,b)=>a+b,0)}</b><br>ESTRELAS</div></div><h3>HABILIDADES TRABALHADAS</h3><p>✓ Reconhecimento de letras &nbsp; ✓ Sons iniciais &nbsp; ✓ Consciência silábica<br>✓ Associação imagem/palavra &nbsp; ✓ Formação de palavras &nbsp; ✓ Atenção auditiva</p><button class="btn" onclick="map()">⌂ VOLTAR AO MAPA</button><button class="btn orange" onclick="restart()">↻ JOGAR NOVAMENTE</button>`,'final',false);say(`Parabéns ${state.name}! Você completou a Aventura do Alfabeto!`)}
+function restart(){state.unlock=1;state.stars=[0,0,0,0,0,0];state.hits=0;state.tries=0;save();map()}
+window.onerror=function(m){console.error(m);return false};start();
 </script></body></html>
