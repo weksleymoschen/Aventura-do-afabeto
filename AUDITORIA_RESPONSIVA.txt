@@ -1,0 +1,25 @@
+AUDITORIA RESPONSIVA E VISUAL
+================================
+[OK] JS válido
+[OK] capa sem corte
+[OK] frame da capa na proporção 6:5
+[OK] campo nome reposicionado
+[OK] avatar group reposicionado
+[OK] seleção dentro do avatar
+[OK] começar direto fase 1
+[OK] 5 fases com fundo
+[OK] fundos não bloqueiam clique
+[OK] música
+[OK] mapa clicável
+
+CORREÇÕES GLOBAIS:
+- A arte da capa agora usa sua proporção real 768x640 (6:5).
+- A imagem nunca é esticada para preencher um frame de proporção diferente.
+- Campo de nome alinhado ao retângulo branco da própria arte.
+- Os quatro hotspots de avatar foram recalculados pela geometria da imagem.
+- O contorno de seleção fica dentro do cartão do personagem.
+- O botão COMEÇAR acompanha a posição do botão da própria imagem.
+- A mesma política de proporção/contain foi aplicada aos fundos das cinco fases.
+- Fundos são parte visual do jogo, mas não bloqueiam os controles clicáveis.
+- Em desktop, as fases ganham composição adaptativa para não serem cortadas.
+- Em celular/tablet, os mesmos elementos permanecem relativos ao frame.
