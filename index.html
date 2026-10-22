@@ -45,6 +45,10 @@ button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:tran
 .generic{width:min(900px,92%);background:rgba(255,255,255,.96);border:4px solid #55c6ff;border-radius:28px;padding:2rem;text-align:center}
 .generic .visual{font-size:clamp(55px,8vw,120px);margin:1rem}.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.ans{padding:1rem;border:4px solid #c9a4ff;border-radius:20px;background:white;font-size:clamp(20px,2vw,34px);font-weight:1000}
 @media(max-width:800px){#setupPanel{left:8%;width:84%;top:12%}.activity{left:5%;right:5%}.pairs{gap:3%}.pair{border-radius:28px}.stageTitle{top:9%}}
+
+.f1page{width:100%;display:flex;flex-direction:column;align-items:center}.targetLetter{display:inline-block;background:#ffbf2e;color:#083e84;border:3px solid #c97910;border-radius:14px;padding:0 .35em}
+.f1Choices{width:min(900px,94%);display:grid;grid-template-columns:repeat(2,1fr);gap:7%}.f1Choice{height:min(45vh,390px);border:7px solid #d69a36;border-radius:50px;background:radial-gradient(circle,#fff7d9,#e8b85f);box-shadow:0 10px 0 #8b531d;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4%}.f1Choice img{width:80%;height:72%;object-fit:contain;filter:none}.f1Choice span{background:#ffc85b;border:4px solid #9b5a20;border-radius:15px;padding:.25rem 1.2rem;font-size:clamp(20px,2vw,34px);font-weight:1000;color:#4a240c}.questionImg{width:min(250px,35vw);height:min(210px,25vh);object-fit:contain;display:block;margin:.5rem auto 1rem;filter:none}
+
 </style>
 </head>
 <body><div id="game">
@@ -91,26 +95,21 @@ const A={
 // 4 O-Olho correta / U-Elefante errada
 // 5 A-Uva errada / U-Uva correta
 const F1=[
- {pairs:[["A","A"],["E","I"]],correct:0},
- {pairs:[["A","I"],["E","E"]],correct:1},
- {pairs:[["I","I"],["O","A"]],correct:0},
- {pairs:[["O","O"],["U","E"]],correct:0},
- {pairs:[["A","U"],["U","U"]],correct:1}
+ {letter:"A",opts:["A","I"],correct:0},
+ {letter:"E",opts:["I","E"],correct:1},
+ {letter:"I",opts:["I","O"],correct:0},
+ {letter:"O",opts:["U","O"],correct:1},
+ {letter:"U",opts:["E","U"],correct:1}
 ];
 const generic={
 2:{title:"VILA DOS SONS",bg:"assets/vila_hd.jpg",qs:[
- ["Qual palavra começa com B?","⚽",["BOLA","GATO","PATO"],0],["Qual palavra começa com C?","🏠",["CASA","MALA","SAPO"],0],
- ["Qual palavra começa com G?","🐱",["PATO","GATO","LUA"],1],["Qual palavra começa com P?","🦆",["PATO","DADO","BOLA"],0],["Qual palavra começa com M?","🧳",["SAPO","MALA","GATO"],1]
-]},
+["Qual palavra começa com B?","assets/bola.svg",["BOLA","GATO","PATO"],0],["Qual palavra começa com C?","assets/casa.svg",["MALA","CASA","PATO"],1],["Qual palavra começa com G?","assets/gato.svg",["PATO","GATO","BOLA"],1],["Qual palavra começa com P?","assets/pato.svg",["PATO","MALA","CASA"],0],["Qual palavra começa com M?","assets/mala.svg",["CASA","MALA","GATO"],1]]},
 3:{title:"MONTANHA DAS SÍLABAS",bg:"assets/montanha.webp",qs:[
- ["Qual é a primeira sílaba de BOLA?","⚽",["BO","LA","BA"],0],["Qual é a primeira sílaba de CASA?","🏠",["SA","CA","CO"],1],["Qual é a primeira sílaba de PATO?","🦆",["PA","TO","PO"],0],["Qual é a primeira sílaba de MALA?","🧳",["LA","MA","ME"],1],["Qual é a primeira sílaba de GATO?","🐱",["GA","TO","GO"],0]
-]},
+["Qual é a primeira sílaba de BOLA?","assets/bola.svg",["BO","LA","BA"],0],["Qual é a primeira sílaba de CASA?","assets/casa.svg",["SA","CA","CO"],1],["Qual é a primeira sílaba de PATO?","assets/pato.svg",["PA","TO","PO"],0],["Qual é a primeira sílaba de MALA?","assets/mala.svg",["LA","MA","ME"],1],["Qual é a primeira sílaba de GATO?","assets/gato.svg",["GA","TO","GO"],0]]},
 4:{title:"CASTELO DAS SÍLABAS",bg:"assets/castelo_silabas.webp",qs:[
- ["Qual combinação forma BOLA?","⚽",["BO + LA","BA + LO","BI + LA"],0],["Qual combinação forma CASA?","🏠",["CO + SA","CA + SA","CA + SO"],1],["Qual combinação forma PATO?","🦆",["PA + TO","PE + TO","PO + TA"],0],["Qual combinação forma MALA?","🧳",["ME + LA","MA + LA","MO + LE"],1],["Qual combinação forma GATO?","🐱",["GA + TO","GO + TA","GU + TO"],0]
-]},
+["Qual combinação forma BOLA?","assets/bola.svg",["BO + LA","BA + LO","BI + LA"],0],["Qual combinação forma CASA?","assets/casa.svg",["CO + SA","CA + SA","CA + SO"],1],["Qual combinação forma PATO?","assets/pato.svg",["PA + TO","PE + TO","PO + TA"],0],["Qual combinação forma MALA?","assets/mala.svg",["ME + LA","MA + LA","MO + LE"],1],["Qual combinação forma GATO?","assets/gato.svg",["GA + TO","GO + TA","GU + TO"],0]]},
 5:{title:"CASTELO DAS PALAVRAS",bg:"assets/castelo_palavras.webp",qs:[
- ["Complete: G_TO","🐱",["A","E","I"],0],["Complete: C_SA","🏠",["A","O","U"],0],["Complete: B_LA","⚽",["A","O","U"],1],["Complete: P_TO","🦆",["A","E","I"],0],["Complete: M_LA","🧳",["A","E","O"],0]
-]}};
+["Complete: G_TO","assets/gato.svg",["A","E","I"],0],["Complete: C_SA","assets/casa.svg",["A","O","U"],0],["Complete: B_LA","assets/bola.svg",["A","O","U"],1],["Complete: P_TO","assets/pato.svg",["A","E","I"],0],["Complete: M_LA","assets/mala.svg",["A","E","O"],0]]}};
 function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("on"));document.getElementById(id).classList.add("on")}
 function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1000)}
 document.querySelectorAll(".avatar").forEach(b=>b.addEventListener("click",()=>{
@@ -129,22 +128,21 @@ function openWorld(w){S.world=w;S.q=0;document.getElementById("stageStars").text
 function render(){if(S.world===1)return renderF1();return renderGeneric()}
 function renderF1(){
  const q=F1[S.q];document.getElementById("count").textContent=`${S.q+1}/5`;
- let h=`<div class="pageIn" style="width:100%;display:flex;flex-direction:column;align-items:center">
- <div class="prompt">ATIVIDADE ${S.q+1} DE 5 — Qual associação está correta?</div><div class="pairs">`;
- q.pairs.forEach((p,i)=>{const [letter,imgKey]=p,item=A[imgKey];h+=`<button class="pair" data-i="${i}"><span class="letter">${letter}</span><img src="${item.img}" alt="${item.word}"><span class="word">${item.word}</span></button>`});
+ let h=`<div class="f1page pageIn"><div class="prompt">ATIVIDADE ${S.q+1} DE 5<br>Qual imagem começa com a letra <span class="targetLetter">${q.letter}</span>?</div><div class="f1Choices">`;
+ q.opts.forEach((key,i)=>{const item=A[key];h+=`<button class="f1Choice" data-i="${i}"><img src="${item.img}" alt="${item.word}"><span>${item.word}</span></button>`});
  h+=`</div></div>`;document.getElementById("activity").innerHTML=h;
- document.querySelectorAll(".pair").forEach(b=>b.addEventListener("click",()=>answerF1(b,+b.dataset.i)));
+ document.querySelectorAll(".f1Choice").forEach(x=>x.onclick=()=>answerF1(x,+x.dataset.i));
 }
 function answerF1(btn,i){
- const q=F1[S.q];if(btn.dataset.locked)return;
- if(i!==q.correct){btn.classList.add("wrongFlash");toast("Tente outra vez.");setTimeout(()=>btn.classList.remove("wrongFlash"),500);return}
- document.querySelectorAll(".pair").forEach(x=>x.dataset.locked="1");btn.classList.add("correctFlash");S.stars++;document.getElementById("stageStars").textContent=S.stars;toast("⭐ Muito bem!");
- const page=document.querySelector("#activity .pageIn");setTimeout(()=>page&&page.classList.add("pageOut"),450);
- setTimeout(()=>{S.q++;if(S.q>=F1.length){S.unlocked=Math.max(S.unlocked,2);updateMap();toast("🎉 Fase 1 concluída!");setTimeout(()=>openWorld(2),700)}else renderF1()},900);
+ const q=F1[S.q];if(document.querySelector(".f1Choice[data-locked='1']"))return;
+ if(i!==q.correct){btn.classList.add("wrongFlash");toast("Tente outra vez.");setTimeout(()=>btn.classList.remove("wrongFlash"),450);return}
+ document.querySelectorAll(".f1Choice").forEach(x=>x.dataset.locked="1");btn.classList.add("correctFlash");S.stars++;document.getElementById("stageStars").textContent=S.stars;toast("⭐ Muito bem!");
+ const pg=document.querySelector(".f1page");setTimeout(()=>pg&&pg.classList.add("pageOut"),300);
+ setTimeout(()=>{S.q++;if(S.q>=5){S.unlocked=Math.max(S.unlocked,2);updateMap();setTimeout(()=>openWorld(2),500)}else renderF1()},800);
 }
 function renderGeneric(){
  const g=generic[S.world],q=g.qs[S.q];document.getElementById("count").textContent=`${S.q+1}/${g.qs.length}`;
- document.getElementById("activity").innerHTML=`<div class="generic pageIn"><div class="prompt">${q[0]}</div><div class="visual">${q[1]}</div><div class="answers">${q[2].map((x,i)=>`<button class="ans" data-i="${i}">${x}</button>`).join("")}</div></div>`;
+ document.getElementById("activity").innerHTML=`<div class="generic pageIn"><div class="prompt">${q[0]}</div><img class="questionImg" src="${q[1]}" alt=""><div class="answers">${q[2].map((x,i)=>`<button class="ans" data-i="${i}">${x}</button>`).join("")}</div></div>`;
  document.querySelectorAll(".ans").forEach(b=>b.addEventListener("click",()=>answerGeneric(+b.dataset.i,b)));
 }
 function answerGeneric(i,b){
