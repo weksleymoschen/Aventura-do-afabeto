@@ -1,13 +1,11 @@
-AUDITORIA DA NOVA BASE
+AUDITORIA — VERSÃO VISUAL INTERATIVA
 [OK] JavaScript válido
-[OK] nome obrigatório
-[OK] avatar obrigatório
-[OK] começa Fase 1 ao clicar Começar
-[OK] música inicia após interação
-[OK] 5 fundos de fase
-[OK] mapa incorporado
-[OK] capa incorporada
+[OK] 9 artes recortadas e incorporadas
+[OK] 4 avatares clicáveis
+[OK] começar abre fase 1
+[OK] 5 fases
 [OK] 25 atividades
 [OK] mapa clicável
-[OK] Netlify pronto
-[OK] GitHub Pages básico
+[OK] música após clique
+[OK] fundos não bloqueiam cliques
+[OK] progresso automático
