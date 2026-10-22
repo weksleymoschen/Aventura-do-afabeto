@@ -43,26 +43,34 @@ button,input{font:inherit}.app{position:relative;width:100vw;height:100dvh;overf
 .quiz{position:absolute;z-index:7;left:14%;right:14%;top:25%;bottom:10%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:25px}.question{background:#fff;border:5px solid var(--sky);border-radius:25px;padding:16px 28px;text-align:center;color:#153e79;font-size:clamp(22px,2.5vw,38px);font-weight:1000}.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%}.answer{min-height:100px;border:5px solid #caa5ff;border-radius:24px;background:white;color:#173d77;font-size:clamp(21px,2.3vw,36px);font-weight:1000;cursor:pointer}
 .end{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(#49c8ff,#68cc69)}.endBox{width:min(750px,85%);padding:35px;border:7px solid #fff;border-radius:35px;background:#fffbe8;text-align:center;color:#173d77;box-shadow:0 12px 0 #178c50}.endBox h1{font-size:clamp(34px,5vw,70px);margin:0 0 10px}.endBox button{padding:15px 28px;border:0;border-radius:20px;background:#29b752;color:#fff;font-weight:1000;font-size:22px}
 @media(max-width:800px){.setup{left:26%;width:70%}.worlds{grid-template-columns:repeat(3,1fr);overflow:auto}.world{min-height:110px}.cards{left:5%;right:5%}.mascot{display:none}.prompt{width:72%}.back{width:52px;height:52px}.answers{gap:8px}}
+
+/* ===== CAPA INCORPORADA: sem duplicar a arte ===== */
+.setupImageOnly{background:#083d60}
+.setupImageOnly .coverBg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:#083d60}
+.hotName{position:absolute;z-index:20;left:37.0%;top:42.0%;width:31.5%;height:7.0%;border:0!important;outline:0;background:transparent!important;text-align:center;color:#173d77;font-weight:900;font-size:clamp(18px,2.1vw,34px);box-shadow:none!important}
+.hotName::placeholder{color:#6c6c6c;opacity:.95}
+.hotAvatars{position:absolute;z-index:21;left:35.7%;top:56.0%;width:37.4%;height:18%;display:grid;grid-template-columns:repeat(4,1fr);gap:2.6%}
+.avatarHot{position:relative;border:0;background:transparent;cursor:pointer;border-radius:18px}
+.avatarHot.selected{outline:5px solid #31d05a;outline-offset:-4px}
+.avatarHot.selected:after{content:"✓";position:absolute;right:3%;top:2%;width:28%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:#31d05a;color:#fff;border:3px solid #fff;font-weight:1000;font-size:clamp(15px,2vw,30px)}
+.startHot{position:absolute;z-index:21;left:28.2%;top:76.2%;width:32.5%;height:12.3%;border:0;background:transparent;cursor:pointer;border-radius:50px}
+.soundHot{position:absolute;z-index:21;left:2.1%;bottom:2.5%;width:7%;height:10%;border:0;background:transparent;cursor:pointer;color:transparent}
+@media(max-aspect-ratio:3/2){
+ .hotName{left:37%;top:42%}.hotAvatars{left:35.7%;top:56%;width:37.4%}.startHot{left:28.2%;top:76.2%;width:32.5%}
+}
 </style></head>
 <body><main class="app">
-<section id="setupScreen" class="screen active">
+<section id="setupScreen" class="screen active setupImageOnly">
   <img class="coverBg" src="assets/capa.jpg" alt="Aventura do Alfabeto">
-  <div class="overlay"></div>
-  <div class="setup">
-    <div class="logoText">AVENTURA <b>DO ALFABETO</b></div>
-    <div class="subtitle">Explore mundos, supere desafios e descubra letras, sílabas e palavras!</div>
-    <div class="label">QUAL É O SEU NOME?</div>
-    <input id="playerName" class="nameInput" placeholder="Digite seu nome" maxlength="18" autocomplete="off">
-    <div class="label">ESCOLHA SEU PERSONAGEM</div>
-    <div class="avatarGrid">
-      <button class="avatar" data-i="0" aria-label="Menino">👦🏻</button>
-      <button class="avatar" data-i="1" aria-label="Menina">👧🏻</button>
-      <button class="avatar" data-i="2" aria-label="Menino negro">👦🏿</button>
-      <button class="avatar" data-i="3" aria-label="Menina negra">👧🏿</button>
-    </div>
-    <button id="startBtn" class="start">▶ COMEÇAR</button>
+  <input id="playerName" class="hotName" placeholder="Digite seu nome" maxlength="18" autocomplete="off" aria-label="Nome do jogador">
+  <div class="hotAvatars" aria-label="Escolha seu personagem">
+    <button class="avatarHot" data-i="0" aria-label="Menino"></button>
+    <button class="avatarHot" data-i="1" aria-label="Menina"></button>
+    <button class="avatarHot" data-i="2" aria-label="Menino negro"></button>
+    <button class="avatarHot" data-i="3" aria-label="Menina negra"></button>
   </div>
-  <button class="soundSetup musicBtn">♫</button>
+  <button id="startBtn" class="startHot" aria-label="Começar"></button>
+  <button class="musicBtn soundHot" aria-label="Som"></button>
 </section>
 
 <section id="mapScreen" class="screen map">
@@ -86,7 +94,7 @@ const state={name:"",avatar:null,world:1,item:0,stars:0,unlocked:1,music:true};
 const avatars=["👦🏻","👧🏻","👦🏿","👧🏿"];
 const worlds=["Floresta das Vogais","Vila dos Sons","Montanha das Sílabas","Castelo das Sílabas","Castelo das Palavras"];
 function show(id){$$(".screen").forEach(s=>s.classList.remove("active"));$("#"+id).classList.add("active")}
-$$(".avatar").forEach(b=>b.addEventListener("click",()=>{$$(".avatar").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");state.avatar=+b.dataset.i}));
+$$(".avatarHot").forEach(b=>b.addEventListener("click",()=>{$$(".avatarHot").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");state.avatar=+b.dataset.i}));
 $("#startBtn").addEventListener("click",()=>{const n=$("#playerName").value.trim();if(!n){alert("Digite seu nome para começar.");$("#playerName").focus();return}if(state.avatar===null){alert("Escolha um personagem para jogar.");return}state.name=n;$("#mapPlayer").textContent=n;$("#stagePlayer").textContent=n;$("#mascot").textContent=avatars[state.avatar];renderMap();show("mapScreen")});
 $(".musicBtn"); $$(".musicBtn").forEach(b=>b.addEventListener("click",()=>{state.music=!state.music;$$(".musicBtn").forEach(x=>x.textContent=state.music?"♫":"♪")}));
 $("#backBtn").addEventListener("click",()=>{renderMap();show("mapScreen")});

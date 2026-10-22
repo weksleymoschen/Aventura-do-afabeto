@@ -1,19 +1,11 @@
-VERSÃO RESTAURADA E CORRIGIDA
-
-- A tela inicial voltou ao layout HD que estava correto; não há painel branco novo sobre a arte.
-- Nome começa vazio.
-- Os quatro personagens continuam na própria arte e são clicáveis.
-- A seleção mostra apenas um pequeno check verde; nenhum quadrado amarelo aparece.
-- O jogo não inicia sem nome e sem personagem.
-- Botão COMEÇAR continua na própria arte e é clicável.
-- Fase 1 possui 5 telas independentes.
-- Cada tela possui três associações e exatamente UMA associação correta:
-  1) A + ABELHA
-  2) E + ELEFANTE
-  3) I + ILHA
-  4) O + OLHO
-  5) U + UVA
-- Ao acertar, passa para uma nova tela dentro da Fase 1.
-- Ao concluir 5/5, segue automaticamente para a Fase 2.
-- O mapa HD e os cenários originais foram preservados; não foram substituídos por painéis ou SVGs.
-- JavaScript validado sem erro de sintaxe.
+CORREÇÕES DESTA VERSÃO
+1. Tela inicial não redesenha nem repete a arte do fundo.
+2. Título, placas, personagens e botão COMEÇAR visíveis vêm somente da imagem incorporada.
+3. Campo de nome é transparente e alinhado sobre o campo da arte.
+4. Avatares da própria imagem são clicáveis; não há emojis por cima.
+5. Seleção do avatar mostra apenas contorno/check verde.
+6. Botão COMEÇAR da própria arte é a área clicável.
+7. A imagem usa object-fit: contain para não esticar, cortar ou embaçar.
+8. Mantida a lógica reconstruída: Fase 1 com 5 telas e uma única associação correta.
+9. Fases seguintes e progressão continuam funcionais.
+10. JavaScript validado com node --check.
