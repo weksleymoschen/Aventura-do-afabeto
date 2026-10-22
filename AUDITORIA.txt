@@ -1,0 +1,13 @@
+AUDITORIA DA NOVA BASE
+[OK] JavaScript válido
+[OK] nome obrigatório
+[OK] avatar obrigatório
+[OK] começa Fase 1 ao clicar Começar
+[OK] música inicia após interação
+[OK] 5 fundos de fase
+[OK] mapa incorporado
+[OK] capa incorporada
+[OK] 25 atividades
+[OK] mapa clicável
+[OK] Netlify pronto
+[OK] GitHub Pages básico
