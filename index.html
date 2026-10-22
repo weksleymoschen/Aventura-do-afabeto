@@ -1,54 +1,107 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Aventura do Alfabeto</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial Rounded MT Bold,Trebuchet MS,Arial,sans-serif;background:#153b56;color:#17324a}
-button,input{font:inherit}.screen{min-height:100vh;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;padding:16px;position:relative}
-.screen:before{content:"";position:absolute;inset:0;background:linear-gradient(#0001,#0004)}
-.card{position:relative;z-index:1;width:min(1000px,96vw);background:#fff8dcf2;border:6px solid #fff;border-radius:30px;padding:18px;text-align:center;box-shadow:0 12px 30px #0006}
-.title{font-size:clamp(38px,7vw,78px);line-height:.88;margin:4px;color:#ff9b16;text-shadow:0 4px 0 #8b3e00,3px 0 #fff,-3px 0 #fff}.title span{color:#19aaf5}.wood{display:inline-block;background:#b96525;color:white;border:4px solid #6d3515;border-radius:15px;padding:9px 20px;box-shadow:inset 0 3px #e9a35d;font-size:clamp(20px,3vw,30px)}
-.btn{border:4px solid white;border-radius:20px;padding:13px 22px;margin:7px;cursor:pointer;color:white;font-weight:900;font-size:clamp(18px,2.5vw,27px);box-shadow:0 6px 0 #175d2f;background:linear-gradient(#6eea55,#18a83c)}
-.btn.orange{background:linear-gradient(#ffb22f,#f06417);box-shadow:0 6px 0 #a53a10}.btn.blue{background:linear-gradient(#55bfff,#1976d2);box-shadow:0 6px 0 #114e91}.btn.purple{background:linear-gradient(#b76cff,#7130d4);box-shadow:0 6px 0 #46159b}.btn:active,.choice:active{transform:translateY(4px);box-shadow:none}.home{position:absolute;z-index:3;left:18px;top:18px;width:55px;height:55px;border-radius:16px;border:4px solid white;background:#ff8a20;color:white;font-size:27px;cursor:pointer}
-.characters{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}.char{width:190px;min-height:150px;border:6px solid #fff;border-radius:25px;background:#8ee7ff;padding:12px;cursor:pointer;font-size:70px}.char.sel{outline:7px solid #ffd52d}.char.girl{background:#ff9ed1}
-.name{width:min(420px,90%);padding:13px;border:4px solid #d78a34;border-radius:15px;font-size:21px;text-align:center}
-.map{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:12px}.level{border:5px solid white;border-radius:24px;min-height:150px;color:white;font-weight:900;cursor:pointer;text-shadow:0 2px #234;padding:10px;box-shadow:0 7px 0 #0004}.level b{font-size:28px;display:block}.level small{font-size:16px}.level:nth-child(1){background:#e53935}.level:nth-child(2){background:#1976d2}.level:nth-child(3){background:#28a745}.level:nth-child(4){background:#7b35d3}.level:nth-child(5){background:#f26a21}.level:nth-child(6){background:#f1a313}.locked{filter:grayscale(1);opacity:.7}.stars{font-size:27px;color:#ffd51f;text-shadow:0 2px #855}
-.question{font-size:clamp(23px,4vw,38px);margin:13px}.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:720px;margin:14px auto}.choice{border:5px solid white;border-radius:22px;min-height:110px;background:#fff;color:#19344b;font-size:clamp(30px,6vw,58px);font-weight:900;cursor:pointer;box-shadow:0 6px 0 #d39b2e;padding:12px}.choice .pic{font-size:58px;display:block}.choice small{font-size:18px;display:block}.good{background:#82ed98!important}.bad{background:#ff9b9b!important}.progress{height:17px;background:#ddd;border-radius:12px;overflow:hidden}.progress i{display:block;height:100%;background:#34c759}.feedback{font-size:25px;font-weight:900;min-height:32px}.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.stat{background:white;border-radius:18px;padding:12px;min-width:130px;border:3px solid #f1c46a}.slots{min-height:75px;background:white;border:4px dashed #36a4e3;border-radius:18px;padding:15px;font-size:36px;font-weight:900;margin:12px auto;max-width:430px}.conf{position:fixed;z-index:99;top:-30px;font-size:25px;animation:fall 1.5s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(500deg)}}@media(max-width:700px){.map{grid-template-columns:1fr 1fr}.level{min-height:125px}.choices{grid-template-columns:1fr 1fr}.card{padding:11px}.screen{padding:7px}.choice{min-height:90px}.home{width:48px;height:48px}}
-</style></head><body><div id="app"></div>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#083b42;font-family:Arial Rounded MT Bold,Trebuchet MS,Arial,sans-serif}
+#game{width:100%;height:100%;display:grid;place-items:center;background:radial-gradient(circle,#1b7f63,#083b42)}
+.stage{position:relative;width:min(100vw,150vh);aspect-ratio:3/2;max-height:100vh;overflow:hidden;box-shadow:0 0 45px #001b;isolation:isolate}
+.art{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none}
+.hot{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:18px;z-index:5;-webkit-tap-highlight-color:transparent}
+.hot:hover{outline:5px solid #fff8;box-shadow:0 0 20px #fff8}.hot:active{transform:scale(.97)}
+.sel{outline:7px solid #ffe22f!important;box-shadow:0 0 26px #ffe22f!important}
+.locked{cursor:not-allowed}
+.topbtn{position:absolute;z-index:10;border:0;border-radius:15px;background:#ff7d19;color:#fff;font-size:clamp(18px,3vw,32px);font-weight:900;box-shadow:0 5px 0 #a8440a;cursor:pointer}
+.music{right:2.1%;top:2.2%;width:7.5%;height:11%;font-size:0;background:transparent;box-shadow:none}.home{left:1.5%;top:2%;width:7.5%;height:11%;font-size:0;background:transparent;box-shadow:none}
+.toast{position:absolute;z-index:20;left:50%;bottom:4%;transform:translateX(-50%);padding:12px 24px;border:4px solid #fff;border-radius:22px;background:#173b5eea;color:#fff;font-weight:900;font-size:clamp(16px,2.3vw,28px);text-align:center;opacity:0;transition:.25s;pointer-events:none}
+.toast.show{opacity:1}.flash{position:absolute;inset:0;z-index:15;pointer-events:none;opacity:0}.flash.ok{background:#4cff6040;animation:flash .55s}.flash.no{background:#ff303045;animation:flash .45s}@keyframes flash{50%{opacity:1}}
+.conf{position:absolute;z-index:30;top:-8%;font-size:clamp(18px,3vw,38px);animation:fall 1.4s linear forwards;pointer-events:none}@keyframes fall{to{transform:translateY(120vh) rotate(600deg)}}
+.overlay{position:absolute;inset:0;z-index:12;display:none;align-items:center;justify-content:center;background:#082d4aaa}.overlay.show{display:flex}
+.modal{width:min(78%,700px);background:#fff7d8;border:7px solid white;border-radius:30px;padding:22px;text-align:center;color:#17334c;box-shadow:0 12px 30px #0008}
+.modal h2{font-size:clamp(25px,4vw,48px);margin:5px}.modal p{font-size:clamp(17px,2.2vw,26px)}
+.action{border:4px solid #fff;border-radius:18px;background:linear-gradient(#66e855,#15a63c);color:#fff;font-weight:900;font-size:clamp(17px,2.4vw,27px);padding:12px 22px;margin:6px;box-shadow:0 6px 0 #116f2d;cursor:pointer}
+.stars{font-size:clamp(30px,5vw,60px);color:#ffd322;text-shadow:0 2px #754}
+@media(max-aspect-ratio:3/2){.stage{width:100vw;height:auto}}@media(min-aspect-ratio:3/2){.stage{height:100vh;width:auto}}
+</style>
+</head>
+<body><div id="game"></div>
 <script>
 'use strict';
-const app=document.getElementById('app');
-const phases=['CAÇA ÀS LETRAS','SOM INICIAL','BATALHA DAS SÍLABAS','ESCUTE E ENCONTRE','MONTE A PALAVRA','DESAFIO FINAL'];
-let state;try{state=JSON.parse(localStorage.getItem('aa_state'))}catch(e){} state=state||{name:'',char:'menino',age:'4-5',unlock:1,stars:[0,0,0,0,0,0],hits:0,tries:0};
-let p=0,qi=0,hits=0,build=[],spoken='';
-const save=()=>localStorage.setItem('aa_state',JSON.stringify(state));
-function bg(n){return `assets/${n}.jpg`}
-function say(t){spoken=t;try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';u.rate=.82;speechSynthesis.speak(u)}catch(e){}}
-function shell(inner,b='floresta',home=true){app.innerHTML=`<main class="screen" style="background-image:url('${bg(b)}')">${home?'<button class="home" onclick="map()">⌂</button>':''}<section class="card">${inner}</section></main>`}
-function start(){shell(`<h1 class="title">AVENTURA DO<br><span>ALFABETO</span></h1><div class="wood">Descubra as letras, forme palavras e viva essa aventura!</div><div style="font-size:85px;margin:10px">🧒🏻 &nbsp; 👧🏻</div><button class="btn" onclick="profile()">▶ COMEÇAR</button><button class="btn orange" onclick="say('Bem-vindo à Aventura do Alfabeto!')">🔊 SOM</button>`,'inicio',false)}
-function profile(){shell(`<div class="wood">ESCOLHA SEU PERSONAGEM</div><div class="characters"><button class="char ${state.char==='menino'?'sel':''}" onclick="pick('menino')">🧒🏻<small style="display:block;font-size:20px">MENINO</small></button><button class="char girl ${state.char==='menina'?'sel':''}" onclick="pick('menina')">👧🏻<small style="display:block;font-size:20px">MENINA</small></button></div><h3>QUAL É O SEU NOME?</h3><input class="name" id="nm" value="${state.name}" placeholder="Digite seu nome aqui..."><h3>QUAL É A SUA IDADE?</h3><button class="btn ${state.age==='4-5'?'':'purple'}" onclick="goAge('4-5')">4 A 5 ANOS</button><button class="btn purple" onclick="goAge('6-7')">6 A 7 ANOS</button>`,'perfil')}
-function pick(c){state.char=c;save();profile()} function goAge(a){state.name=(document.getElementById('nm').value||'Aventureiro').trim();state.age=a;save();map();say(`Olá ${state.name}. Escolha uma fase.`)}
-function map(){shell(`<div class="wood">ESCOLHA O MUNDO DA AVENTURA</div><h2>${state.char==='menina'?'👧🏻':'🧒🏻'} ${state.name||'Aventureiro'}</h2><div class="map">${phases.map((x,i)=>`<button class="level ${i+1>state.unlock?'locked':''}" onclick="openPhase(${i})"><b>${i+1}</b>${x}<small>${i+1>state.unlock?' 🔒':' ▶'}</small><div class="stars">${'★'.repeat(state.stars[i])}${'☆'.repeat(3-state.stars[i])}</div></button>`).join('')}</div><button class="btn orange" onclick="profile()">⚙ PERFIL</button>`,'mapa',false)}
-const data=[
-[{q:'ENCONTRE A LETRA A',s:'Encontre a letra A',a:'A',o:['A','E','M','O']},{q:'ENCONTRE A LETRA B',s:'Encontre a letra B',a:'B',o:['D','P','B','R']},{q:'ENCONTRE A LETRA M',s:'Encontre a letra M',a:'M',o:['N','M','W','V']},{q:'ENCONTRE A LETRA S',s:'Encontre a letra S',a:'S',o:['C','F','S','Z']},{q:'ENCONTRE A LETRA P',s:'Encontre a letra P',a:'P',o:['B','R','P','D']}],
-[{q:'QUAL IMAGEM COMEÇA COM B?',s:'Qual imagem começa com B?',a:'BOLA',o:[['⚽','BOLA'],['🏠','CASA'],['🐱','GATO'],['🦆','PATO']]},{q:'QUAL IMAGEM COMEÇA COM C?',s:'Qual imagem começa com C?',a:'CASA',o:[['🐟','PEIXE'],['🏠','CASA'],['🐝','ABELHA'],['🦆','PATO']]},{q:'QUAL IMAGEM COMEÇA COM G?',s:'Qual imagem começa com G?',a:'GATO',o:[['🐱','GATO'],['🐸','SAPO'],['🍎','MAÇÃ'],['☀️','SOL']]},{q:'QUAL IMAGEM COMEÇA COM P?',s:'Qual imagem começa com P?',a:'PATO',o:[['🦆','PATO'],['⚽','BOLA'],['🏠','CASA'],['🐱','GATO']]},{q:'QUAL IMAGEM COMEÇA COM S?',s:'Qual imagem começa com S?',a:'SOL',o:[['☀️','SOL'],['🐱','GATO'],['🍎','MAÇÃ'],['🏠','CASA']]}],
-[{q:'QUAL É A PRIMEIRA SÍLABA DE SAPO?',s:'Qual é a primeira sílaba de sapo?',a:'SA',o:['SA','PA','MA','TA']},{q:'QUAL É A PRIMEIRA SÍLABA DE BOLA?',s:'Qual é a primeira sílaba de bola?',a:'BO',o:['BA','BO','LA','PO']},{q:'QUAL É A PRIMEIRA SÍLABA DE CASA?',s:'Qual é a primeira sílaba de casa?',a:'CA',o:['SA','CA','MA','PA']},{q:'QUAL É A PRIMEIRA SÍLABA DE PATO?',s:'Qual é a primeira sílaba de pato?',a:'PA',o:['TA','PA','BA','DA']},{q:'QUAL É A PRIMEIRA SÍLABA DE GATO?',s:'Qual é a primeira sílaba de gato?',a:'GA',o:['CA','GA','TA','MA']}],
-[{q:'OUÇA E CLIQUE NA IMAGEM CERTA',s:'Casa',a:'CASA',o:[['🏠','CASA'],['🚗','CARRO'],['⚽','BOLA'],['☀️','SOL']]},{q:'OUÇA E CLIQUE NA IMAGEM CERTA',s:'Gato',a:'GATO',o:[['🐸','SAPO'],['🐱','GATO'],['🦆','PATO'],['🐟','PEIXE']]},{q:'OUÇA E CLIQUE NA IMAGEM CERTA',s:'Sol',a:'SOL',o:[['⭐','ESTRELA'],['☀️','SOL'],['🌙','LUA'],['🏠','CASA']]},{q:'OUÇA E CLIQUE NA IMAGEM CERTA',s:'Bola',a:'BOLA',o:[['⚽','BOLA'],['🚗','CARRO'],['🍎','MAÇÃ'],['🐱','GATO']]},{q:'OUÇA E CLIQUE NA IMAGEM CERTA',s:'Pato',a:'PATO',o:[['🐟','PEIXE'],['🦆','PATO'],['🐱','GATO'],['🐸','SAPO']]}],
-[{q:'MONTE A PALAVRA: ⚽',s:'Monte a palavra bola',a:'BOLA',parts:['BO','LA','SA','PA']},{q:'MONTE A PALAVRA: 🏠',s:'Monte a palavra casa',a:'CASA',parts:['CA','SA','MA','TA']},{q:'MONTE A PALAVRA: 🐱',s:'Monte a palavra gato',a:'GATO',parts:['GA','TO','PA','LA']},{q:'MONTE A PALAVRA: 🦆',s:'Monte a palavra pato',a:'PATO',parts:['PA','TO','BO','SA']},{q:'MONTE A PALAVRA: 🐸',s:'Monte a palavra sapo',a:'SAPO',parts:['SA','PO','CA','MA']}],
-[{q:'QUAL É A PALAVRA CORRETA PARA ⚽?',s:'Qual é a palavra correta para bola?',a:'BOLA',o:['BOLA','BOLO','MALA','GATO']},{q:'QUAL FIGURA COMEÇA COM S?',s:'Qual figura começa com S?',a:'SAPO',o:[['🐸','SAPO'],['🐱','GATO'],['🏠','CASA'],['🦆','PATO']]},{q:'COMPLETE: CA + ?',s:'Complete a palavra casa. Cá mais...',a:'SA',o:['TA','MA','SA','PA']},{q:'QUAL PALAVRA TEM DUAS SÍLABAS?',s:'Qual palavra tem duas sílabas?',a:'CASA',o:['SOL','CASA','BANANA','PÃO']},{q:'QUAL FIGURA É GATO?',s:'Encontre o gato',a:'GATO',o:[['🐟','PEIXE'],['🐱','GATO'],['🐸','SAPO'],['🦆','PATO']]}]
+const G=document.getElementById('game');
+let st; try{st=JSON.parse(localStorage.getItem('aventura_prof'))}catch(e){}
+st=st||{avatar:0,unlock:1,stars:[0,0,0,0,0,0],music:true};
+let ctx=null, timer=null, phase=0;
+const save=()=>localStorage.setItem('aventura_prof',JSON.stringify(st));
+function stage(name, extra=''){G.innerHTML=`<div class="stage"><img class="art" src="assets/${name}.webp" alt=""><div id="flash" class="flash"></div><div id="toast" class="toast"></div>${extra}</div>`}
+function toast(t){let x=document.getElementById('toast'); if(!x)return;x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1000)}
+function burst(){let s=document.querySelector('.stage');for(let i=0;i<22;i++){let e=document.createElement('i');e.className='conf';e.textContent=['★','●','◆','✦'][i%4];e.style.left=Math.random()*100+'%';e.style.color=['#ffd322','#ff4e68','#35c9ff','#6ee85b'][i%4];e.style.animationDelay=Math.random()*.25+'s';s.appendChild(e);setTimeout(()=>e.remove(),1800)}}
+function flash(ok){let f=document.getElementById('flash');f.className='flash '+(ok?'ok':'no');setTimeout(()=>f.className='flash',600)}
+function startMusic(){
+ if(!st.music)return;
+ try{
+  if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();
+  if(ctx.state==='suspended')ctx.resume();
+  if(timer)return;
+  const notes=[261.63,329.63,392,523.25,392,329.63,293.66,349.23,440,587.33,440,349.23];
+  let i=0;
+  timer=setInterval(()=>{if(!st.music||!ctx)return;let o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=notes[i++%notes.length];g.gain.setValueAtTime(.035,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.42);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.44)},460);
+ }catch(e){}
+}
+function toggleMusic(){st.music=!st.music;save(); if(st.music){startMusic();toast('MÚSICA LIGADA ♪')}else{if(timer){clearInterval(timer);timer=null}toast('MÚSICA DESLIGADA')}}
+function musicBtn(){return `<button class="hot music" aria-label="Música" onclick="toggleMusic()"></button>`}
+function homeBtn(){return `<button class="hot home" aria-label="Voltar ao mapa" onclick="map()"></button>`}
+function start(){
+ stage('inicio',`${musicBtn()}
+ <button class="hot" style="left:6.5%;top:54%;width:23%;height:27%" onclick="avatar(0,this)"></button>
+ <button class="hot" style="left:29.5%;top:54%;width:20%;height:27%" onclick="avatar(1,this)"></button>
+ <button class="hot" style="left:51%;top:54%;width:20%;height:27%" onclick="avatar(2,this)"></button>
+ <button class="hot" style="left:73%;top:54%;width:20%;height:27%" onclick="avatar(3,this)"></button>
+ <button class="hot" style="left:22%;top:83%;width:56%;height:14%" onclick="begin()"></button>`);
+ setTimeout(()=>{let hs=document.querySelectorAll('.hot');if(hs[st.avatar+1])hs[st.avatar+1].classList.add('sel')},20)
+}
+function avatar(n,b){st.avatar=n;save();document.querySelectorAll('.stage>.hot').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');startMusic()}
+function begin(){startMusic();map()}
+function map(){
+ stage('mapa',`${musicBtn()}
+ ${[0,1,2,3,4,5].map((n)=>`<button class="hot ${n+1>st.unlock?'locked':''}" aria-label="Fase ${n+1}" style="${[
+ 'left:10%;top:25%;width:22%;height:28%','left:53%;top:24%;width:22%;height:28%','left:70%;top:48%;width:22%;height:28%',
+ 'left:10%;top:61%;width:22%;height:28%','left:48%;top:64%;width:22%;height:28%','left:72%;top:72%;width:22%;height:25%'
+ ][n]}" onclick="openPhase(${n})"></button>`).join('')}`)
+}
+const configs=[
+ {correct:0,spots:[['22%','68%','19%','23%'],['42%','68%','18%','23%'],['61%','68%','18%','23%'],['80%','68%','18%','23%']]},
+ {correct:0,spots:[['25%','72%','17%','23%'],['43%','72%','17%','23%'],['61%','72%','17%','23%'],['79%','72%','17%','23%']]},
+ {correct:1,spots:[['67%','38%','27%','15%'],['67%','54%','27%','15%'],['67%','70%','27%','15%'],['67%','85%','27%','12%']]},
+ {correct:0,spots:[['27%','70%','19%','24%'],['47%','70%','16%','24%'],['64%','70%','16%','24%'],['81%','70%','16%','24%']]},
+ {sequence:[1,3],spots:[['22%','80%','18%','15%'],['40%','80%','18%','15%'],['59%','80%','18%','15%'],['78%','80%','18%','15%']]},
+ {correct:0,spots:[['9%','69%','19%','24%'],['29%','69%','19%','24%'],['49%','69%','19%','24%'],['69%','69%','19%','24%']]}
 ];
-function openPhase(i){if(i+1>state.unlock){say('Complete a fase anterior primeiro.');return}p=i;qi=0;hits=0;render()}
-function render(){let d=data[p][qi], back=p===3?'castelo':p===5?'castelo':p===2?'rio':'floresta';let choices='';
- if(d.parts){build=[];choices=`<div class="slots" id="slots">_ _ _ _</div><div class="choices">${d.parts.map(x=>`<button class="choice" onclick="part('${x}',this)">${x}</button>`).join('')}</div><button class="btn blue" onclick="checkWord('${d.a}')">✓ CONFERIR</button><button class="btn orange" onclick="clearWord()">↻ LIMPAR</button>`}
- else choices=`<div class="choices">${d.o.map(v=>Array.isArray(v)?`<button class="choice" onclick="ans(this,'${v[1]}','${d.a}')"><span class="pic">${v[0]}</span><small>${v[1]}</small></button>`:`<button class="choice" onclick="ans(this,'${v}','${d.a}')">${v}</button>`).join('')}</div>`;
- shell(`<div class="wood">FASE ${p+1} — ${phases[p]}</div><div class="progress"><i style="width:${qi/5*100}%"></i></div><div class="question">🔊 ${d.q}</div><button class="btn blue" onclick="say(spoken)">🔊 OUVIR</button>${choices}<div class="feedback" id="fb"></div><div class="stars">⭐ ${hits}</div>`,back);spoken=d.s;setTimeout(()=>say(d.s),300)}
-function ans(b,v,a){state.tries++;if(v===a){b.classList.add('good');right()}else{b.classList.add('bad');document.getElementById('fb').textContent='QUASE! TENTE NOVAMENTE.';say('Quase! Tente novamente.');setTimeout(()=>b.classList.remove('bad'),500)}save()}
-function part(x,b){build.push(x);b.disabled=true;document.getElementById('slots').textContent=build.join(' + ')}
-function clearWord(){build=[];document.querySelectorAll('.choice').forEach(x=>x.disabled=false);document.getElementById('slots').textContent='_ _ _ _'}
-function checkWord(a){state.tries++;if(build.join('')===a)right();else{document.getElementById('fb').textContent='QUASE! TENTE OUTRA VEZ.';say('Quase! Tente outra vez.');clearWord()}save()}
-function right(){hits++;state.hits++;document.getElementById('fb').textContent=['MUITO BEM!','EXCELENTE!','VOCÊ ACERTOU!'][hits%3];say('Muito bem!');conf();document.querySelectorAll('.choice').forEach(x=>x.disabled=true);setTimeout(()=>{qi++;qi>=5?finish():render()},900)}
-function conf(){for(let i=0;i<22;i++){let e=document.createElement('span');e.className='conf';e.textContent=['★','●','◆','✦'][i%4];e.style.left=Math.random()*100+'vw';e.style.color=['#ffd21f','#ff4b5c','#3fc7ff','#66d35e'][i%4];e.style.animationDelay=Math.random()*.35+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),1900)}}
-function finish(){let s=hits>=5?3:hits>=3?2:1;state.stars[p]=Math.max(state.stars[p],s);state.unlock=Math.max(state.unlock,Math.min(6,p+2));save();conf();shell(`<h1 class="title">PARABÉNS!</h1><div class="wood">${state.name}, VOCÊ CONCLUIU A FASE!</div><div class="stars" style="font-size:60px">${'★'.repeat(s)}${'☆'.repeat(3-s)}</div><div class="stats"><div class="stat"><b>${hits}</b><br>ACERTOS</div><div class="stat"><b>${p+1}</b><br>FASE CONCLUÍDA</div></div><button class="btn" onclick="map()">⌂ VOLTAR AO MAPA</button>${p<5?`<button class="btn blue" onclick="openPhase(${p+1})">▶ PRÓXIMA FASE</button>`:`<button class="btn orange" onclick="finalGame()">🏆 RESULTADO FINAL</button>`}`,'final',false);say(`Parabéns ${state.name}! Você concluiu a fase.`)}
-function finalGame(){shell(`<h1 class="title">AVENTURA<br><span>CONCLUÍDA!</span></h1><div style="font-size:80px">🏆</div><h2>PARABÉNS, ${state.name}!</h2><div class="stats"><div class="stat"><b>${state.hits}</b><br>ACERTOS</div><div class="stat"><b>6</b><br>FASES</div><div class="stat"><b>${state.stars.reduce((a,b)=>a+b,0)}</b><br>ESTRELAS</div></div><h3>HABILIDADES TRABALHADAS</h3><p>✓ Reconhecimento de letras &nbsp; ✓ Sons iniciais &nbsp; ✓ Consciência silábica<br>✓ Associação imagem/palavra &nbsp; ✓ Formação de palavras &nbsp; ✓ Atenção auditiva</p><button class="btn" onclick="map()">⌂ VOLTAR AO MAPA</button><button class="btn orange" onclick="restart()">↻ JOGAR NOVAMENTE</button>`,'final',false);say(`Parabéns ${state.name}! Você completou a Aventura do Alfabeto!`)}
-function restart(){state.unlock=1;state.stars=[0,0,0,0,0,0];state.hits=0;state.tries=0;save();map()}
-window.onerror=function(m){console.error(m);return false};start();
+let seq=[];
+function openPhase(n){
+ if(n+1>st.unlock){toast('COMPLETE A FASE ANTERIOR');return}
+ phase=n;seq=[];let c=configs[n];
+ stage('fase'+(n+1),`${homeBtn()}${musicBtn()}${c.spots.map((p,i)=>`<button class="hot" style="left:${p[0]};top:${p[1]};width:${p[2]};height:${p[3]}" onclick="pickAnswer(${i},this)"></button>`).join('')}
+ <div class="overlay" id="done"><div class="modal"><h2>PARABÉNS!</h2><div class="stars">★★★</div><p>Você concluiu a fase ${n+1}.</p><button class="action" onclick="map()">VOLTAR AO MAPA</button>${n<5?`<button class="action" onclick="openPhase(${n+1})">PRÓXIMA FASE</button>`:`<button class="action" onclick="finish()">VER RESULTADO</button>`}</div></div>`)
+}
+function pickAnswer(i,b){
+ let c=configs[phase];
+ if(c.sequence){
+   if(seq.includes(i))return;
+   seq.push(i);b.classList.add('sel');
+   let expected=c.sequence[seq.length-1];
+   if(i!==expected){flash(false);toast('TENTE OUTRA VEZ');setTimeout(()=>{seq=[];document.querySelectorAll('.stage>.hot').forEach(x=>x.classList.remove('sel'))},550);return}
+   if(seq.length===c.sequence.length)correct();
+ } else if(i===c.correct){b.classList.add('sel');correct()}else{flash(false);toast('QUASE! TENTE NOVAMENTE')}
+}
+function correct(){flash(true);burst();toast('MUITO BEM!');st.stars[phase]=3;st.unlock=Math.max(st.unlock,Math.min(6,phase+2));save();setTimeout(()=>document.getElementById('done').classList.add('show'),850)}
+function finish(){
+ stage('final',`${musicBtn()}
+ <button class="hot" style="left:15%;top:83%;width:38%;height:13%" onclick="restart()"></button>
+ <button class="hot" style="left:62%;top:83%;width:32%;height:13%" onclick="map()"></button>`);
+ burst()
+}
+function restart(){st.unlock=1;st.stars=[0,0,0,0,0,0];save();start()}
+window.addEventListener('error',e=>console.error(e.error||e.message));
+start();
 </script></body></html>

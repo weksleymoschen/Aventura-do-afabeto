@@ -1,2 +1,7 @@
-AVENTURA DO ALFABETO — versão Netlify
-Envie o ZIP diretamente ao Netlify. O index.html está na raiz.
+AVENTURA DO ALFABETO — EDIÇÃO PROFISSIONAL
+• index.html está na raiz.
+• Imagens em assets/ preservam proporção 3:2, sem esticamento.
+• As áreas das próprias imagens são clicáveis.
+• Música instrumental é gerada pelo navegador após o primeiro clique.
+• Progresso salvo no navegador.
+• Envie o ZIP diretamente ao Netlify.
