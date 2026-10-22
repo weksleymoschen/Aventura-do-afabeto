@@ -1,0 +1,32 @@
+ESTA VERSÃO NÃO FOI REFEITA VISUALMENTE.
+
+Ela foi construída diretamente sobre a versão anterior:
+Aventura_do_Alfabeto_WM_FASE1_5_TELAS_FINAL
+
+Preservado:
+- tela inicial HD que estava aprovada;
+- campo de nome na própria arte;
+- quatro personagens na própria arte;
+- botão COMEÇAR na própria arte;
+- mapa HD anterior;
+- Floresta das Vogais e demais cenários anteriores;
+- proporções e posicionamento do jogo;
+- fases 2, 3, 4 e 5 sem redesenho.
+
+Corrigido:
+- seleção dos 4 avatares reforçada por clique/pointer;
+- nenhum quadrado amarelo sobre os personagens;
+- somente o check verde indica o avatar escolhido;
+- COMEÇAR recebe clique direto;
+- nome inicia vazio;
+- Fase 1 continua visualmente integrada às toras;
+- 5 páginas diferentes, uma após cada acerto;
+- exatamente UMA associação correta em cada atividade:
+  1. A + ABELHA (correta); E + IGREJA e I + OLHO (erradas)
+  2. E + ELEFANTE (correta); A + IGREJA e U + ABELHA (erradas)
+  3. I + ILHA (correta); O + UVA e E + ABELHA (erradas)
+  4. O + OLHO (correta); U + ILHA e A + ELEFANTE (erradas)
+  5. U + UVA (correta); E + OLHO e I + ELEFANTE (erradas)
+- após 5/5, a lógica anterior leva automaticamente à Fase 2.
+- Igreja adicionada em SVG vetorial para permanecer nítida.
+- JavaScript validado com Node.

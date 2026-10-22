@@ -691,78 +691,14 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 .phase1Choice.bad{animation:shake .22s 2!important}
 
 
-/* ==========================================================
-   AVATARES — HOTSPOTS INDIVIDUAIS RECONSTRUÍDOS
-   ========================================================== */
-#setup{isolation:isolate}
-#setup .art{z-index:1!important;pointer-events:none!important}
-#setup .hdName{z-index:20!important}
-#setup .hdStart{z-index:20!important}
-#setup .hdMusic{z-index:20!important}
-
-#setup .hdAvatars{
- position:absolute!important;
- inset:0!important;
- width:100%!important;height:100%!important;
- display:block!important;
- z-index:10000!important;
- pointer-events:none!important;
-}
-
-/* Coordenadas individuais sobre cada cartão da arte 1536x1024 */
-#setup .hdAvatar{
- position:absolute!important;
- top:55.0%!important;
- width:10.4%!important;
- height:18.5%!important;
- display:block!important;
- padding:0!important;margin:0!important;
- border:0!important;outline:0!important;
- background:transparent!important;box-shadow:none!important;
- cursor:pointer!important;pointer-events:auto!important;
- touch-action:manipulation!important;
- -webkit-tap-highlight-color:transparent!important;
-}
-#setup .avatarHot1{left:23.3%!important}
-#setup .avatarHot2{left:34.2%!important}
-#setup .avatarHot3{left:45.1%!important}
-#setup .avatarHot4{left:56.0%!important}
-
-#setup .hdAvatar:hover,
-#setup .hdAvatar:active,
-#setup .hdAvatar:focus,
-#setup .hdAvatar:focus-visible,
-#setup .hdAvatar.selected,
-#setup .hdAvatar[aria-pressed="true"]{
- border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;
-}
-#setup .hdAvatar::before,#setup .hdAvatar::after{content:none!important;display:none!important}
-
-/* Único feedback visual: check verde pequeno no canto do cartão */
-#setup .avatarCheck{
- display:none!important;
- position:absolute!important;right:3%!important;top:3%!important;
- width:30px!important;height:30px!important;border-radius:50%!important;
- background:#22c94b!important;color:white!important;border:3px solid white!important;
- box-shadow:0 2px 6px #0005!important;
- font:900 21px/25px Arial,sans-serif!important;text-align:center!important;
- pointer-events:none!important;z-index:10001!important;
-}
-#setup .hdAvatar.selected .avatarCheck,
-#setup .hdAvatar[aria-pressed="true"] .avatarCheck{display:block!important}
-
-/* COMEÇAR fica clicável, mas abaixo dos hotspots somente na sua própria área */
-#setup .hdStart{pointer-events:auto!important}
-
-
-/* CORREÇÃO DEFINITIVA: nenhum quadrado/contorno sobre os avatares */
+/* PATCH DE SELEÇÃO — preserva a arte original; nenhum retângulo sobre o personagem */
 #setup .hdAvatar,#setup .hdAvatar:hover,#setup .hdAvatar:active,
 #setup .hdAvatar:focus,#setup .hdAvatar:focus-visible,
-#setup .hdAvatar.selected,#setup .hdAvatar[aria-pressed="true"]{
-  border:0!important;outline:0!important;background:transparent!important;
-  box-shadow:none!important;appearance:none!important;-webkit-appearance:none!important;
+#setup .hdAvatar.selected,#setup .hdAvatar.sel,#setup .hdAvatar[aria-pressed="true"]{
+ border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;
+ -webkit-tap-highlight-color:transparent!important;
 }
-#setup .hdAvatar::before,#setup .hdAvatar::after{display:none!important;content:none!important}
+#setup .hdAvatar::before,#setup .hdAvatar::after{content:none!important;display:none!important}
 
 </style>
 </head>
@@ -780,13 +716,13 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 <!-- Campo real sobre o campo desenhado na arte. Começa SEM nome preenchido. -->
 <input id="playerName" class="hdName" maxlength="15" placeholder="Digite seu nome" autocomplete="off">
 <!-- Áreas clicáveis exatamente sobre os quatro personagens desenhados na própria arte HD. -->
-<div class="hdAvatars" aria-label="Escolha seu personagem">
-  <button class="hdAvatar avatarHot1" type="button" data-avatar="1" aria-label="Menino" aria-pressed="false"><span class="avatarCheck">✓</span></button>
-  <button class="hdAvatar avatarHot2" type="button" data-avatar="2" aria-label="Menina" aria-pressed="false"><span class="avatarCheck">✓</span></button>
-  <button class="hdAvatar avatarHot3" type="button" data-avatar="3" aria-label="Menino negro" aria-pressed="false"><span class="avatarCheck">✓</span></button>
-  <button class="hdAvatar avatarHot4" type="button" data-avatar="4" aria-label="Menina negra" aria-pressed="false"><span class="avatarCheck">✓</span></button>
+<div class="hdAvatars">
+  <button class="hdAvatar" type="button" data-av="1" data-avatar="1" aria-label="Menino" aria-pressed="false" onclick="chooseCharacter(1,this)"><span class="avatarCheck">✓</span></button>
+  <button class="hdAvatar" type="button" data-av="2" data-avatar="2" aria-label="Menina" aria-pressed="false" onclick="chooseCharacter(2,this)"><span class="avatarCheck">✓</span></button>
+  <button class="hdAvatar" type="button" data-av="3" data-avatar="3" aria-label="Menino negro" aria-pressed="false" onclick="chooseCharacter(3,this)"><span class="avatarCheck">✓</span></button>
+  <button class="hdAvatar" type="button" data-av="4" data-avatar="4" aria-label="Menina negra" aria-pressed="false" onclick="chooseCharacter(4,this)"><span class="avatarCheck">✓</span></button>
 </div>
-<button class="hdStart" type="button" aria-label="Começar"></button>
+<button class="hdStart" type="button" aria-label="Começar" onclick="begin()"></button>
 <button class="hdMusic" type="button" aria-label="Música" onclick="toggleMusic()"></button>
 </section>
 
@@ -820,8 +756,8 @@ const worlds=["","FLORESTA DAS VOGAIS","VILA DOS SONS","MONTANHA DAS SÍLABAS","
 const arts=["","floresta_vogais_pro.png","vila_hd.jpg","montanha.webp","castelo_silabas.webp","castelo_palavras.webp"];
 const Q={
 1:[
-{p:"ATIVIDADE 1 DE 5",pairs:[["A","A"],["E","I"],["I","O"]],a:"0"},
-{p:"ATIVIDADE 2 DE 5",pairs:[["A","O"],["E","E"],["U","A"]],a:"1"},
+{p:"ATIVIDADE 1 DE 5",pairs:[["A","A"],["E","J"],["I","O"]],a:"0"},
+{p:"ATIVIDADE 2 DE 5",pairs:[["A","J"],["E","E"],["U","A"]],a:"1"},
 {p:"ATIVIDADE 3 DE 5",pairs:[["I","I"],["O","U"],["E","A"]],a:"0"},
 {p:"ATIVIDADE 4 DE 5",pairs:[["U","I"],["O","O"],["A","E"]],a:"1"},
 {p:"ATIVIDADE 5 DE 5",pairs:[["E","O"],["I","E"],["U","U"]],a:"2"}],
@@ -912,18 +848,16 @@ function openWorld(n){
  render();
 }
 
-function chooseCharacter(n){
-  n=Number(n);
-  if(![1,2,3,4].includes(n)) return;
-  S.avatar=n;
-  document.querySelectorAll(".hdAvatar").forEach(btn=>{
-    const selected=Number(btn.dataset.avatar)===n;
-    btn.classList.toggle("selected",selected);
-    btn.setAttribute("aria-pressed",selected?"true":"false");
-  });
-  try{tone(660,.08,.025)}catch(e){}
-  toast("✓ PERSONAGEM ESCOLHIDO!");
-  save();
+function chooseCharacter(n,el){
+ S.avatar=Number(n);
+ document.querySelectorAll(".hdAvatar").forEach((b,i)=>{
+   const selected=(i+1===S.avatar);
+   b.classList.toggle("selected",selected);
+   b.setAttribute("aria-pressed",selected?"true":"false");
+ });
+ try{ tone(660,.08,.025); }catch(e){}
+ toast("✓ Personagem escolhido!");
+ save();
 }
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));document.getElementById(id).classList.add("on");if(id==="map")updateMap()}
 function goSetup(){startMusic();show("setup");setTimeout(()=>document.getElementById("playerName").focus(),120)}
@@ -931,7 +865,7 @@ function begin(){
  const field=document.getElementById("playerName");
  const typed=(field?.value||"").trim();
  if(!typed){ field?.focus(); toast("✏️ DIGITE SEU NOME PARA COMEÇAR!"); return; }
- if(![1,2,3,4].includes(Number(S.avatar))){ toast("👦🏽 ESCOLHA UM PERSONAGEM!"); return; }
+ if(!S.avatar){ toast("👦🏽 ESCOLHA UM PERSONAGEM!"); return; }
 
  const chosenAvatar=S.avatar;
  S={name:typed,avatar:chosenAvatar,unlocked:1,done:[],stars:0,world:1,q:0,music:S.music,sel:[]};
@@ -974,6 +908,7 @@ function render(){
      A:{img:"fase1_obj_A.png",word:"ABELHA"},
      E:{img:"fase1_obj_E.png",word:"ELEFANTE"},
      I:{img:"fase1_obj_I.png",word:"ILHA"},
+     J:{img:"igreja.svg",word:"IGREJA"},
      O:{img:"fase1_obj_O.png",word:"OLHO"},
      U:{img:"fase1_obj_U.png",word:"UVA"}
    };
@@ -1065,7 +1000,7 @@ function toggleMusic(){
 }
 function save(){localStorage.setItem("wm_aventura_alfabeto_final",JSON.stringify(S))}
 function resetGame(){localStorage.removeItem("wm_aventura_alfabeto_final");location.reload()}
-window.addEventListener("load",()=>{S.avatar=null;setTimeout(()=>{let n=document.getElementById("playerName");if(n){n.value="";n.focus()}},120);setTimeout(()=>document.getElementById("playerName").focus(),180);try{let x=JSON.parse(localStorage.getItem("wm_aventura_alfabeto_final")||"null");if(x){S.stars=x.stars||0;S.unlocked=x.unlocked||1;S.done=x.done||[]}S.avatar=null;S.name="Aventureiro";S.music=false}catch(e){};document.getElementById("playerName").value="";document.getElementById("hudName").textContent=S.name;if(S.avatar){document.getElementById("mascotImg").src=`assets/avatar${S.avatar}.webp`;}document.querySelectorAll(".avatar").forEach((b,i)=>b.classList.toggle("sel",i+1===S.avatar));document.querySelectorAll(".hdAvatar").forEach((b,i)=>{const ok=i+1===S.avatar;b.classList.toggle("selected",ok);b.setAttribute("aria-pressed",ok?"true":"false")});updateMap()});
+window.addEventListener("load",()=>{setTimeout(()=>{let n=document.getElementById("playerName");if(n){n.value="";n.focus()}},120);setTimeout(()=>document.getElementById("playerName").focus(),180);try{let x=JSON.parse(localStorage.getItem("wm_aventura_alfabeto_final")||"null");if(x)Object.assign(S,x);S.music=false}catch(e){};document.getElementById("playerName").value="";document.getElementById("hudName").textContent=S.name;if(S.avatar){document.getElementById("mascotImg").src=`assets/avatar${S.avatar}.webp`;}document.querySelectorAll(".avatar").forEach((b,i)=>b.classList.toggle("sel",i+1===S.avatar));document.querySelectorAll(".hdAvatar").forEach((b,i)=>{const ok=i+1===S.avatar;b.classList.toggle("selected",ok);b.setAttribute("aria-pressed",ok?"true":"false")});updateMap()});
 
 const PRELOAD_ASSETS=[
  "assets/tela_inicial_hd.jpg","assets/mapa_final_hd.png","assets/floresta_profissional.png",
@@ -1083,24 +1018,19 @@ document.addEventListener("pointerup",(e)=>{
 
 
 
-let avatarPointerHandled=false;
-document.addEventListener("pointerdown",function(e){
-  const btn=e.target.closest && e.target.closest(".hdAvatar");
-  if(!btn) return;
-  avatarPointerHandled=true;
-  e.preventDefault();
-  e.stopPropagation();
-  chooseCharacter(btn.dataset.avatar);
-  setTimeout(()=>avatarPointerHandled=false,250);
-},true);
-
-document.addEventListener("click",function(e){
-  const btn=e.target.closest && e.target.closest(".hdAvatar");
-  if(!btn || avatarPointerHandled) return;
-  e.preventDefault();
-  e.stopPropagation();
-  chooseCharacter(btn.dataset.avatar);
-},true);
+window.addEventListener("DOMContentLoaded",()=>{
+  const nameField=document.getElementById("playerName");
+  if(nameField){nameField.value=""; nameField.setAttribute("autocomplete","off");}
+  S.avatar=0;
+  document.querySelectorAll(".hdAvatar").forEach(btn=>{
+    btn.classList.remove("selected","sel");
+    btn.setAttribute("aria-pressed","false");
+    btn.addEventListener("pointerup",(ev)=>{
+      ev.preventDefault(); ev.stopPropagation();
+      chooseCharacter(Number(btn.dataset.avatar||btn.dataset.av),btn);
+    });
+  });
+});
 
 </script></main></div></body></html>
 <!-- WM: correções visuais consolidadas -->
