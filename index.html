@@ -1,7 +1,15 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#08385d"><title>Academia dos Super-Heróis das Letras</title><link rel="stylesheet" href="css/style.css"></head><body>
-<main id="app">
-<section class="screen active" id="setup"><div class="stage"><img class="scene" id="setupScene" alt=""><div class="sparkles"></div><header class="logo"><small>ACADEMIA DOS</small><strong>SUPER-HERÓIS</strong><b>DAS LETRAS</b><p>Prepare seus poderes e embarque em uma aventura pelas letras, sílabas e palavras!</p></header><section class="setup-panel"><label>QUAL É O SEU NOME?</label><input id="playerName" maxlength="18" placeholder="Digite seu nome" autocomplete="off"><h2>ESCOLHA SEU HERÓI</h2><div class="avatar-grid" id="avatarGrid"></div><button class="primary" id="startBtn">▶ COMEÇAR A AVENTURA</button><div class="warning" id="warning" aria-live="polite"></div></section><div class="brand">WM JOGOS EDUCATIVOS</div></div></section>
-<section class="screen" id="game"><div class="stage"><img class="scene" id="gameScene" alt=""><div class="vignette"></div><button class="icon-btn back" id="backBtn" aria-label="Voltar ao mapa">⌂</button><button class="icon-btn sound" id="soundBtn" aria-label="Ativar ou desativar som">🔊</button><div class="phase-title" id="phaseTitle"></div><div class="progress-wrap"><div id="progressDots"></div><span id="progressText"></span></div><div class="instruction" id="instruction"></div><div class="challenge" id="challenge"></div><img id="sideHero" class="side-hero" alt="Herói escolhido"><div class="choices" id="choices"></div><div class="feedback" id="feedback" aria-live="polite">MUITO BEM! ⭐</div><div id="confetti"></div></div></section>
-<section class="screen" id="map"><div class="stage"><img class="scene" id="mapScene" alt=""><div class="vignette"></div><button class="icon-btn back" id="mapHome" aria-label="Voltar ao início">⌂</button><button class="icon-btn sound map-sound" aria-label="Ativar ou desativar som">🔊</button><div class="map-title">ESCOLHA O MUNDO</div><div class="map-worlds" id="mapWorlds"></div><div class="map-status"><span id="mapPlayer"></span><b id="starCount">⭐ 0/25</b></div></div></section>
-<section class="screen" id="finish"><div class="stage"><img class="scene" id="finishScene" alt=""><div class="finish-card"><div class="trophy" aria-hidden="true">★</div><h1>PARABÉNS, <span id="finishName"></span>!</h1><h2>VOCÊ SE TORNOU UM<br>SUPER-HERÓI DAS LETRAS!</h2><img id="finishHero" alt="Herói escolhido"><div><button class="secondary" id="restartBtn">↻ JOGAR NOVAMENTE</button><button class="primary small" id="finishMapBtn">⌂ VOLTAR AO MAPA</button></div></div><div id="finishConfetti"></div></div></section>
-</main><script src="js/game.js"></script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#123d73">
+<title>Aventura do Alfabeto • WM Jogos Educativos</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="js/game.js"></script>
+</body>
+</html>

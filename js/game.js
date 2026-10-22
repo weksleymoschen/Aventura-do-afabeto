@@ -1,58 +1,52 @@
-const LOCAL_BG={academy:"assets/backgrounds/academy_fallback.jpg",forest:"assets/backgrounds/forest_fallback.jpg",tower:"assets/backgrounds/tower_fallback.jpg",city:"assets/backgrounds/city_fallback.jpg",island:"assets/backgrounds/island_fallback.jpg",mountain:"assets/backgrounds/mountain_fallback.jpg",map:"assets/backgrounds/map_fallback.jpg",celebration:"assets/backgrounds/celebration_fallback.jpg"};
-const AVATAR_LOCAL=["assets/avatars/hero_blue_fallback.jpg","assets/avatars/hero_pink_fallback.jpg","assets/avatars/hero_green_fallback.jpg","assets/avatars/hero_purple_fallback.jpg"];
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const state={name:"",avatar:-1,phase:1,q:0,stars:0,unlocked:1,busy:false,sound:true,audio:null};
-const phases=[
-{name:"FLORESTA DAS VOGAIS",bg:"forest",instruction:"Qual imagem começa com a letra:",five:true,qs:[
-{c:"A",correct:"abelha",o:["elefante","abelha","casa","banana","arvore"]},
-{c:"E",correct:"elefante",o:["casa","uva","elefante","banana","olho"]},
-{c:"I",correct:"ilha",o:["uva","casa","olho","ilha","abelha"]},
-{c:"O",correct:"olho",o:["elefante","olho","uva","casa","ilha"]},
-{c:"U",correct:"uva",o:["ilha","abelha","casa","uva","olho"]}]},
-{name:"TORRE DAS SÍLABAS",bg:"tower",instruction:"Qual imagem começa com a sílaba:",qs:[
-{c:"CA",correct:"casa",o:["casa","cachorro","bola","macaco"]},
-{c:"BO",correct:"bola",o:["cachorro","bola","casa","macaco"]},
-{c:"GA",correct:"gato",o:["casa","macaco","gato","bola"]},
-{c:"MA",correct:"macaco",o:["bola","gato","casa","macaco"]},
-{c:"PA",correct:"pato",o:["casa","pato","gato","bola"]}]},
-{name:"CIDADE DOS SONS",bg:"city",instruction:"Qual imagem começa com o som:",qs:[
-{c:"M",correct:"macaco",o:["bola","macaco","gato","mesa"]},
-{c:"B",correct:"bola",o:["gato","casa","bola","macaco"]},
-{c:"G",correct:"gato",o:["gato","mesa","bola","casa"]},
-{c:"C",correct:"casa",o:["bola","macaco","casa","gato"]},
-{c:"P",correct:"pato",o:["casa","bola","gato","pato"]}]},
-{name:"ILHA DAS LETRAS",bg:"island",instruction:"Qual imagem começa com a letra:",qs:[
-{c:"U",correct:"uva",o:["uva","relogio","urso","igreja"]},
-{c:"R",correct:"relogio",o:["igreja","uva","relogio","urso"]},
-{c:"I",correct:"igreja",o:["urso","igreja","uva","relogio"]},
-{c:"A",correct:"abelha",o:["abelha","urso","igreja","uva"]},
-{c:"B",correct:"banana",o:["relogio","banana","uva","urso"]}]},
-{name:"MONTANHA DAS PALAVRAS",bg:"mountain",instruction:"Qual imagem corresponde à palavra:",qs:[
-{c:"SOL",correct:"sol",o:["sol","lua","estrela","nuvem"]},
-{c:"LUA",correct:"lua",o:["estrela","sol","lua","nuvem"]},
-{c:"ESTRELA",correct:"estrela",o:["nuvem","estrela","lua","sol"]},
-{c:"NUVEM",correct:"nuvem",o:["sol","lua","estrela","nuvem"]},
-{c:"CASA",correct:"casa",o:["lua","casa","sol","nuvem"]}]}
-];
-const ext={ilha:"svg",olho:"svg",pato:"svg",cavalo:"svg",colher:"svg",arvore:"svg"};
-function objSrc(n){return `assets/objects/${n}.${ext[n]||"jpg"}`}
-function setScene(img,key){img.onerror=null;img.src=LOCAL_BG[key]||LOCAL_BG.academy}
-function show(id){$$(".screen").forEach(x=>x.classList.remove("active"));$("#"+id).classList.add("active")}
-function avatarImg(i,cls=""){return `<img class="${cls}" src="${AVATAR_LOCAL[i]}" alt="Herói ${i+1}">`}
-function init(){setScene($("#setupScene"),"academy");setScene($("#mapScene"),"map");setScene($("#finishScene"),"celebration");
- $("#avatarGrid").innerHTML=AVATAR_LOCAL.map((u,i)=>`<button class="avatar-card" data-i="${i}" aria-label="Escolher herói ${i+1}">${avatarImg(i)}</button>`).join("");
- $$(".avatar-card").forEach(b=>b.addEventListener("click",()=>{$$(".avatar-card").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");state.avatar=+b.dataset.i;$("#warning").textContent=""}));
+
+const ART={"academy": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/1a0c7e4f-43bd-46f6-9c66-f68fb8a38573/954835f6-e707-4432-ac2f-b8b8266c05d3/Original_premium_children_s_educational_game_environment_for.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiNmNkM2E2ZmQwNzYzYjE0ZSIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MjgwNTM3M30.cbrzr1bWajDyDS4pwJR_inELqWXHvEUdMDp_4uCWUpM", "forest": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/e82ce110-00f3-411e-89da-4f6cf3d1941b/562a4e97-94b1-418d-9577-2f7c20e2d18e/Original_premium_children_s_educational_game_environment__ma.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiMzAwMDg2MmQzODFmMmVmNCIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MjgwNjMxN30.e9yt7LCB54ekSIUYgPilBkkMPgEqULtgE5whPYEDW_c", "tower": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/c26ef287-0543-44f7-9d97-4d32962a3b26/b5cfef70-efae-4012-ada7-3582367359d5/Original_premium_children_s_educational_game_environment__ma.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiMDNkMzY2N2JjY2QwNTYyMiIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjc5MDc3OX0.GIf6tEL1ooXdVYcKsEaQKDQcCg0L7X-9Lgk9-AEc1sI", "city": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/7c6f047f-c9b8-4a80-81fe-faf3e9058feb/d65cc0ec-5f20-4e28-869c-2c113e289d38/Original_premium_children_s_educational_game_environment__co.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiOGI1YTY3ZmRlZTFkMjU1NSIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjc3Mzg4NX0.02stTZeUk-1V5UVFQQgpiqMtjFFmDDzjDgRbECgtz08", "island": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/462d56ea-aca4-445f-8a69-509d0693b90c/ab2ddf84-73e2-45b1-abb4-d89389a2af91/Original_premium_children_s_educational_game_environment__tr.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiNDEzMmM1MzRkMWU4ODk0ZCIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MjgyMjMyNH0.YX8sue9B3V6sodFcI2tQHvg9poD8sXeBYe3KjLqQjJE", "mountain": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/749f9cb9-c2c9-44e3-839f-4cf16a8eed9a/53059b7a-f309-45ea-8279-7386ca5eb1ae/Original_premium_children_s_educational_game_environment__ma.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiODY0ZmY2MDdjMTlhZGJkYiIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjc4ODg3MX0.jiDC4ZGieGbJfHt2yIeYAaB16eyXHxU6wPz6RjAvypI", "map": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/72f6bd19-5db9-4e60-91f8-3333e47197bd/719f8a49-7e86-4e9e-a6ba-b5a40e23ac67/Original_premium_children_s_educational_game_fantasy_world_m.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiNDE2NDNiYWIwYTZjYjBkMiIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjc4MDcxNX0.yElkH0KxkilgomYQ6to7JU8SRgc6Wl6PGz9p7-84tKY", "hero_blue": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/2b84d610-2460-414b-aa41-1b34e9d38112/3f19cd46-e381-4ba0-9883-ff31d8333e9c/Single_standalone_original_child_adventure_hero_avatar_for_a.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiZWVjZGUzMmY2OTExM2QyNCIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MjgxNjA0N30.HG5uGGlIlaeMKiuO2FItcCGr-LVZLsqdnkjwezRllRI", "hero_pink": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/38860a3d-31cc-441d-86fc-17ad4d002d87/b780069a-c658-4c99-be22-6280118dc79a/Single_standalone_original_child_adventure_hero_avatar_for_a.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiOTkxMjUwODMwZjcxNzI1NSIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjg0NzEwN30.u16Vk0ebKVeJVZtHaPwrsq-VHSghlwQa2xu4lLiQ07Q", "hero_green": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3.1-flash-lite-image/images/7633d827-d256-4248-9542-6b525b1f3217/36c56010-3653-4788-9761-6209a20059e1/Single_standalone_original_child_adventure_hero_avatar_for_a.jpg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiMzRjZmRhM2UxNGFlN2I4YSIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MjgwNTA1NH0.whFdk3bPTFHtAwccEqRPndQTKQS6sX1v4GGnmVs5LoE", "hero_purple": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3.1-flash-lite-image/images/f8e86780-e865-41f1-9e4f-f0e616e2a06b/90bf6162-8490-476d-ab40-4c84f0423236/Single_standalone_original_child_adventure_hero_avatar_for_a.jpg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiMzk2ZTA4ZmNiMzg0ODlkMiIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjc3OTc3Mn0.C32VSK-dK3Fr0ZeLGD6JDVhxTomDxAosgjsCQ1x5O_8"};
+const PHASES={"1": ["FLORESTA DAS VOGAIS", "forest", "Qual imagem começa com a letra:", [["A", "abelha", ["gato", "uva", "abelha", "casa", "olho"]], ["E", "elefante", ["ilha", "bola", "gato", "elefante", "uva"]], ["I", "ilha", ["casa", "ilha", "abelha", "pato", "uva"]], ["O", "olho", ["elefante", "bola", "olho", "gato", "casa"]], ["U", "uva", ["pato", "uva", "casa", "olho", "ilha"]]]], "2": ["TORRE DAS SÍLABAS", "tower", "Qual imagem começa com a sílaba:", [["CA", "casa", ["bola", "casa", "uva", "pato"]], ["BO", "bola", ["gato", "uva", "bola", "macaco"]], ["GA", "gato", ["gato", "casa", "pato", "elefante"]], ["MA", "macaco", ["bola", "macaco", "uva", "gato"]], ["PA", "pato", ["casa", "olho", "pato", "bola"]]]], "3": ["CIDADE DOS SONS", "city", "Qual imagem começa com este som:", [["M", "macaco", ["gato", "bola", "macaco", "uva"]], ["B", "bola", ["bola", "casa", "pato", "olho"]], ["G", "gato", ["uva", "gato", "casa", "elefante"]], ["C", "casa", ["pato", "bola", "casa", "uva"]], ["P", "pato", ["macaco", "olho", "gato", "pato"]]]], "4": ["ILHA DAS LETRAS", "island", "Encontre a imagem que começa com:", [["A", "abelha", ["abelha", "gato", "bola", "uva"]], ["E", "elefante", ["casa", "elefante", "pato", "olho"]], ["I", "ilha", ["gato", "uva", "ilha", "bola"]], ["O", "olho", ["casa", "pato", "olho", "abelha"]], ["U", "uva", ["elefante", "uva", "gato", "casa"]]]], "5": ["MONTANHA DAS PALAVRAS", "mountain", "Clique na imagem da palavra:", [["SOL", "sol", ["lua", "sol", "estrela", "nuvem"]], ["LUA", "lua", ["estrela", "casa", "lua", "sol"]], ["ESTRELA", "estrela", ["nuvem", "estrela", "lua", "casa"]], ["NUVEM", "nuvem", ["sol", "casa", "nuvem", "estrela"]], ["CASA", "casa", ["lua", "bola", "sol", "casa"]]]]};
+const names={abelha:"ABELHA",elefante:"ELEFANTE",ilha:"ILHA",olho:"OLHO",uva:"UVA",casa:"CASA",bola:"BOLA",gato:"GATO",macaco:"MACACO",pato:"PATO",sol:"SOL",lua:"LUA",estrela:"ESTRELA",nuvem:"NUVEM",maca:"MAÇÃ",banana:"BANANA"};
+const state={name:"",avatar:null,phase:1,mission:0,unlocked:1,completed:new Set(),sound:true,locked:false};
+const app=document.querySelector("#app"),toast=document.querySelector("#toast");
+const avatarKeys=["hero_blue","hero_pink","hero_green","hero_purple"];
+let audioCtx=null,musicTimer=null;
+function bg(src){return `<img class="bg" src="${src}" alt="" draggable="false"><div class="scrim"></div>`}
+function top(title,home=true){return `<div class="topbar">${home?'<button class="iconbtn" id="home" aria-label="Mapa">⌂</button>':'<span></span>'}<div class="titleplate">${title}</div><button class="iconbtn" id="sound" aria-label="Som">${state.sound?'♪':'×'}</button></div>`}
+function bindTop(){document.querySelector("#sound")?.addEventListener("click",toggleSound);document.querySelector("#home")?.addEventListener("click",showMap)}
+function toggleSound(){state.sound=!state.sound;if(state.sound) startMusic(); else stopMusic(); document.querySelector("#sound").textContent=state.sound?'♪':'×';}
+function tone(freq,d=.12,type="sine",vol=.035){if(!state.sound)return;try{audioCtx ||= new (window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.value=vol;o.connect(g);g.connect(audioCtx.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+d);o.stop(audioCtx.currentTime+d)}catch(e){}}
+function startMusic(){if(!state.sound||musicTimer)return;let seq=[392,523,659,523,440,587,698,587],i=0;musicTimer=setInterval(()=>tone(seq[i++%seq.length],.25,"sine",.012),420)}
+function stopMusic(){clearInterval(musicTimer);musicTimer=null}
+function showToast(t){toast.textContent=t;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),700)}
+function confetti(){let c=document.createElement("div");c.className="confetti";for(let i=0;i<45;i++){let p=document.createElement("i");p.style.left=Math.random()*100+"%";p.style.background=`hsl(${Math.random()*360} 85% 55%)`;p.style.animationDelay=Math.random()*.25+"s";c.append(p)}document.querySelector(".stage").append(c);setTimeout(()=>c.remove(),1900)}
+function startScreen(){
+ app.innerHTML=`<section class="stage">${bg(ART.academy)}<div class="brand">WM JOGOS EDUCATIVOS</div><div class="start-wrap">
+ <div class="hero-copy"><h1>AVENTURA DO <span>ALFABETO</span></h1><p>Explore cinco mundos mágicos e descubra os poderes das letras, dos sons, das sílabas e das palavras!</p></div>
+ <div class="panel setup"><label class="label" for="name">QUAL É O SEU NOME?</label><input id="name" class="name" maxlength="20" autocomplete="off" placeholder="Digite seu nome">
+ <div class="label" style="margin-top:.7em">ESCOLHA SEU AVENTUREIRO</div><div class="avatar-grid">${avatarKeys.map((k,i)=>`<button class="avatar" data-av="${k}" aria-label="Aventureiro ${i+1}"><img src="${ART[k]}" alt=""></button>`).join("")}</div>
+ <button class="primary" id="start">▶ COMEÇAR A AVENTURA</button></div></div></section>`;
+ document.querySelectorAll(".avatar").forEach(b=>b.onclick=()=>{state.avatar=b.dataset.av;document.querySelectorAll(".avatar").forEach(x=>x.classList.toggle("sel",x===b));tone(620,.08)});
+ document.querySelector("#start").onclick=()=>{let n=document.querySelector("#name").value.trim();if(!n)return showToast("DIGITE SEU NOME");if(!state.avatar)return showToast("ESCOLHA SEU AVENTUREIRO");state.name=n;state.phase=1;state.mission=0;startMusic();showPhase()};
 }
-function startAudio(){if(state.audio)return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;const ctx=new AC(),master=ctx.createGain();master.gain.value=.025;master.connect(ctx.destination);state.audio={ctx,master};let i=0,notes=[261.6,329.6,392,523.2,392,349.2,293.7,329.6];function loop(){if(state.sound)tone(notes[i++%notes.length],.34,.055);setTimeout(loop,470)}loop()}
-function tone(freq,d=.18,vol=.08,type="sine"){if(!state.audio||!state.sound)return;const {ctx,master}=state.audio,o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.001,ctx.currentTime);g.gain.exponentialRampToValueAtTime(vol,ctx.currentTime+.02);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+d);o.connect(g);g.connect(master);o.start();o.stop(ctx.currentTime+d+.02)}
-function sfx(ok){if(ok){tone(660,.12,.12,"triangle");setTimeout(()=>tone(880,.18,.11,"triangle"),100)}else{tone(170,.16,.08,"sawtooth")}}
-function openPhase(n){state.phase=n;state.q=0;show("game");setScene($("#gameScene"),phases[n-1].bg);$("#phaseTitle").textContent=`FASE ${n} • ${phases[n-1].name}`;const sh=$("#sideHero");sh.src=AVATAR_LOCAL[state.avatar];renderQuestion()}
-function renderQuestion(){state.busy=false;const p=phases[state.phase-1],q=p.qs[state.q];$("#instruction").textContent=p.instruction;$("#challenge").textContent=q.c;$("#progressText").textContent=`${state.q+1}/5`;$("#progressDots").innerHTML=[0,1,2,3,4].map(i=>`<i class="dot ${i<=state.q?"on":""}"></i>`).join("");const box=$("#choices");box.className="choices"+(p.five?" five":"");box.innerHTML=q.o.map(n=>`<button class="choice" data-n="${n}" aria-label="${n}"><img src="${objSrc(n)}" alt="${n}"><b>${n.toUpperCase()}</b></button>`).join("");$$(".choice").forEach(b=>b.addEventListener("click",()=>answer(b,b.dataset.n===q.correct)))}
-function answer(btn,ok){if(state.busy)return;if(!ok){btn.classList.add("wrong");sfx(false);setTimeout(()=>btn.classList.remove("wrong"),430);return}state.busy=true;btn.classList.add("correct");sfx(true);$("#feedback").classList.add("show");confetti("#confetti",26);setTimeout(()=>{$("#feedback").classList.remove("show");state.stars++;state.q++;if(state.q===5){state.unlocked=Math.max(state.unlocked,state.phase+1);if(state.phase===5)finish();else openPhase(state.phase+1)}else renderQuestion()},760)}
-function confetti(sel,n){const box=$(sel);box.innerHTML="";const colors=["#ffd83d","#ff4f86","#35cfff","#42d85b","#874df2"];for(let i=0;i<n;i++){const e=document.createElement("i");e.className="conf";e.style.left=Math.random()*100+"%";e.style.background=colors[i%colors.length];e.style.animationDelay=Math.random()*.35+"s";box.appendChild(e)}setTimeout(()=>box.innerHTML="",2300)}
-function renderMap(){show("map");$("#mapPlayer").textContent=state.name;$("#starCount").textContent=`⭐ ${state.stars}/25`;const names=phases.map(p=>p.name);$("#mapWorlds").innerHTML=names.map((n,i)=>{const k=i+1,locked=k>state.unlocked,done=k<state.unlocked||state.stars===25;return `<button class="world-btn w${k} ${locked?"locked":""} ${done?"done":""}" data-world="${k}" ${locked?"disabled":""}>${locked?"🔒 ":""}${k} • ${n}</button>`}).join("");$$(".world-btn:not(.locked)").forEach(b=>b.addEventListener("click",()=>openPhase(+b.dataset.world)))}
-function finish(){state.unlocked=6;show("finish");$("#finishName").textContent=state.name;const h=$("#finishHero");h.src=AVATAR_LOCAL[state.avatar];confetti("#finishConfetti",55);tone(523,.2,.11,"triangle");setTimeout(()=>tone(659,.2,.11,"triangle"),180);setTimeout(()=>tone(784,.4,.12,"triangle"),360)}
-$("#startBtn").addEventListener("click",()=>{const n=$("#playerName").value.trim();if(!n){$("#warning").textContent="Digite seu nome para começar.";$("#playerName").focus();return}if(state.avatar<0){$("#warning").textContent="Escolha seu herói para começar.";return}state.name=n;startAudio();openPhase(1)});
-$("#backBtn").addEventListener("click",renderMap);$("#mapHome").addEventListener("click",()=>show("setup"));$("#finishMapBtn").addEventListener("click",renderMap);$("#restartBtn").addEventListener("click",()=>location.reload());
-$$(".sound,.map-sound").forEach(b=>b.addEventListener("click",()=>{state.sound=!state.sound;$$(".sound,.map-sound").forEach(x=>x.textContent=state.sound?"🔊":"🔇")}));
-init();
+function showPhase(){
+ let [title,bgkey,instruction,missions]=PHASES[state.phase], [token,answer,opts]=missions[state.mission];
+ let dots=missions.map((_,i)=>`<span class="dot ${i<state.mission?'done':''}"></span>`).join("");
+ app.innerHTML=`<section class="stage">${bg(ART[bgkey])}${top(`FASE ${state.phase} • ${title}`)}<div class="brand">WM JOGOS EDUCATIVOS</div>
+ <div class="game-ui"><div class="hud"><div class="progress">${dots} <b>${state.mission+1}/5</b></div></div>
+ <div><div class="prompt">${instruction}</div><div class="challenge"><div class="token">${token}</div></div></div>
+ <div class="choices ${opts.length===4?'four':'five'}">${opts.map(o=>`<button class="choice" data-o="${o}" aria-label="${names[o]}"><img src="assets/objects/${o}.svg" alt="${names[o]}"><b>${names[o]}</b></button>`).join("")}</div></div>
+ <div class="player-mini"><img src="${ART[state.avatar]}" alt=""></div></section>`;
+ bindTop();document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>answerChoice(b,b.dataset.o===answer));
+}
+function answerChoice(btn,ok){
+ if(state.locked)return;if(!ok){btn.classList.add("wrong");tone(180,.18,"sawtooth",.025);setTimeout(()=>btn.classList.remove("wrong"),420);return}
+ state.locked=true;btn.classList.add("correct");tone(660,.1);setTimeout(()=>tone(880,.16),90);showToast("MUITO BEM!");confetti();
+ setTimeout(()=>{state.mission++;if(state.mission<5){state.locked=false;showPhase()}else{state.completed.add(state.phase);state.unlocked=Math.max(state.unlocked,state.phase+1);if(state.phase<5){state.phase++;state.mission=0;state.locked=false;showPhase()}else showFinal()}},850)
+}
+function showMap(){
+ const worlds=[[1,"FLORESTA DAS VOGAIS"],[2,"TORRE DAS SÍLABAS"],[3,"CIDADE DOS SONS"],[4,"ILHA DAS LETRAS"],[5,"MONTANHA DAS PALAVRAS"]];
+ app.innerHTML=`<section class="stage">${bg(ART.map)}${top("MAPA DA AVENTURA",false)}<div class="brand">WM JOGOS EDUCATIVOS</div><div class="map-ui">${worlds.map(([n,t])=>{let done=state.completed.has(n),open=n<=state.unlocked;return `<button class="world ${done?'done':''}" data-p="${n}" ${open?'':'disabled'}><span class="state">${done?'✓ ★':open?'▶':'🔒'}</span>${n}. ${t}</button>`}).join("")}</div></section>`;
+ bindTop();document.querySelectorAll(".world:not(:disabled)").forEach(b=>b.onclick=()=>{state.phase=+b.dataset.p;state.mission=0;showPhase()});
+}
+function showFinal(){
+ tone(523,.18);setTimeout(()=>tone(659,.18),120);setTimeout(()=>tone(784,.35),240);
+ app.innerHTML=`<section class="stage">${bg(ART.academy)}${top("MISSÃO CONCLUÍDA!",false)}<div class="brand">WM JOGOS EDUCATIVOS</div><div class="final-ui"><img class="final-avatar" src="${ART[state.avatar]}" alt=""><div class="panel final-card"><h1>PARABÉNS, ${state.name.toUpperCase()}!</h1><h2>VOCÊ COMPLETOU A<br>AVENTURA DO ALFABETO!</h2><p>★★★★★</p><div class="btnrow"><button class="primary" id="again">JOGAR NOVAMENTE</button><button class="primary" id="mapbtn">VOLTAR AO MAPA</button></div></div></div></section>`;
+ bindTop();confetti();document.querySelector("#again").onclick=()=>{state.phase=1;state.mission=0;state.unlocked=1;state.completed.clear();showPhase()};document.querySelector("#mapbtn").onclick=showMap;
+}
+startScreen();
