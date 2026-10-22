@@ -1,0 +1,23 @@
+FASE 1 — LÓGICA CORRIGIDA
+
+A fase possui 10 atividades separadas.
+Cada tela mostra 3 associações de LETRA + IMAGEM.
+Em cada atividade existe EXATAMENTE UMA associação correta.
+
+Exemplo da atividade 1:
+A + ABELHA = CORRETA
+E + UVA = ERRADA
+I + OLHO = ERRADA
+
+Quando a criança toca na correta:
+- recebe o feedback de acerto;
+- ganha a estrela;
+- após 0,7 s aparece a PRÓXIMA atividade da própria Fase 1.
+
+Somente depois de completar as 10 atividades a Fase 1 termina e o jogo segue para a Fase 2.
+
+SELEÇÃO DE PERSONAGEM
+- Os quatro personagens são clicáveis.
+- O escolhido recebe somente um pequeno ✓ verde.
+- Não aparece quadrado amarelo.
+- A escolha fica salva em S.avatar.
