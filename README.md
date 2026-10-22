@@ -1,21 +1,17 @@
 # Aventura do Alfabeto — WM Jogos Educativos
 
-Jogo educativo de alfabetização para crianças de aproximadamente 4 a 7 anos.
+Versão reconstruída do zero.
 
-## Publicação
+## Fase 1
+São 5 telas separadas. Cada tela mostra somente 2 associações de letra + imagem, e exatamente uma está correta.
 
-### Netlify
-Arraste a pasta do projeto ou este ZIP descompactado para o Netlify Drop.
-Não há etapa de build. O arquivo inicial é `index.html`.
+1. A + ABELHA ✓ | E + IGREJA ✗
+2. A + IGREJA ✗ | E + ELEFANTE ✓
+3. I + IGREJA ✓ | O + ABELHA ✗
+4. O + OLHO ✓ | U + ELEFANTE ✗
+5. A + UVA ✗ | U + UVA ✓
 
-### GitHub Pages
-Envie todo o conteúdo para a branch `main`.
-O workflow `.github/workflows/deploy-pages.yml` publica automaticamente o site.
+Ao acertar, há transição para uma NOVA tela ainda dentro da Fase 1. Após a quinta, abre automaticamente a Fase 2.
 
-## Estrutura
-- `index.html` — jogo completo
-- `assets/` — artes e personagens
-- `netlify.toml` — configuração do Netlify
-- `.github/workflows/deploy-pages.yml` — publicação no GitHub Pages
-- `.nojekyll` — compatibilidade com GitHub Pages
-- `CORRECOES_SOLICITADAS.md` — checklist da revisão
+## Avatar
+A seleção foi reconstruída com botões reais contendo as imagens dos quatro personagens. Não há hotspots invisíveis.

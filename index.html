@@ -1,1010 +1,155 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#148ed1">
-<title>Aventura do Alfabeto | WM Jogos Educativos</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Aventura do Alfabeto — WM Jogos Educativos</title>
 <style>
-:root{--navy:#102b58;--yellow:#ffd32a;--green:#31c92d;--sky:#46bfff;--wood:#8a461f;--cream:#fff9e7}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0a5485;font-family:"Trebuchet MS",Arial,sans-serif;color:var(--navy)}
-body{display:grid;place-items:center}
-#shell{width:100vw;height:100vh;display:grid;place-items:center;background:linear-gradient(180deg,#168fc9,#073f70)}
-#gameframe{position:relative;width:min(100vw,150vh);height:min(100vh,66.6667vw);aspect-ratio:3/2;background:#70d4f4;overflow:hidden;box-shadow:0 0 45px #001a36}
-.screen{display:none;position:absolute;inset:0}.screen.on{display:block}
-.art{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:#168fc9;user-select:none;-webkit-user-drag:none;filter:none;image-rendering:auto}
-.dim{position:absolute;inset:0;background:linear-gradient(#0016340a,#0016341b);pointer-events:none}
-button,input{font-family:inherit}.top{position:absolute;z-index:20;top:1.4%;left:1.2%;right:1.2%;display:flex;align-items:center;justify-content:space-between;gap:1%}
-.hud{display:flex;gap:.6vw;align-items:center}.chip{background:#fffffff0;border:3px solid white;border-radius:1.2vw;padding:.45em .8em;font-size:clamp(11px,1.45vw,22px);font-weight:900;box-shadow:0 .25vw .5vw #0003}
-.icon{border:3px solid white;border-radius:1vw;background:linear-gradient(#52caff,#168fdd);color:white;font-size:clamp(13px,1.65vw,25px);font-weight:900;padding:.45em .65em;box-shadow:0 .28vw 0 #075c9a;cursor:pointer}
-.icon:active,.btn:active,.answer:active,.tile:active{transform:translateY(.25vw);box-shadow:none}
-.hotplay{position:absolute;z-index:10;left:38%;top:55%;width:31%;height:18%;border:0;background:transparent;cursor:pointer}
-.setup{position:absolute;z-index:8;left:27%;top:7%;width:48%;height:86%;background:#fffdf1f2;border:.35vw solid #fff;border-radius:2.2vw;box-shadow:0 .8vw 2vw #001b4666;text-align:center;padding:1.4%}
-.wood{display:inline-block;background:linear-gradient(#bd6a30,#773514);border:.25vw solid #eaa45a;border-radius:1vw;color:#fff;font-weight:900;text-shadow:0 .15vw #0008;padding:.35em 1.2em;font-size:clamp(14px,1.75vw,27px)}
-.name{width:78%;margin:1.5% auto 2%;padding:1.5%;border:.28vw solid #52c7ff;border-radius:1vw;text-align:center;font-weight:900;font-size:clamp(14px,1.65vw,25px);display:block}
-.avatars{display:flex;justify-content:center;gap:1.4%;margin:2% 0 3%}.avatar{width:22%;aspect-ratio:1;border:.3vw solid #59c9f7;border-radius:1.3vw;padding:0;background:#e8fbff;overflow:hidden;cursor:pointer;box-shadow:0 .3vw .5vw #0002}.avatar img{width:100%;height:100%;object-fit:contain;object-position:center;background:#e8fbff}.avatar.sel{border-color:#ffca24;box-shadow:0 0 0 .25vw #fff,0 0 1vw #ffca24;transform:scale(1.045)}
-.btn{border:.3vw solid white;border-radius:1.8vw;background:linear-gradient(#67ef3b,#16a818);color:#fff;padding:.4em 1.35em;font-size:clamp(18px,2.5vw,38px);font-weight:900;text-shadow:0 .18vw #096c12;box-shadow:0 .45vw 0 #087514;cursor:pointer}
-.mapnode{position:absolute;z-index:9;border:0;background:transparent;cursor:pointer}.mapnode.lock{cursor:not-allowed;filter:grayscale(1)}.mapnode.done:after{content:"✓";position:absolute;right:8%;top:8%;width:22%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:#31cb45;border:.25vw solid white;color:white;font-size:2vw;font-weight:900}
-.n1{left:13%;top:36%;width:24%;height:27%}.n2{left:40%;top:34%;width:23%;height:28%}.n3{left:70%;top:49%;width:24%;height:28%}.n4{left:37%;top:65%;width:25%;height:27%}.n5{left:70%;top:15%;width:24%;height:28%}
-.stageTitle{position:absolute;z-index:11;left:25%;right:25%;top:2%;text-align:center}.stageTitle .wood{font-size:clamp(14px,1.8vw,28px)}
-.panel{position:absolute;z-index:8;left:18%;right:5%;top:16%;bottom:5%;background:transparent;border:.35vw solid white;border-radius:2vw;box-shadow:0 .8vw 2vw #001b4666;text-align:center;padding:1.2%;overflow:hidden}
-.progress{width:82%;height:1.1vw;min-height:8px;margin:.5% auto;background:#d9d9d9;border:.15vw solid white;border-radius:1vw;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,#ffce25,#45d443);transition:.35s}
-.prompt{width:76%;margin:.6% auto;background:#fffffff2;border:.25vw solid #55c3ff;border-radius:1.2vw;padding:.55em;font-size:clamp(16px,2vw,31px);font-weight:900}
-.visual{height:31%;display:flex;align-items:center;justify-content:center;gap:2%}.emoji{font-size:clamp(55px,8vw,122px);filter:drop-shadow(0 .35vw .2vw #0002)}.wordpic{background:#fff;border:.25vw solid #ffd178;border-radius:1.2vw;padding:.5% 2%;font-size:clamp(20px,2.4vw,36px);font-weight:900}
-.answers,.tiles{height:30%;display:flex;align-items:center;justify-content:center;gap:1.3%;flex-wrap:wrap}.answer,.tile{min-width:18%;border:.28vw solid #cdb1ff;border-radius:1.2vw;background:#fff;padding:.48em .75em;font-size:clamp(17px,2.2vw,34px);font-weight:900;box-shadow:0 .35vw 0 #0002;cursor:pointer}.answer.good{background:#79e78a;border-color:#2ebd43}.answer.bad{background:#ffd7d7;animation:shake .25s 2}@keyframes shake{50%{transform:translateX(.6vw)}}
-.slots{width:68%;height:23%;margin:.5% auto;border:.28vw dashed #67baf0;border-radius:1.2vw;background:#fff;display:flex;align-items:center;justify-content:center;gap:1%;font-size:clamp(19px,2.6vw,40px);font-weight:900}
-.mascot{position:absolute;z-index:9;left:1.5%;bottom:4%;width:16%;aspect-ratio:1;border:.35vw solid white;border-radius:50%;overflow:hidden;background:#e7fbff;box-shadow:0 .5vw 1vw #001a4166}.mascot img{width:100%;height:100%;object-fit:contain;object-position:center;background:#e8fbff}
-.toast{position:absolute;z-index:80;left:50%;top:11%;transform:translateX(-50%) scale(.8);opacity:0;background:#fff;border:.3vw solid #ffd22c;border-radius:1.2vw;padding:.55em 1.2em;font-size:clamp(16px,1.9vw,29px);font-weight:900}.toast.show{animation:toast .9s}@keyframes toast{20%,75%{opacity:1;transform:translateX(-50%) scale(1)}}
-.conf{position:absolute;z-index:90;top:-8%;font-size:2.2vw;animation:fall 1.6s linear forwards}@keyframes fall{to{transform:translateY(115vh) rotate(720deg)}}
-.finalCard{position:absolute;z-index:9;left:31%;top:14%;width:54%;height:72%;background:#fffffff0;border:.4vw solid #ffd22d;border-radius:2vw;box-shadow:0 .8vw 2vw #001b4666;text-align:center;padding:1.5%}.finalCard h1{margin:0;color:#ff8a00;font-size:clamp(24px,3.3vw,50px);text-shadow:0 .15vw #6b3100}.trophy{font-size:clamp(55px,8vw,120px);line-height:1}.cert{margin:1% auto;width:72%;background:#fff8d7;border:.25vw solid #e8b33d;border-radius:1vw;padding:2%;font-weight:900}.tiny{font-size:clamp(11px,1.35vw,20px)}
-@media(max-width:700px){.chip.namechip{display:none}}
-
-/* TELA HD PROFISSIONAL — coordenadas percentuais da arte 1536x1024 */
-.hdName{
- position:absolute;z-index:20;left:27.0%;top:43.3%;width:31.7%;height:6.1%;
- border:.25vw solid #39aff2;border-radius:1.2vw;background:#fff;
- text-align:center;font-weight:900;font-size:clamp(15px,1.65vw,25px);
- color:#172b55;outline:none;padding:0 .8em;
-}
-.hdName:focus{box-shadow:0 0 0 .22vw #fff,0 0 1vw #38baff}
-.hdAvatars{
-position:absolute;z-index:1002;
-left:23.7%;top:56.2%;width:41.3%;height:17.1%;
-display:flex;gap:1.2%;pointer-events:auto
-}
-.hdAvatar{
-height:100%;flex:1;border:0!important;border-radius:1.25vw;
-background:transparent!important;cursor:pointer;pointer-events:auto!important;
-touch-action:manipulation;-webkit-tap-highlight-color:transparent!important
-}
-.hdAvatar.sel{border-color:#ffd126;box-shadow:0 0 0 .2vw #fff,0 0 .8vw #ffd126}
-.hdStart{
- position:absolute!important;z-index:999!important;
- left:27.2%!important;top:72.5%!important;width:32.5%!important;height:16.5%!important;
- display:block!important;border:0!important;background:transparent!important;
- cursor:pointer!important;border-radius:4vw!important;pointer-events:auto!important;
-}
-.hdMusic{
- position:absolute!important;z-index:999!important;
- left:2.5%!important;top:84.0%!important;width:16.5%!important;height:14.5%!important;
- display:block!important;border:0!important;background:transparent!important;
- cursor:pointer!important;pointer-events:auto!important;
-}
-
-
-#stage .top{background:linear-gradient(180deg,rgba(9,61,102,.92),rgba(9,61,102,.62));left:0;right:0;top:0;padding:.7% 1.2%;border-bottom:2px solid rgba(255,255,255,.65)}
-#stage .stageTitle{top:1.3%}
-#stage .panel{border:0;box-shadow:none}
-#stage .visual{background:rgba(255,255,255,.08);border-radius:1.2vw}
-
-
-/* FASE 1 TOTALMENTE INTEGRADA AO CENÁRIO */
-#stage:has(#content .forestTargets) .panel{
- left:0;right:0;top:0;bottom:0;background:transparent;border:0;box-shadow:none;padding:0;pointer-events:none;
-}
-#stage:has(#content .forestTargets) .progress{display:none}
-#stage:has(#content .forestTargets) .stageTitle{display:none}
-.forestPrompt{
- position:absolute;z-index:15;left:29%;top:11%;width:49%;height:10%;
- display:flex;align-items:center;justify-content:center;
- background:#fffffff5;border:.28vw solid #58c8ff;border-radius:1.4vw;
- font-size:clamp(16px,2vw,31px);font-weight:900;pointer-events:auto;
-}
-.forestTargets{position:absolute;inset:0;z-index:14;pointer-events:none}
-.logTarget{
- position:absolute;transform:translate(-50%,-50%);width:10.5%;aspect-ratio:1;
- border:.35vw solid #9a5725;border-radius:50%;
- background:radial-gradient(circle,#fff4c8 0 62%,#d89a4a 64% 72%,#8a4b22 74% 100%);
- color:#0c3978;font-size:clamp(25px,4vw,62px);font-weight:1000;
- text-shadow:0 .08vw #fff;box-shadow:0 .35vw .55vw #0004;cursor:pointer;pointer-events:auto;
-}
-.logTarget.good{background:radial-gradient(circle,#b8ffad 0 62%,#65c84c 64% 72%,#317d2b 74% 100%)}
-.logTarget.bad{animation:shake .25s 2}
-#stage .top{z-index:40}
-#stage .top .icon:first-child{
- background:linear-gradient(#ffd83d,#ff9c18);color:#fff;border-color:#fff;
-}
-
-#stage:has(#content .forestTargets) .mascot{display:none}
-
-/* MAPA HD: a própria arte é clicável; sem botões/imagens duplicadas */
-#map .art{object-fit:contain;object-position:center;filter:none}
-.mapHot{position:absolute;z-index:15;border:0;background:transparent;cursor:pointer}
-.mapBack{left:1.5%;top:1.5%;width:10%;height:13%}
-.mh1{left:16%;top:28%;width:25%;height:30%}
-.mh2{left:43%;top:28%;width:23%;height:30%}
-.mh3{left:70%;top:23%;width:25%;height:31%}
-.mh4{left:36%;top:61%;width:27%;height:34%}
-.mh5{left:69%;top:61%;width:27%;height:34%}
-.lockedHot{cursor:not-allowed}
-.mapScore{position:absolute;z-index:18;right:3.3%;top:2.7%;width:12.5%;height:7.5%;display:flex;align-items:center;justify-content:center;background:#102e67;border:.22vw solid #fff;border-radius:1vw;color:#fff;font-weight:900;font-size:clamp(13px,1.7vw,26px);box-shadow:0 .25vw .5vw #0003}
-
-/* FLORESTA: cenário limpo e letras diretamente nas toras */
-#stage:has(.forestTargets) .art{object-fit:contain;object-position:center;filter:none}
-#stage:has(.forestTargets) .panel{position:absolute;inset:0;background:transparent;border:0;box-shadow:none;padding:0;overflow:visible;pointer-events:none}
-#stage:has(.forestTargets) .progress,#stage:has(.forestTargets) .stageTitle,#stage:has(.forestTargets) .mascot{display:none}
-#stage:has(.forestTargets) .top{background:transparent;border:0;padding:.8% 1.2%}
-.forestPrompt{position:absolute;z-index:20;left:31%;top:3.2%;width:43%;height:9%;display:flex;align-items:center;justify-content:center;background:#fffffff2;border:.28vw solid #55c5ff;border-radius:1.2vw;font-weight:900;font-size:clamp(16px,2vw,31px);pointer-events:auto;box-shadow:0 .3vw .7vw #0002}
-.forestTargets{position:absolute;inset:0;z-index:18;pointer-events:none}
-.letterOnLog{position:absolute;transform:translate(-50%,-50%);width:12%;height:16%;border:0;background:transparent;color:#103d80;font-size:clamp(34px,5.3vw,82px);font-weight:1000;text-shadow:0 .12vw #fff,0 .22vw .25vw #0002;cursor:pointer;pointer-events:auto}
-.letterOnLog:hover{transform:translate(-50%,-50%) scale(1.08)}
-.letterOnLog.good{color:#16a83c;animation:pop .35s}
-.letterOnLog.bad{color:#e53a31;animation:shake .25s 2}
-@keyframes pop{50%{transform:translate(-50%,-50%) scale(1.25)}}
-
-
-/* ===== PADRÃO FINAL DE QUALIDADE VISUAL ===== */
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0b6fa4}
-*{box-sizing:border-box}
-.screen{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;background:#0b6fa4}
-.screen>.art,#stageArt{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:contain !important;
-  object-position:center center !important;
-  filter:none !important;
-  transform:none !important;
-  image-rendering:auto !important;
-  -webkit-font-smoothing:antialiased;
-}
-button,input{font-family:Arial,Helvetica,sans-serif}
-button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offset:3px}
-
-/* texto legível em celular/tablet */
-.prompt,.forestPrompt,.wordpic,.answer,.tile,.chip,.stageTitle{
-  text-rendering:optimizeLegibility;
-  -webkit-font-smoothing:antialiased;
-}
-.answer,.tile{min-height:58px}
-@media(max-width:900px){
- .prompt,.forestPrompt{font-size:clamp(18px,3.4vw,28px)}
- .answer,.tile{font-size:clamp(18px,4vw,30px)}
-}
-
-
-.avatar.selected,.hdAvatar.selected{outline:none!important;box-shadow:none!important;}
-
-
-.mapHot{color:transparent!important;font-size:0!important;box-shadow:none!important}
-.mapHot:hover{background:rgba(255,255,255,.07)}
-#stage:has(.forestTargets) .top .icon:first-child{
-  position:absolute;left:1.2%;top:1.2%;z-index:60;
-  background:linear-gradient(#ffd83d,#ff9d19);border:3px solid #fff;color:#fff;
-  border-radius:18px;font-weight:900;padding:10px 16px;min-width:110px;
-}
-
-
-/* ===== MAPA FINAL: UMA ÚNICA CAMADA VISUAL ===== */
-#map>.art{
- width:100%;height:100%;object-fit:contain!important;object-position:center!important;
- filter:none!important;transform:none!important;background:#1599d0;
-}
-#map .top,#map .hud,#map .chip,#map .icon{display:none!important}
-#map .mapScore{display:none!important}
-#map .mapHot{
- position:absolute;z-index:30;border:0;background:transparent!important;
- box-shadow:none!important;padding:0;cursor:pointer;border-radius:18px;
-}
-#map .mapHot:hover{background:rgba(255,255,255,.10)!important}
-#map .mapHot:active{background:rgba(255,220,60,.16)!important}
-#map .mapBack{left:0.5%;top:0.7%;width:8.5%;height:13%}
-#map .mh1{left:12.5%;top:27%;width:26%;height:28%}
-#map .mh2{left:42%;top:30%;width:22%;height:28%}
-#map .mh3{left:73%;top:25%;width:24%;height:29%}
-#map .mh4{left:25%;top:61%;width:27%;height:31%}
-#map .mh5{left:67%;top:62%;width:27%;height:31%}
-#map .lockedHot{cursor:not-allowed}
-
-
-/* ===== FLORESTA FINAL: LETRAS INCORPORADAS ÀS TORAS ===== */
-#stage:has(.forestTargets) .top{
- position:absolute;z-index:50;top:1%;left:1%;right:1%;background:transparent!important;border:0!important;
-}
-#stage:has(.forestTargets) .top .hud{display:flex}
-#stage:has(.forestTargets) .stageTitle,
-#stage:has(.forestTargets) .progress,
-#stage:has(.forestTargets) .mascot{display:none!important}
-#stage:has(.forestTargets) .panel{
- position:absolute!important;inset:0!important;background:transparent!important;border:0!important;
- box-shadow:none!important;padding:0!important;overflow:visible!important;pointer-events:none!important;
-}
-#stage:has(.forestTargets) .forestPrompt{
- position:absolute;z-index:25;left:31%;top:11%;width:43%;height:9%;
- display:flex;align-items:center;justify-content:center;
- background:rgba(255,255,255,.96);border:4px solid #52c6ff;border-radius:22px;
- box-shadow:0 5px 12px rgba(0,0,0,.15);font-size:clamp(18px,2vw,31px);font-weight:900;
- pointer-events:auto;
-}
-#stage:has(.forestTargets) .forestTargets{position:absolute;inset:0;z-index:24;pointer-events:none}
-#stage:has(.forestTargets) .letterOnLog{
- position:absolute;transform:translate(-50%,-50%);
- width:11%;height:15%;padding:0;border:0!important;border-radius:0!important;
- background:transparent!important;box-shadow:none!important;
- color:#123e80;font-size:clamp(38px,5vw,78px);font-weight:1000;line-height:1;
- text-shadow:0 2px 0 #fff,0 3px 4px rgba(0,0,0,.12);
- cursor:pointer;pointer-events:auto;
-}
-#stage:has(.forestTargets) .letterOnLog:hover{transform:translate(-50%,-50%) scale(1.08)}
-#stage:has(.forestTargets) .letterOnLog.good{color:#16a83c}
-#stage:has(.forestTargets) .letterOnLog.bad{color:#e83b32}
-
-
-#stage .top .icon:first-child{
- min-width:118px;background:linear-gradient(#ffd846,#ff9f1c)!important;color:white!important;
- border:3px solid white!important;border-radius:18px!important;font-weight:900!important;
- box-shadow:0 4px 0 #c46b0b!important;
-}
-#stage .chip{font-weight:900}
-
-
-.hdStart:active{background:rgba(255,255,255,.10)}
-.hdMusic:active{background:rgba(255,255,255,.14)}
-.hdAvatar:active{background:rgba(255,255,255,.10)}
-
-
-/* ===== REVISÃO COMPLETA DE INTERAÇÃO E QUALIDADE ===== */
-.hdStart,.hdMusic,.hdAvatar,.mapHot,.answer,.tile,.letterOnLog{pointer-events:auto!important;touch-action:manipulation}
-.hdStart{z-index:1000!important}
-.hdMusic{z-index:1000!important}
-.hdAvatars{z-index:1001!important}
-#setup .art,#map .art,#stageArt{filter:none!important;transform:none!important;image-rendering:auto!important}
-#map .art,#stageArt{object-fit:contain!important;object-position:center center!important}
-
-/* evita círculos/cartões extras sobre as toras */
-#stage:has(.forestTargets) .letterOnLog{
- border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;
- color:#123e80!important;text-shadow:0 2px 0 #fff,0 3px 4px rgba(0,0,0,.18)!important;
-}
-#stage:has(.forestTargets) .letterOnLog.good{color:#16a83c!important}
-#stage:has(.forestTargets) .letterOnLog.bad{color:#e53935!important}
-
-/* fases 2–5: legibilidade sem embaçar o cenário */
-#stage:not(:has(.forestTargets)) .panel{
- background:rgba(255,250,235,.94)!important;
- backdrop-filter:none!important;
-}
-#stage:not(:has(.forestTargets)) .prompt{
- background:#fff!important;color:#092b5f!important;
-}
-
-
-.hdAvatar.sel,.hdAvatar.selected{outline:none!important;box-shadow:none!important;}
-
-/* FASE 1 — ARTE APROVADA INCORPORADA AO JOGO */
-#stage:has(.vowelHitLayer) #stageArt{
- object-fit:contain!important;object-position:center!important;
- filter:none!important;transform:none!important;image-rendering:auto!important;
-}
-#stage:has(.vowelHitLayer) .panel{
- position:absolute!important;inset:0!important;padding:0!important;
- background:transparent!important;border:0!important;box-shadow:none!important;
- pointer-events:none!important;overflow:visible!important;
-}
-#stage:has(.vowelHitLayer) .progress,
-#stage:has(.vowelHitLayer) .stageTitle,
-#stage:has(.vowelHitLayer) .mascot{display:none!important}
-#stage:has(.vowelHitLayer) .top{
- position:absolute!important;z-index:80!important;left:0!important;right:0!important;top:0!important;
- background:transparent!important;border:0!important;box-shadow:none!important;
-}
-.vowelHitLayer{position:absolute;inset:0;z-index:50;pointer-events:none}
-.vowelPictureHit{
- position:absolute;border:0;background:transparent;box-shadow:none;border-radius:3vw;
- cursor:pointer;pointer-events:auto;touch-action:manipulation;
-}
-.vowelPictureHit:hover{background:rgba(255,255,255,.06)}
-.vowelPictureHit:active{background:rgba(255,223,64,.13)}
-.vowelPictureHit.good{outline:.45vw solid #35d45a;outline-offset:-.45vw}
-.vowelPictureHit.bad{animation:shake .22s 2}
-
-
-/* Associação visual: letra + animal/objeto + palavra, sem alterar o restante do jogo */
-#stage:has(.assocOnLog) .panel{
- position:absolute!important;inset:0!important;background:transparent!important;
- border:0!important;box-shadow:none!important;padding:0!important;pointer-events:none!important;
-}
-#stage:has(.assocOnLog) .progress,
-#stage:has(.assocOnLog) .stageTitle,
-#stage:has(.assocOnLog) .mascot{display:none!important}
-#stage:has(.assocOnLog) .forestTargets{position:absolute;inset:0;z-index:45;pointer-events:none}
-.assocOnLog{
- position:absolute;transform:translate(-50%,-50%);
- width:17%;height:19%;border:0;background:transparent;box-shadow:none;
- padding:0;cursor:pointer;pointer-events:auto;touch-action:manipulation;
-}
-.assocOnLog img{
- width:100%;height:100%;object-fit:contain;display:block;
- filter:none!important;transform:none!important;image-rendering:auto!important;
-}
-.assocOnLog:hover{transform:translate(-50%,-50%) scale(1.05)}
-.assocOnLog.good{outline:.4vw solid #35d45a;outline-offset:.15vw;border-radius:2vw}
-.assocOnLog.bad{animation:shake .22s 2}
-
-
-/* ===== CORREÇÃO FINAL FASE 1: CINCO ASSOCIAÇÕES VISUAIS ===== */
-#stage:has(.vowelAssociationGrid) .panel{
- position:absolute!important;inset:0!important;background:transparent!important;border:0!important;
- box-shadow:none!important;padding:0!important;overflow:visible!important;pointer-events:none!important;
-}
-#stage:has(.vowelAssociationGrid) .progress,
-#stage:has(.vowelAssociationGrid) .stageTitle,
-#stage:has(.vowelAssociationGrid) .mascot{display:none!important}
-#stage:has(.vowelAssociationGrid) .forestPrompt{
- left:27%!important;top:3%!important;width:46%!important;height:10%!important;
-}
-.vowelAssociationGrid{
- position:absolute;z-index:55;left:18%;right:5%;top:18%;bottom:4%;
- display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr;
- gap:2.5% 2%;pointer-events:none;
-}
-.vowelAssocCard{
- border:0;background:transparent;padding:0;cursor:pointer;pointer-events:auto;touch-action:manipulation;
- min-width:0;min-height:0;border-radius:2vw;overflow:hidden;
-}
-.vowelAssocCard:nth-child(1){grid-column:1/3}
-.vowelAssocCard:nth-child(2){grid-column:3/5}
-.vowelAssocCard:nth-child(3){grid-column:5/7}
-.vowelAssocCard:nth-child(4){grid-column:2/4}
-.vowelAssocCard:nth-child(5){grid-column:4/6}
-.vowelAssocCard img{width:100%;height:100%;object-fit:contain;display:block;filter:none!important}
-.vowelAssocCard:hover{transform:scale(1.025)}
-.vowelAssocCard.good{outline:.45vw solid #32d257;outline-offset:-.3vw}
-.vowelAssocCard.bad{animation:shake .22s 2}
-
-/* ←: canto inferior esquerdo, fora da pergunta e dos contadores */
-#stage .top .icon:first-child{
- position:fixed!important;left:1.2%!important;top:auto!important;bottom:2%!important;
- z-index:1200!important;min-width:125px!important;
-}
-
-/* ===== FASE 2: IMAGEM E PALAVRA NO MESMO CARTÃO ===== */
-#stage:has(.imageWordAnswers) .visual{display:none!important}
-.imageWordAnswers{
- display:grid;grid-template-columns:repeat(3,1fr);gap:2.2%;
- width:92%;margin:4% auto 0;
-}
-.imageWordCard{
- min-height:190px!important;display:flex!important;flex-direction:column!important;
- align-items:center!important;justify-content:center!important;gap:8px!important;
- background:#fff!important;border:4px solid #c8a3ff!important;border-radius:24px!important;
-}
-.choicePic{font-size:clamp(58px,7vw,100px);line-height:1}
-.choiceWord{font-size:clamp(24px,3vw,42px);font-weight:1000;color:#071f48}
-
-
-/* CORREÇÃO PONTUAL — seleção de personagem */
-.hdAvatar:focus,
-.hdAvatar:focus-visible,
-.hdAvatar.sel:focus,
-.hdAvatar.selected:focus{
- outline:none!important;
- outline-offset:0!important;
- box-shadow:none!important;
-}
-.hdAvatar.sel,
-.hdAvatar.selected{
- outline:none!important;
- box-shadow:none!important;
-}
-/* Destaque somente dentro do cartão realmente escolhido */
-.hdAvatar.sel::after,
-.hdAvatar.selected::after{
- content:"";
- position:absolute;
- inset:3%;
- border:5px solid #ffd83d;
- border-radius:18px;
- pointer-events:none;
-}
-.hdAvatar{position:relative}
-
-
-/* ===== CORREÇÕES VISUAIS DEFINITIVAS ===== */
-.hdAvatar,.hdAvatar:hover,.hdAvatar:active,.hdAvatar:focus,.hdAvatar:focus-visible,
-.hdAvatar.sel,.hdAvatar.selected,.hdAvatar.sel:focus,.hdAvatar.selected:focus{
- outline:0!important;outline:none!important;outline-offset:0!important;
- box-shadow:none!important;border:0!important;background:transparent!important;
- -webkit-tap-highlight-color:transparent!important;
-}
-.hdAvatar::before,.hdAvatar::after,
-.hdAvatar.sel::before,.hdAvatar.sel::after,
-.hdAvatar.selected::before,.hdAvatar.selected::after{
- content:none!important;display:none!important;border:0!important;outline:0!important;box-shadow:none!important;
-}
-
-/* Botão voltar: apenas seta, sem palavra ← */
-#stage .top .icon:first-child,
-#map .icon:first-child{
- width:74px!important;min-width:74px!important;height:68px!important;
- padding:0!important;border-radius:20px!important;
- font-size:0!important;line-height:0!important;
- display:flex!important;align-items:center!important;justify-content:center!important;
- background:linear-gradient(#ffbf24,#ff991c)!important;
- border:4px solid #fff!important;box-shadow:0 5px 0 #c8680a!important;
-}
-#stage .top .icon:first-child::after,
-#map .icon:first-child::after{
- content:"←"!important;display:block!important;
- font-size:42px!important;line-height:1!important;font-weight:1000!important;color:#fff!important;
-}
-
-/* FASE 1 = a própria imagem aprovada é o jogo */
-#stage.fase1Aprovada #stageArt{
- content:url("assets/fase1_floresta_aprovada.png")!important;
- width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;
- filter:none!important;transform:none!important;image-rendering:auto!important;
-}
-#stage.fase1Aprovada .panel{
- position:absolute!important;inset:0!important;padding:0!important;margin:0!important;
- background:transparent!important;border:0!important;box-shadow:none!important;
- pointer-events:none!important;overflow:visible!important;
-}
-#stage.fase1Aprovada .progress,
-#stage.fase1Aprovada .stageTitle,
-#stage.fase1Aprovada .mascot{display:none!important}
-#stage.fase1Aprovada .forestPrompt{display:none!important}
-.fase1ClickLayer{position:absolute;inset:0;z-index:60;pointer-events:none}
-.fase1Card{
- position:absolute;border:0!important;background:transparent!important;box-shadow:none!important;
- outline:0!important;padding:0!important;cursor:pointer;pointer-events:auto;touch-action:manipulation;
- -webkit-tap-highlight-color:transparent!important;
-}
-.fase1Card:focus,.fase1Card:focus-visible{outline:0!important;box-shadow:none!important}
-.fase1Card.good{box-shadow:inset 0 0 0 8px #2fd35a!important;border-radius:50%!important}
-.fase1Card.bad{animation:shake .22s 2}
-
-/* Mantém a seta da fase sem cobrir a arte principal */
-#stage.fase1Aprovada .top .icon:first-child{
- position:absolute!important;left:1.2%!important;top:2%!important;bottom:auto!important;z-index:1200!important;
-}
-
-
-/* PERSONAGENS — hotspots exatamente sobre os quatro cartões */
-.hdAvatar,.hdAvatar:hover,.hdAvatar:active,.hdAvatar:focus,.hdAvatar:focus-visible,
-.hdAvatar.sel,.hdAvatar.selected{
- outline:none!important;border:0!important;box-shadow:none!important;background:transparent!important;
-}
-.hdAvatar::before,.hdAvatar::after,.hdAvatar.sel::before,.hdAvatar.sel::after,
-.hdAvatar.selected::before,.hdAvatar.selected::after{content:none!important;display:none!important}
-
-/* FASE 1 — uma única associação correta por atividade */
-#stage.fase1Aprovada #stageArt{
- content:none!important;
-}
-#stage.fase1Aprovada .panel{
- position:absolute!important;inset:0!important;padding:0!important;background:transparent!important;
- border:0!important;box-shadow:none!important;pointer-events:none!important;
-}
-#stage.fase1Aprovada .progress,#stage.fase1Aprovada .stageTitle,#stage.fase1Aprovada .mascot{display:none!important}
-.phase1Prompt{
- position:absolute;z-index:80;left:29%;top:7%;width:49%;min-height:9%;
- display:flex;align-items:center;justify-content:center;text-align:center;
- background:rgba(255,255,255,.96);border:4px solid #54c5ff;border-radius:28px;
- color:#0b376f;font-weight:1000;font-size:clamp(22px,2.2vw,38px);padding:.5% 1%;
- pointer-events:none;
-}
-.phase1Choices{
- position:absolute;z-index:75;left:24%;right:5%;top:27%;bottom:9%;
- display:grid;grid-template-columns:repeat(3,1fr);gap:3%;align-items:center;pointer-events:none;
-}
-.phase1Pair{
- height:72%;border:7px solid #f0b52e;border-radius:50px;background:#fff3c8;
- box-shadow:0 10px 0 #b66a18,0 12px 22px rgba(0,0,0,.2);
- display:flex;flex-direction:column;align-items:center;justify-content:center;
- cursor:pointer;pointer-events:auto;touch-action:manipulation;overflow:hidden;padding:3%;
-}
-.phase1Pair .pairLetter{
- font-size:clamp(62px,8vw,125px);line-height:.85;font-weight:1000;color:#164d9c;
- text-shadow:0 4px 0 #fff;
-}
-.phase1Pair img{width:72%;height:52%;object-fit:contain;filter:none!important}
-.phase1Pair .pairWord{
- font-size:clamp(17px,1.8vw,30px);font-weight:1000;color:#4b250b;
- background:#ffc85c;border:3px solid #b86c1c;border-radius:14px;padding:2% 8%;
-}
-.phase1Pair.good{border-color:#2dd455!important;box-shadow:0 0 0 8px #fff,0 0 0 14px #2dd455!important}
-.phase1Pair.bad{animation:shake .22s 2}
-
-
-/* PERSONAGENS — clique/toque confiável */
-.hdAvatars{
- position:absolute!important;z-index:5000!important;
- left:22.8%!important;top:56.0%!important;width:43.2%!important;height:18.0%!important;
- display:flex!important;gap:1.3%!important;pointer-events:auto!important;
-}
-.hdAvatar{
- display:block!important;position:relative!important;flex:1 1 0!important;height:100%!important;
- z-index:5001!important;pointer-events:auto!important;cursor:pointer!important;
- border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;
- touch-action:manipulation!important;-webkit-tap-highlight-color:transparent!important;
-}
-.hdAvatar:focus,.hdAvatar:focus-visible,.hdAvatar:active,
-.hdAvatar[aria-pressed="true"]{
- border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;
-}
-.hdAvatar::before,.hdAvatar::after{content:none!important;display:none!important}
-
-
-/* ===== SELEÇÃO DE PERSONAGEM — feedback sem quadrado amarelo ===== */
-.hdAvatar{
- position:relative!important;overflow:visible!important;pointer-events:auto!important;
- border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;
-}
-.hdAvatar:focus,.hdAvatar:focus-visible,.hdAvatar:active,.hdAvatar.selected,
-.hdAvatar[aria-pressed="true"]{
- border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;
-}
-.hdAvatar::before,.hdAvatar::after{content:none!important;display:none!important}
-.avatarCheck{
- display:none;position:absolute;right:2%;top:2%;z-index:20;
- width:30px;height:30px;border-radius:50%;background:#25c84a;color:#fff;
- border:3px solid #fff;box-shadow:0 2px 5px #0005;
- font:900 21px/25px Arial,sans-serif;text-align:center;pointer-events:none;
-}
-.hdAvatar.selected .avatarCheck,.hdAvatar[aria-pressed="true"] .avatarCheck{display:block}
-
-
-/* ===== FASE 1 SEQUENCIAL — UMA RESPOSTA CERTA POR TELA ===== */
-#stage.fase1Aprovada #stageArt{
- content:none!important;width:100%!important;height:100%!important;
- object-fit:contain!important;object-position:center!important;filter:none!important;transform:none!important;
-}
-#stage.fase1Aprovada .panel{
- position:absolute!important;inset:0!important;background:transparent!important;border:0!important;
- box-shadow:none!important;padding:0!important;overflow:visible!important;pointer-events:none!important;
-}
-#stage.fase1Aprovada .progress,#stage.fase1Aprovada .stageTitle,#stage.fase1Aprovada .mascot{display:none!important}
-.phase1Prompt{
- position:absolute!important;z-index:80!important;left:29.5%!important;top:4.5%!important;
- width:48%!important;min-height:10%!important;padding:.5% 1%!important;
- display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
- background:rgba(255,255,255,.96)!important;border:4px solid #54c5ff!important;border-radius:25px!important;
- color:#0b376f!important;text-align:center!important;font-size:clamp(18px,1.75vw,29px)!important;
- line-height:1.08!important;pointer-events:none!important;
-}
-.phase1Prompt strong{color:#7b3c00;font-size:.8em}
-.phase1LogChoices{
- position:absolute!important;z-index:75!important;left:27.5%!important;right:5.5%!important;
- top:30.5%!important;height:31%!important;display:grid!important;
- grid-template-columns:repeat(3,1fr)!important;gap:4.2%!important;pointer-events:none!important;
-}
-.phase1LogPair{
- min-width:0!important;height:100%!important;padding:3% 4%!important;
- display:grid!important;grid-template-columns:36% 64%!important;grid-template-rows:76% 24%!important;
- align-items:center!important;justify-items:center!important;
- border:0!important;outline:0!important;background:transparent!important;box-shadow:none!important;
- cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important;
- -webkit-tap-highlight-color:transparent!important;
-}
-.phase1LogPair:focus,.phase1LogPair:focus-visible{outline:0!important;box-shadow:none!important}
-.phase1LogPair .logLetter{
- grid-column:1;grid-row:1;
- font-size:clamp(54px,6vw,96px)!important;font-weight:1000!important;line-height:1!important;
- color:#164d9c!important;text-shadow:0 3px 0 #fff,0 5px 6px #0003!important;
-}
-.phase1LogPair img{
- grid-column:2;grid-row:1;width:94%!important;height:94%!important;object-fit:contain!important;
- border-radius:22px!important;filter:none!important;transform:none!important;
-}
-.phase1LogPair .logWord{
- grid-column:1/3;grid-row:2;align-self:center;
- background:#ffc65a!important;border:3px solid #a85b14!important;border-radius:13px!important;
- padding:2% 10%!important;color:#4a240b!important;font-size:clamp(15px,1.5vw,25px)!important;
- font-weight:1000!important;line-height:1!important;box-shadow:0 2px 0 #fff8 inset!important;
-}
-.phase1LogPair.good{
- filter:drop-shadow(0 0 8px #25d44c) drop-shadow(0 0 14px #25d44c)!important;
-}
-.phase1LogPair.bad{animation:shake .22s 2!important}
-
-
-/* =========================================================
-   FASE 1 FINAL — 5 PÁGINAS / UMA ASSOCIAÇÃO CORRETA POR TELA
-   ========================================================= */
-#stage.fase1Aprovada #stageArt{
- content:none!important;
- width:100%!important;height:100%!important;
- object-fit:contain!important;object-position:center!important;
- filter:none!important;transform:none!important;
-}
-#stage.fase1Aprovada .panel{
- position:absolute!important;inset:0!important;
- padding:0!important;margin:0!important;
- background:transparent!important;border:0!important;box-shadow:none!important;
- overflow:visible!important;pointer-events:none!important;
-}
-#stage.fase1Aprovada .progress,
-#stage.fase1Aprovada .stageTitle,
-#stage.fase1Aprovada .mascot{display:none!important}
-
-.phase1Page{
- position:absolute;inset:0;z-index:70;pointer-events:none;
-}
-.phaseEnter{animation:phaseIn .42s ease both}
-.phaseExit{animation:phaseOut .42s ease both}
-@keyframes phaseIn{
- from{opacity:0;transform:translateX(5%) scale(.985)}
- to{opacity:1;transform:translateX(0) scale(1)}
-}
-@keyframes phaseOut{
- from{opacity:1;transform:translateX(0)}
- to{opacity:0;transform:translateX(-5%)}
-}
-
-.phase1Prompt{
- position:absolute!important;
- left:31%!important;top:4.2%!important;width:46%!important;min-height:11%!important;
- display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
- padding:.5% 1.2%!important;
- background:rgba(255,255,255,.97)!important;
- border:4px solid #55c4ff!important;border-radius:25px!important;
- color:#0a376f!important;text-align:center!important;
- box-shadow:0 5px 0 rgba(11,84,140,.2)!important;
- pointer-events:none!important;
-}
-.phase1Prompt strong{
- font-size:clamp(18px,1.55vw,27px)!important;color:#8b480e!important;line-height:1.05!important
-}
-.phase1Prompt span{
- font-size:clamp(19px,1.7vw,30px)!important;font-weight:900!important;line-height:1.08!important
-}
-
-/* As três opções ficam exatamente sobre as três toras superiores do cenário. */
-.phase1ThreeChoices{
- position:absolute!important;
- left:28.3%!important;right:5.7%!important;top:31.5%!important;height:29.5%!important;
- display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:4.3%!important;
- pointer-events:none!important;
-}
-.phase1Choice{
- height:100%!important;min-width:0!important;
- display:grid!important;grid-template-columns:38% 62%!important;grid-template-rows:76% 24%!important;
- align-items:center!important;justify-items:center!important;
- padding:3% 4%!important;
- border:0!important;outline:0!important;background:transparent!important;box-shadow:none!important;
- cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important;
- -webkit-tap-highlight-color:transparent!important;
-}
-.phase1Choice:focus,.phase1Choice:focus-visible{
- outline:0!important;box-shadow:none!important;
-}
-.phaseLetter{
- grid-column:1;grid-row:1;
- font-size:clamp(58px,6.2vw,100px)!important;font-weight:1000!important;line-height:1!important;
- color:#174f9d!important;text-shadow:0 3px 0 #fff,0 5px 6px #0003!important;
-}
-.phase1Choice img{
- grid-column:2;grid-row:1;
- width:96%!important;height:96%!important;object-fit:contain!important;
- border-radius:18px!important;filter:none!important;transform:none!important;
-}
-.phaseWord{
- grid-column:1/3;grid-row:2;
- font-size:clamp(15px,1.45vw,24px)!important;font-weight:1000!important;line-height:1!important;
- color:#4b250c!important;background:#ffc95d!important;
- border:3px solid #aa6019!important;border-radius:13px!important;
- padding:2% 9%!important;box-shadow:0 2px 0 #fff8 inset!important;
-}
-.phase1Choice.good{
- filter:drop-shadow(0 0 8px #2bd552) drop-shadow(0 0 15px #2bd552)!important;
-}
-.phase1Choice.bad{animation:shake .22s 2!important}
-
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,Helvetica,sans-serif;background:#0b7ea9}
+button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+#game{width:100vw;height:100vh;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0;display:none}.screen.on{display:block}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:none}
+.overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,30,60,.12),rgba(0,0,0,.02))}
+.card{position:absolute;background:rgba(255,255,255,.96);border:4px solid #55c6ff;border-radius:28px;box-shadow:0 8px 0 rgba(0,70,120,.18)}
+#setupPanel{left:28%;top:18%;width:48%;padding:2.1%;text-align:center}
+.logo{font-weight:1000;font-size:clamp(28px,4vw,62px);color:#073c79;text-shadow:0 2px white}
+.sub{font-size:clamp(15px,1.5vw,25px);font-weight:800;color:#4c351b;margin:.4rem 0 1rem}
+#name{width:80%;padding:.8rem 1rem;border:4px solid #49bfff;border-radius:20px;font-weight:900;font-size:clamp(20px,2vw,34px);text-align:center;outline:none}
+.avatarTitle{font-weight:1000;color:#6d330e;font-size:clamp(17px,1.5vw,26px);margin:1rem 0 .5rem}
+.avatars{display:grid;grid-template-columns:repeat(4,1fr);gap:2%}
+.avatar{position:relative;border:5px solid transparent;border-radius:22px;background:white;padding:0;overflow:hidden;aspect-ratio:1/1}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.avatar.selected{border-color:#29ce55;box-shadow:0 0 0 5px white,0 0 0 9px #29ce55}
+.avatar .check{display:none;position:absolute;right:5px;top:5px;width:32px;height:32px;border-radius:50%;background:#29ce55;color:#fff;font-weight:1000;align-items:center;justify-content:center;border:3px solid white}.avatar.selected .check{display:flex}
+.start{margin-top:1rem;border:5px solid white;border-radius:28px;background:linear-gradient(#5be51d,#16a900);color:white;font-weight:1000;font-size:clamp(24px,2.7vw,44px);padding:.6rem 3rem;box-shadow:0 7px 0 #087d00}
+.toast{position:absolute;z-index:50;left:50%;bottom:5%;transform:translateX(-50%);background:#082b55;color:white;padding:.8rem 1.4rem;border-radius:18px;font-weight:900;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1}
+.top{position:absolute;z-index:20;left:1.2%;right:1.2%;top:1.5%;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+.top>*{pointer-events:auto}.back,.music{border:4px solid white;background:linear-gradient(#ffbd25,#ff9415);color:white;border-radius:20px;box-shadow:0 5px 0 #b75a0b;font-weight:1000}.back{width:68px;height:62px;font-size:38px}.music{width:66px;height:62px;font-size:28px}
+.stats{display:flex;gap:.6rem;align-items:center}.pill{background:rgba(255,255,255,.95);border:3px solid white;border-radius:20px;padding:.55rem .9rem;font-weight:1000;color:#07366b;font-size:clamp(15px,1.4vw,24px)}
+#map .bg{object-fit:cover}.mapBtns{position:absolute;inset:0}.world{position:absolute;border:0;background:transparent;width:18%;height:13%;font-size:0}.world.unlocked{cursor:pointer}.world.locked{cursor:not-allowed}
+.w1{left:11%;top:46%}.w2{left:40%;top:51%}.w3{left:67%;top:79%}.w4{left:38%;top:80%}.w5{left:72%;top:44%}
+.stageBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:none}
+.stageShade{position:absolute;inset:0;background:rgba(0,25,50,.05)}
+.stageTitle{position:absolute;z-index:5;top:2.5%;left:50%;transform:translateX(-50%);background:#a94f17;color:white;border:4px solid #efaa48;border-radius:18px;padding:.45rem 2rem;font-weight:1000;font-size:clamp(20px,2.3vw,38px);white-space:nowrap}
+.activity{position:absolute;z-index:8;left:18%;right:5%;top:18%;bottom:5%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.prompt{background:rgba(255,255,255,.97);border:4px solid #55c6ff;border-radius:25px;padding:.6rem 1.4rem;font-weight:1000;color:#07366b;font-size:clamp(20px,2.1vw,36px);text-align:center;max-width:80%;margin-bottom:2.2%}
+.pairs{width:100%;display:grid;grid-template-columns:repeat(2,1fr);gap:5%;max-width:920px}
+.pair{height:min(43vh,370px);border:7px solid #d69a36;border-radius:50px;background:radial-gradient(circle,#fff4c8,#e7b85e);box-shadow:0 10px 0 #8b531d;display:grid;grid-template-columns:35% 65%;grid-template-rows:76% 24%;align-items:center;justify-items:center;padding:4%;overflow:hidden}
+.pair .letter{font-size:clamp(70px,9vw,145px);font-weight:1000;color:#164c9c;text-shadow:0 4px white}
+.pair img{width:94%;height:94%;object-fit:contain;filter:none}
+.pair .word{grid-column:1/3;background:#ffc85b;border:4px solid #9b5a20;border-radius:15px;padding:.25rem 1rem;font-size:clamp(18px,1.8vw,30px);font-weight:1000;color:#4a240c}
+.pair.correctFlash{outline:10px solid #2bd352}.pair.wrongFlash{animation:shake .18s 2}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.pageIn{animation:pageIn .45s ease both}@keyframes pageIn{from{opacity:0;transform:translateX(7%)}to{opacity:1;transform:none}}
+.pageOut{animation:pageOut .4s ease both}@keyframes pageOut{to{opacity:0;transform:translateX(-7%)}}
+.generic{width:min(900px,92%);background:rgba(255,255,255,.96);border:4px solid #55c6ff;border-radius:28px;padding:2rem;text-align:center}
+.generic .visual{font-size:clamp(55px,8vw,120px);margin:1rem}.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.ans{padding:1rem;border:4px solid #c9a4ff;border-radius:20px;background:white;font-size:clamp(20px,2vw,34px);font-weight:1000}
+@media(max-width:800px){#setupPanel{left:8%;width:84%;top:12%}.activity{left:5%;right:5%}.pairs{gap:3%}.pair{border-radius:28px}.stageTitle{top:9%}}
 </style>
 </head>
-<body><div id="shell"><main id="gameframe">
-<div id="toast" class="toast">Muito bem!</div>
-
-<section id="start" class="screen">
-<img class="art" src="assets/capa.webp" alt="">
-<button class="hotplay" aria-label="Jogar" onclick="goSetup()"></button>
-<div class="top"><span></span><button id="musicTop" class="icon" onclick="toggleMusic()">🎵</button></div>
-</section>
-
+<body><div id="game">
 <section id="setup" class="screen on">
-<img class="art" src="assets/tela_inicial_hd.jpg" alt="Aventura do Alfabeto">
-<!-- Campo real sobre o campo desenhado na arte. Começa SEM nome preenchido. -->
-<input id="playerName" class="hdName" maxlength="15" placeholder="Digite seu nome" autocomplete="off">
-<!-- Áreas clicáveis exatamente sobre os quatro personagens desenhados na própria arte HD. -->
-<div class="hdAvatars">
-  <button class="hdAvatar" type="button" data-av="1" data-avatar="1" aria-label="Menino" aria-pressed="false" onclick="chooseCharacter(1,this)"><span class="avatarCheck">✓</span></button>
-  <button class="hdAvatar" type="button" data-av="2" data-avatar="2" aria-label="Menina" aria-pressed="false" onclick="chooseCharacter(2,this)"><span class="avatarCheck">✓</span></button>
-  <button class="hdAvatar" type="button" data-av="3" data-avatar="3" aria-label="Menino negro" aria-pressed="false" onclick="chooseCharacter(3,this)"><span class="avatarCheck">✓</span></button>
-  <button class="hdAvatar" type="button" data-av="4" data-avatar="4" aria-label="Menina negra" aria-pressed="false" onclick="chooseCharacter(4,this)"><span class="avatarCheck">✓</span></button>
+ <img class="bg" src="assets/tela_inicial_hd.jpg"><div class="overlay"></div>
+ <div id="setupPanel" class="card">
+  <div class="logo">AVENTURA DO ALFABETO</div><div class="sub">Explore mundos, supere desafios e descubra letras, sílabas e palavras!</div>
+  <input id="name" autocomplete="off" placeholder="Digite seu nome">
+  <div class="avatarTitle">ESCOLHA SEU PERSONAGEM</div>
+  <div class="avatars">
+   <button class="avatar" data-av="1"><img src="assets/avatar1.webp"><span class="check">✓</span></button>
+   <button class="avatar" data-av="2"><img src="assets/avatar2.webp"><span class="check">✓</span></button>
+   <button class="avatar" data-av="3"><img src="assets/avatar3.webp"><span class="check">✓</span></button>
+   <button class="avatar" data-av="4"><img src="assets/avatar4.webp"><span class="check">✓</span></button>
+  </div>
+  <button id="start" class="start">▶ COMEÇAR</button>
+ </div>
+</section>
+
+<section id="map" class="screen"><img class="bg" src="assets/mapa_profissional.png">
+ <div class="top"><button class="back" data-go="setup">←</button><div class="stats"><div class="pill" id="mapName">Aventureiro</div><div class="pill">⭐ <span id="mapStars">0</span></div><button class="music">🎵</button></div></div>
+ <div class="mapBtns"><button class="world w1" data-world="1"></button><button class="world w2" data-world="2"></button><button class="world w3" data-world="3"></button><button class="world w4" data-world="4"></button><button class="world w5" data-world="5"></button></div>
+</section>
+
+<section id="stage" class="screen"><img id="stageBg" class="stageBg"><div class="stageShade"></div>
+ <div class="top"><button class="back" data-go="map">←</button><div class="stats"><div class="pill" id="stageName"></div><div class="pill">⭐ <span id="stageStars">0</span> • <span id="count">1/5</span></div><button class="music">🎵</button></div></div>
+ <div class="stageTitle" id="stageTitle"></div><div class="activity" id="activity"></div>
+</section>
+<div id="toast" class="toast"></div>
 </div>
-<button class="hdStart" type="button" aria-label="Começar"></button>
-<button class="hdMusic" type="button" aria-label="Música" onclick="toggleMusic()"></button>
-</section>
-
-<section id="map" class="screen">
-<img class="art" src="assets/mapa_final_hd.png" alt="">
-
-<button class="mapHot mapBack" onclick="show('setup')" aria-label="Voltar"></button>
-<div class="mapScore">⭐ <span id="mapScoreValue">0</span>/50</div>
-<button class="mapHot mh1" onclick="openWorld(1)" aria-label="Floresta das Vogais"></button>
-<button class="mapHot mh2" onclick="openWorld(2)" aria-label="Vila dos Sons"></button>
-<button class="mapHot mh3" onclick="openWorld(3)" aria-label="Montanha das Sílabas"></button>
-<button class="mapHot mh4" onclick="openWorld(4)" aria-label="Castelo das Sílabas"></button>
-<button class="mapHot mh5" onclick="openWorld(5)" aria-label="Castelo das Palavras"></button>
-</section>
-
-<section id="stage" class="screen">
-<img id="stageArt" class="art" src="assets/floresta_vogais_pro.png" alt=""><div class="dim"></div>
-<div class="top"><button class="icon" onclick="show('map')" aria-label="Voltar ao mapa">←</button><div class="hud"><span class="chip namechip"><span id="hudName">Aventureiro</span></span><span class="chip">⭐ <span id="stars">0</span> • <span id="counter">1/10</span></span><button class="icon" onclick="toggleMusic()">🎵</button></div></div>
-<div class="stageTitle"><div id="worldTitle" class="wood"></div></div>
-<div class="mascot"><img id="mascotImg" src="assets/avatar1.webp" alt=""></div>
-<div class="panel"><div class="progress"><i id="bar"></i></div><div id="content"></div></div>
-</section>
-
-<section id="final" class="screen">
-<img class="art" src="assets/final.webp" alt=""><div class="dim"></div>
-<div class="finalCard"><div class="trophy">🏆</div><h1 id="finalTitle">PARABÉNS!</h1><div class="cert">CERTIFICADO<br>GUARDIÃO DAS PALAVRAS<br><span class="tiny">⭐⭐⭐⭐⭐</span></div><p id="finalText" class="tiny"></p><button class="btn" onclick="resetGame()">↻ JOGAR NOVAMENTE</button> <button class="icon" onclick="show('map')">🗺️ MAPA</button></div>
-</section>
-</main></div>
 <script>
-const worlds=["","FLORESTA DAS VOGAIS","VILA DOS SONS","MONTANHA DAS SÍLABAS","CASTELO DAS SÍLABAS","CASTELO DAS PALAVRAS"];
-const arts=["","floresta_vogais_pro.png","vila_hd.jpg","montanha.webp","castelo_silabas.webp","castelo_palavras.webp"];
-const Q={
-1:[
-{p:"ATIVIDADE 1 DE 5",pairs:[["A","A"],["E","U"],["I","O"]],a:"0"},
-{p:"ATIVIDADE 2 DE 5",pairs:[["A","O"],["E","E"],["U","A"]],a:"1"},
-{p:"ATIVIDADE 3 DE 5",pairs:[["I","I"],["O","U"],["E","A"]],a:"0"},
-{p:"ATIVIDADE 4 DE 5",pairs:[["U","I"],["O","O"],["A","E"]],a:"1"},
-{p:"ATIVIDADE 5 DE 5",pairs:[["E","O"],["I","E"],["U","U"]],a:"2"}],
-2:[
-{p:"Qual palavra começa com B?",pic:"⚽",label:"BOLA",o:["⚽ BOLA","🐱 GATO","🦆 PATO"],a:"⚽ BOLA"},
-{p:"Qual palavra começa com G?",pic:"🐱",label:"GATO",o:["🐸 SAPO","🐱 GATO","🏠 CASA"],a:"🐱 GATO"},
-{p:"Qual palavra começa com P?",pic:"🦆",label:"PATO",o:["🦆 PATO","⚽ BOLA","🌙 LUA"],a:"🦆 PATO"},
-{p:"Qual palavra começa com C?",pic:"🏠",label:"CASA",o:["🎲 DADO","🏠 CASA","🧳 MALA"],a:"🏠 CASA"},
-{p:"Qual palavra começa com M?",pic:"🧳",label:"MALA",o:["🧳 MALA","🐸 SAPO","👄 BOCA"],a:"🧳 MALA"},
-{p:"Qual palavra começa com S?",pic:"🐸",label:"SAPO",o:["🐸 SAPO","🎲 DADO","⚽ BOLA"],a:"🐸 SAPO"},
-{p:"Qual palavra começa com D?",pic:"🎲",label:"DADO",o:["🌙 LUA","🎲 DADO","🐱 GATO"],a:"🎲 DADO"},
-{p:"Qual palavra começa com L?",pic:"🌙",label:"LUA",o:["🏠 CASA","🌙 LUA","🦆 PATO"],a:"🌙 LUA"},
-{p:"Qual palavra começa com F?",pic:"🌸",label:"FLOR",o:["🌸 FLOR","🐱 GATO","🧳 MALA"],a:"🌸 FLOR"},
-{p:"Qual palavra começa com R?",pic:"🐭",label:"RATO",o:["🐭 RATO","🐸 SAPO","⚽ BOLA"],a:"🐭 RATO"}],
-3:[
-{p:"Qual é a primeira sílaba de BOLA?",pic:"⚽",label:"BOLA",o:["BA","BO","BU"],a:"BO"},
-{p:"Qual é a primeira sílaba de CASA?",pic:"🏠",label:"CASA",o:["CO","CA","CU"],a:"CA"},
-{p:"Qual é a primeira sílaba de MALA?",pic:"🧳",label:"MALA",o:["ME","MI","MA"],a:"MA"},
-{p:"Qual é a primeira sílaba de PATO?",pic:"🦆",label:"PATO",o:["PA","PE","PI"],a:"PA"},
-{p:"Qual é a primeira sílaba de SAPO?",pic:"🐸",label:"SAPO",o:["SA","SO","SU"],a:"SA"},
-{p:"Qual é a primeira sílaba de DADO?",pic:"🎲",label:"DADO",o:["DE","DA","DO"],a:"DA"},
-{p:"Qual é a primeira sílaba de BOCA?",pic:"👄",label:"BOCA",o:["BU","BA","BO"],a:"BO"},
-{p:"Qual é a primeira sílaba de MESA?",pic:"🪑",label:"MESA",o:["MO","ME","MA"],a:"ME"},
-{p:"Qual é a primeira sílaba de FADA?",pic:"🧚",label:"FADA",o:["FI","FA","FO"],a:"FA"},
-{p:"Qual é a primeira sílaba de LATA?",pic:"🥫",label:"LATA",o:["LU","LA","LE"],a:"LA"}],
-4:[
-{p:"Junte as sílabas e forme CASA",pic:"🏠",label:"CASA",build:["CA","SA"],o:["CA","BO","SA","PA"]},
-{p:"Junte as sílabas e forme BOLA",pic:"⚽",label:"BOLA",build:["BO","LA"],o:["LA","PA","BO","MA"]},
-{p:"Junte as sílabas e forme PATO",pic:"🦆",label:"PATO",build:["PA","TO"],o:["TO","PO","PA","TA"]},
-{p:"Junte as sílabas e forme MALA",pic:"🧳",label:"MALA",build:["MA","LA"],o:["LA","ME","MA","SA"]},
-{p:"Junte as sílabas e forme SAPO",pic:"🐸",label:"SAPO",build:["SA","PO"],o:["PA","SA","PO","SO"]},
-{p:"Junte as sílabas e forme DADO",pic:"🎲",label:"DADO",build:["DA","DO"],o:["DE","DO","DA","DI"]},
-{p:"Junte as sílabas e forme BOCA",pic:"👄",label:"BOCA",build:["BO","CA"],o:["BO","CO","CA","BA"]},
-{p:"Junte as sílabas e forme MESA",pic:"🪑",label:"MESA",build:["ME","SA"],o:["MA","SA","ME","SO"]},
-{p:"Junte as sílabas e forme FADA",pic:"🧚",label:"FADA",build:["FA","DA"],o:["FO","FA","DE","DA"]},
-{p:"Junte as sílabas e forme LATA",pic:"🥫",label:"LATA",build:["LA","TA"],o:["LA","TO","TA","LU"]}],
-5:[
-{p:"Complete a palavra: G _ T O",pic:"🐱",o:["A","E","I"],a:"A"},
-{p:"Qual palavra combina com a imagem?",pic:"🏠",o:["CASA","MESA","MALA"],a:"CASA"},
-{p:"Organize as letras e forme CASA",pic:"🏠",label:"CASA",letters:["A","S","C","A"],word:"CASA"},
-{p:"Complete a palavra: B _ L A",pic:"⚽",o:["A","O","U"],a:"O"},
-{p:"Qual palavra combina com a imagem?",pic:"🌙",o:["LUA","RUA","BOCA"],a:"LUA"},
-{p:"Organize as letras e forme GATO",pic:"🐱",label:"GATO",letters:["T","A","G","O"],word:"GATO"},
-{p:"Complete a palavra: P _ T O",pic:"🦆",o:["E","A","I"],a:"A"},
-{p:"Qual palavra combina com a imagem?",pic:"🐸",o:["SAPO","SACO","DADO"],a:"SAPO"},
-{p:"Organize as letras e forme MALA",pic:"🧳",label:"MALA",letters:["A","M","L","A"],word:"MALA"},
-{p:"Complete a palavra: D A D _",pic:"🎲",o:["A","E","O"],a:"O"}]};
-let S={name:"Aventureiro",avatar:null,unlocked:1,done:[],stars:0,world:1,q:0,music:false,sel:[]};
-let ctx=null,timer=null,step=0;
-const melody=[523,659,784,659,587,698,880,698,523,659,784,1047,880,784,659,587];
-
-
-function updateMap(){
- const mapScore=document.getElementById("mapScoreValue");
- if(mapScore) mapScore.textContent=S.stars;
- const allStars=document.getElementById("allStars");
- if(allStars) allStars.textContent=S.stars;
-
- const hotspots=[
-   document.querySelector(".mh1"),
-   document.querySelector(".mh2"),
-   document.querySelector(".mh3"),
-   document.querySelector(".mh4"),
-   document.querySelector(".mh5")
- ];
- hotspots.forEach((el,i)=>{
-   if(!el) return;
-   const world=i+1;
-   el.classList.toggle("lockedHot",world>S.unlocked);
-   el.setAttribute("aria-disabled",world>S.unlocked?"true":"false");
- });
-}
-
-function openWorld(n){
- if(n>S.unlocked){
-   toast("🔒 Complete a fase anterior!");
-   return;
- }
- S.world=n;
- S.q=0;
- S.sel=[];
- lockedAnswer=false;
- const art=document.getElementById("stageArt");
- if(art) art.src=n===1?"assets/floresta_profissional.png":`assets/${arts[n]}`;
- const title=document.getElementById("worldTitle");
- if(title) title.textContent=worlds[n];
- show("stage");
- render();
-}
-
-function chooseCharacter(n,el){
- S.avatar=Number(n);
- document.querySelectorAll(".hdAvatar").forEach((b,i)=>{
-   const selected=(i+1===S.avatar);
-   b.classList.toggle("selected",selected);
-   b.setAttribute("aria-pressed",selected?"true":"false");
- });
- try{ tone(660,.08,.025); }catch(e){}
- toast("✓ Personagem escolhido!");
- save();
-}
-function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));document.getElementById(id).classList.add("on");if(id==="map")updateMap()}
-function goSetup(){startMusic();show("setup");setTimeout(()=>document.getElementById("playerName").focus(),120)}
-function begin(){
- const field=document.getElementById("playerName");
- const typed=(field?.value||"").trim();
- if(!typed){ field?.focus(); toast("✏️ DIGITE SEU NOME PARA COMEÇAR!"); return; }
- if(!S.avatar){ toast("👦🏽 ESCOLHA UM PERSONAGEM!"); return; }
-
- const chosenAvatar=S.avatar;
- S={name:typed,avatar:chosenAvatar,unlocked:1,done:[],stars:0,world:1,q:0,music:S.music,sel:[]};
- lockedAnswer=false;
-
- const hud=document.getElementById("hudName");
- if(hud) hud.textContent=S.name;
- const mascot=document.getElementById("mascotImg");
- if(mascot) mascot.src=`assets/avatar${S.avatar}.webp`;
- save();
- updateMap();
- show("map");
-}
-
-
-
-
-function render(){
- const q=Q[S.world][S.q];
- if(!q){finishWorld();return;}
-
- const stage=document.getElementById("stage");
- if(stage) stage.classList.toggle("fase1Aprovada",S.world===1);
-
- const stars=document.getElementById("stars");
- const counter=document.getElementById("counter");
- const bar=document.getElementById("bar");
- if(stars)stars.textContent=S.stars;
- const total=Q[S.world].length;if(counter)counter.textContent=`${S.q+1}/${total}`;
- if(bar)bar.style.width=`${(S.q/total)*100}%`;
-
- const content=document.getElementById("content");
- if(!content)return;
-
- if(S.world===1){
-   const art=document.getElementById("stageArt");
-   if(art) art.src="assets/floresta_profissional.png";
-
-   const assoc={
-     A:{img:"fase1_obj_A.png",word:"ABELHA"},
-     E:{img:"fase1_obj_E.png",word:"ELEFANTE"},
-     I:{img:"fase1_obj_I.png",word:"ILHA"},
-     O:{img:"fase1_obj_O.png",word:"OLHO"},
-     U:{img:"fase1_obj_U.png",word:"UVA"}
-   };
-
-   let h=`<div class="phase1Page phaseEnter">
-      <div class="phase1Prompt">
-        <strong>${q.p}</strong>
-        <span>Qual associação entre LETRA e IMAGEM está correta?</span>
-      </div>
-      <div class="phase1ThreeChoices">`;
-
-   q.pairs.forEach((pair,idx)=>{
-      const letter=pair[0], imageKey=pair[1], item=assoc[imageKey];
-      h+=`<button type="button" class="phase1Choice" data-value="${idx}"
-              onclick="answer(this)" aria-label="${letter} com ${item.word}">
-          <span class="phaseLetter">${letter}</span>
-          <img src="assets/${item.img}" alt="${item.word}">
-          <span class="phaseWord">${item.word}</span>
-      </button>`;
-   });
-
-   h+=`</div></div>`;
-   content.innerHTML=h;
-   return;
- }
-
- let h=`<div class="prompt">${q.p}</div>`;
- h+=`<div class="visual"><div class="emoji">${q.pic||""}</div>${q.label?`<div class="wordpic">${q.label}</div>`:""}</div>`;
- if(q.build){
-   h+=`<div class="slots" id="slots">Toque nas sílabas na ordem</div><div class="tiles">${q.o.map(x=>`<button class="tile" onclick="pickBuild('${x}',this)">${x}</button>`).join("")}</div>`;
- }else if(q.letters){
-   h+=`<div class="slots" id="slots">Monte a palavra</div><div class="tiles">${q.letters.map(x=>`<button class="tile" onclick="pickLetter('${x}',this)">${x}</button>`).join("")}</div>`;
- }else{
-   h+=`<div class="answers">${q.o.map(x=>`<button class="answer" data-value="${x}" onclick="answer(this)">${x}</button>`).join("")}</div>`;
- }
- content.innerHTML=h;
-}function answer(el){let q=Q[S.world][S.q],v=el.dataset.value;if(v===q.a){el.classList.add("good");success()}else{el.classList.add("bad");tone(180,.14,.045);toast("🌟 Quase! Tente outra vez.");setTimeout(()=>el.classList.remove("bad"),600)}}
-function pickBuild(v,el){let q=Q[S.world][S.q];S.sel.push(v);el.style.visibility="hidden";document.getElementById("slots").textContent=S.sel.join(" + ");if(S.sel.length===q.build.length){S.sel.join("|")===q.build.join("|")?success():retry()}}
-function pickLetter(v,el){let q=Q[S.world][S.q];S.sel.push(v);el.style.visibility="hidden";document.getElementById("slots").textContent=S.sel.join(" ");if(S.sel.length===q.word.length){S.sel.join("")===q.word?success():retry()}}
-function retry(){tone(180,.14,.045);toast("✨ Vamos tentar novamente!");S.sel=[];setTimeout(render,650)}
-let lockedAnswer=false;
-function success(){
- if(lockedAnswer)return;
- lockedAnswer=true;
- S.stars=Math.min(50,S.stars+1);
- tone(784,.12,.05);confetti(22);
- toast(["⭐ Muito bem!","🎉 Você conseguiu!","🌈 Excelente!"][Math.floor(Math.random()*3)]);
- save();
-
- const page=document.querySelector(".phase1Page");
- if(page && S.world===1) page.classList.add("phaseExit");
-
- setTimeout(()=>{
-   S.q++;S.sel=[];lockedAnswer=false;
-   const total=Q[S.world].length;
-   if(S.q>=total){finishWorld()}else{render()}
- },900)
-}
-function finishWorld(){
- if(!S.done.includes(S.world))S.done.push(S.world);
- if(S.world<5){
-   const next=S.world+1;
-   S.unlocked=Math.max(S.unlocked,next);
-   save();updateMap();confetti(55);
-   toast("🏅 FASE CONCLUÍDA! Próxima aventura...");
-   setTimeout(()=>{
-     S.world=next;S.q=0;S.sel=[];lockedAnswer=false;
-     const art=document.getElementById("stageArt");
-     if(art)art.src=next===1?"assets/floresta_profissional.png":`assets/${arts[next]}`;
-     const title=document.getElementById("worldTitle");
-     if(title)title.textContent=worlds[next];
-     show("stage");render();
-   },900);
- }else{
-   save();confetti(90);setTimeout(finishGame,700);
- }
-}
-function finishGame(){show("final");document.getElementById("finalTitle").textContent=`PARABÉNS, ${S.name.toUpperCase()}!`;document.getElementById("finalText").textContent=`Você concluiu toda a Aventura do Alfabeto e conquistou ${S.stars} estrelas!`;confetti(80)}
-function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.remove("show");void e.offsetWidth;e.classList.add("show")}
-function confetti(n=20){for(let i=0;i<n;i++){let e=document.createElement("div");e.className="conf";e.textContent=["⭐","🎉","✨","🌈"][i%4];e.style.left=Math.random()*100+"%";e.style.animationDelay=Math.random()*.4+"s";document.getElementById("gameframe").appendChild(e);setTimeout(()=>e.remove(),2100)}}
-function tone(f,d=.1,v=.02){try{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();let o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=f;o.connect(g);g.connect(ctx.destination);g.gain.value=v;o.start();g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+d);o.stop(ctx.currentTime+d)}catch(e){}}
-function tick(){if(S.music)tone(melody[step++%melody.length],.28,.012)}
-function startMusic(){if(!timer){tone(440,.03,.001);timer=setInterval(tick,390)}}
-function toggleMusic(){
- S.music=!S.music;
- if(S.music){ startMusic(); tick(); }
- save();
- toast(S.music?"🎵 Música ligada":"🔇 Música desligada");
-}
-function save(){localStorage.setItem("wm_aventura_alfabeto_final",JSON.stringify(S))}
-function resetGame(){localStorage.removeItem("wm_aventura_alfabeto_final");location.reload()}
-window.addEventListener("load",()=>{setTimeout(()=>{let n=document.getElementById("playerName");if(n){n.value="";n.focus()}},120);setTimeout(()=>document.getElementById("playerName").focus(),180);try{let x=JSON.parse(localStorage.getItem("wm_aventura_alfabeto_final")||"null");if(x)Object.assign(S,x);S.music=false}catch(e){};document.getElementById("playerName").value="";document.getElementById("hudName").textContent=S.name;if(S.avatar){document.getElementById("mascotImg").src=`assets/avatar${S.avatar}.webp`;}document.querySelectorAll(".avatar").forEach((b,i)=>b.classList.toggle("sel",i+1===S.avatar));document.querySelectorAll(".hdAvatar").forEach((b,i)=>{const ok=i+1===S.avatar;b.classList.toggle("selected",ok);b.setAttribute("aria-pressed",ok?"true":"false")});updateMap()});
-
-const PRELOAD_ASSETS=[
- "assets/tela_inicial_hd.jpg","assets/mapa_final_hd.png","assets/floresta_profissional.png",
- "assets/vila_hd.jpg","assets/montanha.webp","assets/castelo_silabas.webp","assets/castelo_palavras.webp","assets/final.webp"
+const S={name:"",avatar:0,world:1,q:0,stars:0,unlocked:1,music:false};
+const A={
+ A:{word:"ABELHA",img:"assets/fase1_obj_A.png"},
+ E:{word:"ELEFANTE",img:"assets/fase1_obj_E.png"},
+ I:{word:"IGREJA",img:"assets/igreja.svg"},
+ O:{word:"OLHO",img:"assets/fase1_obj_O.png"},
+ U:{word:"UVA",img:"assets/fase1_obj_U.png"}
+};
+// EXATAMENTE DUAS alternativas por tela; UMA correta.
+// 1 A-Abelha correta / E-Igreja errada
+// 2 A-Igreja errada / E-Elefante correta
+// 3 I-Igreja correta / O-Abelha errada
+// 4 O-Olho correta / U-Elefante errada
+// 5 A-Uva errada / U-Uva correta
+const F1=[
+ {pairs:[["A","A"],["E","I"]],correct:0},
+ {pairs:[["A","I"],["E","E"]],correct:1},
+ {pairs:[["I","I"],["O","A"]],correct:0},
+ {pairs:[["O","O"],["U","E"]],correct:0},
+ {pairs:[["A","U"],["U","U"]],correct:1}
 ];
-window.addEventListener("load",()=>PRELOAD_ASSETS.forEach(src=>{const im=new Image();im.decoding="async";im.src=src;}));
-
-
-
-
-document.addEventListener("pointerup",(e)=>{
- const start=e.target.closest?.(".hdStart");
- if(start){e.preventDefault();e.stopPropagation();begin();}
+const generic={
+2:{title:"VILA DOS SONS",bg:"assets/vila_hd.jpg",qs:[
+ ["Qual palavra começa com B?","⚽",["BOLA","GATO","PATO"],0],["Qual palavra começa com C?","🏠",["CASA","MALA","SAPO"],0],
+ ["Qual palavra começa com G?","🐱",["PATO","GATO","LUA"],1],["Qual palavra começa com P?","🦆",["PATO","DADO","BOLA"],0],["Qual palavra começa com M?","🧳",["SAPO","MALA","GATO"],1]
+]},
+3:{title:"MONTANHA DAS SÍLABAS",bg:"assets/montanha.webp",qs:[
+ ["Qual é a primeira sílaba de BOLA?","⚽",["BO","LA","BA"],0],["Qual é a primeira sílaba de CASA?","🏠",["SA","CA","CO"],1],["Qual é a primeira sílaba de PATO?","🦆",["PA","TO","PO"],0],["Qual é a primeira sílaba de MALA?","🧳",["LA","MA","ME"],1],["Qual é a primeira sílaba de GATO?","🐱",["GA","TO","GO"],0]
+]},
+4:{title:"CASTELO DAS SÍLABAS",bg:"assets/castelo_silabas.webp",qs:[
+ ["Qual combinação forma BOLA?","⚽",["BO + LA","BA + LO","BI + LA"],0],["Qual combinação forma CASA?","🏠",["CO + SA","CA + SA","CA + SO"],1],["Qual combinação forma PATO?","🦆",["PA + TO","PE + TO","PO + TA"],0],["Qual combinação forma MALA?","🧳",["ME + LA","MA + LA","MO + LE"],1],["Qual combinação forma GATO?","🐱",["GA + TO","GO + TA","GU + TO"],0]
+]},
+5:{title:"CASTELO DAS PALAVRAS",bg:"assets/castelo_palavras.webp",qs:[
+ ["Complete: G_TO","🐱",["A","E","I"],0],["Complete: C_SA","🏠",["A","O","U"],0],["Complete: B_LA","⚽",["A","O","U"],1],["Complete: P_TO","🦆",["A","E","I"],0],["Complete: M_LA","🧳",["A","E","O"],0]
+]}};
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("on"));document.getElementById(id).classList.add("on")}
+function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1000)}
+document.querySelectorAll(".avatar").forEach(b=>b.addEventListener("click",()=>{
+ S.avatar=+b.dataset.av;document.querySelectorAll(".avatar").forEach(x=>x.classList.toggle("selected",x===b));toast("✓ Personagem escolhido!");
+}));
+document.getElementById("start").addEventListener("click",()=>{
+ const n=document.getElementById("name").value.trim();
+ if(!n)return toast("Digite seu nome.");
+ if(!S.avatar)return toast("Escolha um personagem.");
+ S.name=n;document.getElementById("mapName").textContent=n;document.getElementById("stageName").textContent=n;updateMap();show("map");
 });
-
-
-</script></main></div></body></html>
-<!-- WM: correções visuais consolidadas -->
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
+document.querySelectorAll(".world").forEach(b=>b.addEventListener("click",()=>{let w=+b.dataset.world;if(w>S.unlocked)return toast("🔒 Complete a fase anterior.");openWorld(w)}));
+function updateMap(){document.getElementById("mapStars").textContent=S.stars;document.querySelectorAll(".world").forEach(b=>{let w=+b.dataset.world;b.classList.toggle("locked",w>S.unlocked);b.classList.toggle("unlocked",w<=S.unlocked)})}
+function openWorld(w){S.world=w;S.q=0;document.getElementById("stageStars").textContent=S.stars;if(w===1){document.getElementById("stageTitle").textContent="FLORESTA DAS VOGAIS";document.getElementById("stageBg").src="assets/floresta_profissional.png"}else{document.getElementById("stageTitle").textContent=generic[w].title;document.getElementById("stageBg").src=generic[w].bg}show("stage");render()}
+function render(){if(S.world===1)return renderF1();return renderGeneric()}
+function renderF1(){
+ const q=F1[S.q];document.getElementById("count").textContent=`${S.q+1}/5`;
+ let h=`<div class="pageIn" style="width:100%;display:flex;flex-direction:column;align-items:center">
+ <div class="prompt">ATIVIDADE ${S.q+1} DE 5 — Qual associação está correta?</div><div class="pairs">`;
+ q.pairs.forEach((p,i)=>{const [letter,imgKey]=p,item=A[imgKey];h+=`<button class="pair" data-i="${i}"><span class="letter">${letter}</span><img src="${item.img}" alt="${item.word}"><span class="word">${item.word}</span></button>`});
+ h+=`</div></div>`;document.getElementById("activity").innerHTML=h;
+ document.querySelectorAll(".pair").forEach(b=>b.addEventListener("click",()=>answerF1(b,+b.dataset.i)));
+}
+function answerF1(btn,i){
+ const q=F1[S.q];if(btn.dataset.locked)return;
+ if(i!==q.correct){btn.classList.add("wrongFlash");toast("Tente outra vez.");setTimeout(()=>btn.classList.remove("wrongFlash"),500);return}
+ document.querySelectorAll(".pair").forEach(x=>x.dataset.locked="1");btn.classList.add("correctFlash");S.stars++;document.getElementById("stageStars").textContent=S.stars;toast("⭐ Muito bem!");
+ const page=document.querySelector("#activity .pageIn");setTimeout(()=>page&&page.classList.add("pageOut"),450);
+ setTimeout(()=>{S.q++;if(S.q>=F1.length){S.unlocked=Math.max(S.unlocked,2);updateMap();toast("🎉 Fase 1 concluída!");setTimeout(()=>openWorld(2),700)}else renderF1()},900);
+}
+function renderGeneric(){
+ const g=generic[S.world],q=g.qs[S.q];document.getElementById("count").textContent=`${S.q+1}/${g.qs.length}`;
+ document.getElementById("activity").innerHTML=`<div class="generic pageIn"><div class="prompt">${q[0]}</div><div class="visual">${q[1]}</div><div class="answers">${q[2].map((x,i)=>`<button class="ans" data-i="${i}">${x}</button>`).join("")}</div></div>`;
+ document.querySelectorAll(".ans").forEach(b=>b.addEventListener("click",()=>answerGeneric(+b.dataset.i,b)));
+}
+function answerGeneric(i,b){
+ const g=generic[S.world],q=g.qs[S.q];if(i!==q[3]){b.classList.add("wrongFlash");toast("Tente outra vez.");return}
+ S.stars++;document.getElementById("stageStars").textContent=S.stars;toast("⭐ Muito bem!");S.q++;
+ setTimeout(()=>{if(S.q>=g.qs.length){if(S.world<5){S.unlocked=Math.max(S.unlocked,S.world+1);updateMap();openWorld(S.world+1)}else{toast("🏆 Guardião das Palavras!");show("map")}}else renderGeneric()},650)
+}
+</script></body></html>
