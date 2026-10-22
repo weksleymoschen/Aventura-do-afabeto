@@ -1,0 +1,11 @@
+AVENTURA DO ALFABETO — REVISÃO FINAL DA TELA INICIAL
+
+Correções medidas diretamente sobre a arte 1536x1024:
+- campo do nome reposicionado exatamente dentro da caixa branca;
+- fundo branco real cobre o texto 'Digite seu nome' gravado na arte, evitando duplicação;
+- os 4 avatares possuem áreas clicáveis exatamente sobre os cartões;
+- marca de seleção fica dentro do avatar, sem quadrado deslocado;
+- seleção recebe borda interna verde + check;
+- nome continua obrigatório;
+- personagem continua obrigatório;
+- JavaScript validado.
