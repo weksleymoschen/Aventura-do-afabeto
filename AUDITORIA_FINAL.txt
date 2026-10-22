@@ -1,30 +1,72 @@
-AUDITORIA FINAL DO JOGO
-============================
-[OK] index.html na raiz
-[OK] sem distorção por object-fit fill
-[OK] 4 avatares clicáveis
-[OK] nome obrigatório
-[OK] avatar obrigatório
-[OK] 5 mundos
-[OK] fase 1 com 5 telas
-[OK] progressão automática
-[OK] mapa clicável
-[OK] imagens decorativas não bloqueiam clique
-[OK] Netlify pronto
-[OK] GitHub Pages pronto
-[OK] JavaScript válido
-[OK] sem assets ausentes
+AUDITORIA FINAL — ACADEMIA DOS SUPER-HERÓIS DAS LETRAS
+Data: 22/10/2026
 
-Arquivos ausentes: nenhum
+ARQUITETURA
+[OK] index.html na raiz do pacote.
+[OK] CSS em css/style.css.
+[OK] JavaScript em js/game.js.
+[OK] assets separados em backgrounds, avatars e objects.
+[OK] interface funcional construída em HTML/CSS/JS; os cliques não dependem de hotspots de screenshot.
+[OK] pacote estático, sem backend.
+[OK] caminhos relativos.
+[OK] nenhum URL remoto é necessário para executar esta versão.
 
-TESTES E CORREÇÕES:
-- Interface construída em um frame único 3:2 para manter arte e cliques alinhados.
-- A imagem da capa/mapa é parte real da interface; os personagens, COMEÇAR e mundos têm áreas clicáveis.
-- Campo de nome e escolha de avatar são obrigatórios.
-- Fase 1 possui 5 atividades independentes; cada tela tem somente uma associação correta.
-- Ao acertar, a atividade seguinte abre automaticamente.
-- Ao concluir a fase, o jogo abre automaticamente o próximo mundo.
-- Fase 1 usa ilustrações SVG nítidas, sem ampliar bitmap pequeno.
-- Fundos não interceptam mouse/toque.
-- JavaScript passou no verificador de sintaxe do Node.
-- Pacote possui configuração para Netlify e GitHub Pages.
+VALIDAÇÃO TÉCNICA REALIZADA
+[OK] node --check js/game.js: sintaxe JavaScript válida.
+[OK] verificação dos caminhos estáticos referenciados: nenhum arquivo referenciado ausente.
+[OK] ZIP recriado com index.html diretamente na raiz.
+[OK] regra object-fit: fill não utilizada.
+[OK] cenários usam object-fit: cover; alternativas usam contain.
+[OK] touch-action: manipulation aplicado aos controles principais.
+
+TELA INICIAL
+[OK] campo de nome inicia vazio.
+[OK] quatro avatares selecionáveis.
+[OK] somente um avatar permanece selecionado.
+[OK] indicador de seleção permanece dentro do card por overflow:hidden.
+[OK] validação impede início sem nome.
+[OK] validação impede início sem avatar.
+[OK] COMEÇAR abre diretamente a Fase 1.
+
+CONTEÚDO PEDAGÓGICO
+[OK] 5 fases x 5 missões = 25 missões.
+[OK] Fase 1 possui cinco alternativas por missão.
+[OK] Fase 2 possui quatro alternativas por missão.
+[OK] Fase 3 possui quatro alternativas por missão.
+[OK] Fase 4 possui quatro alternativas por missão.
+[OK] Fase 5 possui quatro alternativas por missão.
+[OK] A → ABELHA.
+[OK] E → ELEFANTE.
+[OK] I → ILHA.
+[OK] O → OLHO.
+[OK] U → UVA.
+[OK] CA → CASA; BO → BOLA; GA → GATO; MA → MACACO; PA → PATO.
+[OK] M → MACACO; B → BOLA; G → GATO; C → CASA; P → PATO.
+[CORRIGIDO] Fase 4: a associação A → MAÇÃ foi removida por ser pedagogicamente incorreta; agora A → ABELHA.
+[OK] SOL, LUA, ESTRELA, NUVEM e CASA na Fase 5.
+[OK] ordem fixa; não há embaralhamento durante a atividade.
+
+INTERAÇÃO
+[OK] erro não avança a missão.
+[OK] erro aplica feedback vermelho/animação e efeito sonoro.
+[OK] acerto bloqueia respostas múltiplas durante a transição.
+[OK] acerto aplica feedback verde, mensagem e confetes.
+[OK] avanço automático entre missões.
+[OK] avanço automático entre fases.
+[OK] mapa com estados bloqueado/disponível/concluído.
+[OK] controle de som.
+[OK] tela final com nome e avatar.
+[OK] voltar ao mapa.
+[OK] jogar novamente.
+
+RESPONSIVIDADE
+[OK POR INSPEÇÃO DE CSS] palco 16:9 em telas paisagem.
+[OK POR INSPEÇÃO DE CSS] regras específicas para celular em orientação retrato.
+[OK POR INSPEÇÃO DE CSS] celular reorganiza avatares e alternativas em grid 2 colunas, sem reduzir toda a interface a uma faixa 16:9 ilegível.
+[OK POR INSPEÇÃO DE CSS] sem rolagem horizontal/global (html/body overflow:hidden).
+
+LIMITAÇÃO DO AMBIENTE DE TESTE
+Foi tentada auditoria por navegador Chromium headless. O executável disponível no ambiente ficou bloqueado aguardando serviços de sistema/DBus e não produziu screenshots automatizadas dentro do tempo limite. A biblioteca Playwright também não está instalada. Por isso, NÃO estou declarando falsamente que houve clique automatizado em navegador nas quatro resoluções. Foram realizadas validação sintática, inspeção estrutural, verificação de arquivos, revisão da lógica e auditoria responsiva do CSS.
+
+STATUS
+PACOTE CONSTRUÍDO E CORRIGIDO PARA TESTE DE ACEITAÇÃO NO NAVEGADOR/NETLIFY.
