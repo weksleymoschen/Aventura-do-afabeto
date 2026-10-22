@@ -1,0 +1,7 @@
+25 atividades: OK
+A = ABELHA: OK
+M = MALA: OK
+pista visual: OK
+imagens novas: OK
+transições: OK
+GitHub Pages: OK
