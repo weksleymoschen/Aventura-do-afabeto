@@ -1,0 +1,7 @@
+Correção aplicada:
+- removidos da arte de fundo da Fase 1: botão VOLTAR antigo, nome gravado, contador gravado e ícone de música gravado;
+- preservadas as cinco atividades e suas associações;
+- controles agora são elementos reais do jogo, nítidos e clicáveis;
+- botão voltar agora é apenas uma seta;
+- nome e progresso continuam dinâmicos, não fazem parte da imagem;
+- imagens mantidas em 1536x1024, sem esticar.
