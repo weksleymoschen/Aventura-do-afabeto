@@ -1,0 +1,20 @@
+ALTERAÇÃO SOLICITADA
+
+Base: ZIP enviado pelo usuário nesta conversa.
+
+FASE 1:
+- Mantém o mesmo modelo visual da Floresta das Vogais.
+- Cada atividade mostra AS CINCO TORAS (A, E, I, O, U).
+- Há 5 atividades na Fase 1.
+- Em cada atividade existe EXATAMENTE UMA associação correta entre letra e imagem.
+- Atividade 1: A + ABELHA.
+- Atividade 2: E + ELEFANTE.
+- Atividade 3: I + ILHA.
+- Atividade 4: O + OLHO.
+- Atividade 5: U + UVA.
+- As outras quatro associações de cada tela são propositalmente incorretas.
+- Ao acertar, abre a próxima atividade ainda dentro da Fase 1.
+- Após 5/5, desbloqueia e entra automaticamente na Fase 2.
+- Seleção de personagem, nome, mapa e demais fases foram mantidos da base enviada.
+- Botão COMEÇAR recebe clique direto.
+- JavaScript validado sem erro de sintaxe.
