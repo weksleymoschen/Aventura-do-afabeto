@@ -1,18 +1,19 @@
-CORREÇÕES PONTUAIS
+AVENTURA DO ALFABETO — CORREÇÕES DESTA VERSÃO
 
-1. SELEÇÃO DO PERSONAGEM
-- Reposicionada a camada clicável exatamente sobre os quatro personagens.
-- Ela não invade mais o campo de nome.
-- Os quatro personagens voltam a ser selecionáveis.
-- Nenhum quadrado amarelo grande é desenhado.
-
-2. FASE 1
-- Mantido o cenário e o estilo visual aprovado.
-- Cada atividade mostra três associações.
-- Em cada atividade existe EXATAMENTE UMA associação correta entre letra e imagem.
-- Exemplo: A + ABELHA é correto; alternativas incorretas usam letra e imagem que não correspondem.
-- Foram usados recortes da própria arte aprovada para ABELHA, ELEFANTE, ILHA, OLHO e UVA.
-- Não foram usados emojis.
-
-3. PRESERVADO
-- Nome obrigatório, Começar, Som, Mapa, estrelas, 10 atividades e progressão automática.
+1. Fase 1 reconstruída com 5 atividades/telas distintas.
+2. Cada atividade mostra A, E, I, O e U com cinco imagens.
+3. Existe exatamente UMA associação correta por atividade:
+   1/5 = A — ABELHA
+   2/5 = E — ELEFANTE
+   3/5 = I — ILHA
+   4/5 = O — OLHO
+   5/5 = U — UVA
+4. Ao acertar, a próxima tela da própria Fase 1 é aberta automaticamente.
+5. Após 5/5, o jogo avança automaticamente para a Fase 2.
+6. As artes aprovadas foram incorporadas como telas reais do jogo em 1536x1024, sem esticar.
+7. Seleção dos quatro personagens corrigida: clique/toque funcional e check circular no escolhido.
+8. Removido o quadrado amarelo de seleção.
+9. Botão COMEÇAR mantido como área clicável real.
+10. Fase 2 corrigida: atividade de BOLA mostra uma bola, não uma casa.
+11. Mantidas as demais fases, mapa, progressão automática, música, estrelas e versão responsiva.
+12. Pacote pronto para Netlify e GitHub Pages.

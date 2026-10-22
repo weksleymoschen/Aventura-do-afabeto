@@ -48,14 +48,13 @@ button,input{font-family:inherit}.top{position:absolute;z-index:20;top:1.4%;left
 }
 .hdName:focus{box-shadow:0 0 0 .22vw #fff,0 0 1vw #38baff}
 .hdAvatars{
-position:absolute;z-index:1002;
-left:23.7%;top:56.2%;width:41.3%;height:17.1%;
+position:absolute;z-index:62;
+left:22.5%;top:45.5%;width:58%;height:24%;
 display:flex;gap:1.2%;pointer-events:auto
 }
 .hdAvatar{
-height:100%;flex:1;border:0!important;border-radius:1.25vw;
-background:transparent!important;cursor:pointer;pointer-events:auto!important;
-touch-action:manipulation;-webkit-tap-highlight-color:transparent!important
+height:100%;flex:1;border:.28vw solid transparent;border-radius:1.25vw;
+background:transparent;cursor:pointer;pointer-events:auto
 }
 .hdAvatar.sel{border-color:#ffd126;box-shadow:0 0 0 .2vw #fff,0 0 .8vw #ffd126}
 .hdStart{
@@ -298,256 +297,58 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 .vowelPictureHit.bad{animation:shake .22s 2}
 
 
-/* Associação visual: letra + animal/objeto + palavra, sem alterar o restante do jogo */
-#stage:has(.assocOnLog) .panel{
- position:absolute!important;inset:0!important;background:transparent!important;
- border:0!important;box-shadow:none!important;padding:0!important;pointer-events:none!important;
-}
-#stage:has(.assocOnLog) .progress,
-#stage:has(.assocOnLog) .stageTitle,
-#stage:has(.assocOnLog) .mascot{display:none!important}
-#stage:has(.assocOnLog) .forestTargets{position:absolute;inset:0;z-index:45;pointer-events:none}
-.assocOnLog{
- position:absolute;transform:translate(-50%,-50%);
- width:17%;height:19%;border:0;background:transparent;box-shadow:none;
- padding:0;cursor:pointer;pointer-events:auto;touch-action:manipulation;
-}
-.assocOnLog img{
- width:100%;height:100%;object-fit:contain;display:block;
- filter:none!important;transform:none!important;image-rendering:auto!important;
-}
-.assocOnLog:hover{transform:translate(-50%,-50%) scale(1.05)}
-.assocOnLog.good{outline:.4vw solid #35d45a;outline-offset:.15vw;border-radius:2vw}
-.assocOnLog.bad{animation:shake .22s 2}
+/* ===== CORREÇÃO PROFISSIONAL DEFINITIVA ===== */
 
+/* Seleção do personagem: área clicável real e somente um check, sem quadrado amarelo. */
+#setup .hdAvatars{left:21.7%!important;top:55.0%!important;width:44.5%!important;height:17.8%!important;gap:1.5%!important;z-index:1200!important}
+#setup .hdAvatar{position:relative!important;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;border-radius:1.4vw!important}
+#setup .hdAvatar[data-selected="true"]::after{
+ content:"✓";position:absolute;right:5%;top:5%;width:25%;aspect-ratio:1;border-radius:50%;
+ display:grid;place-items:center;background:#2fd04d;color:white;border:.22vw solid white;
+ font-size:clamp(13px,1.7vw,26px);font-weight:1000;box-shadow:0 .18vw .45vw #0005;
+}
+#setup .hdStart{left:27.0%!important;top:74.0%!important;width:32.0%!important;height:13.5%!important;z-index:1190!important}
+#setup .hdName{left:27.0%!important;top:43.3%!important;width:31.7%!important;height:6.1%!important;z-index:1210!important}
 
-/* ===== CORREÇÃO FINAL FASE 1: CINCO ASSOCIAÇÕES VISUAIS ===== */
-#stage:has(.vowelAssociationGrid) .panel{
- position:absolute!important;inset:0!important;background:transparent!important;border:0!important;
- box-shadow:none!important;padding:0!important;overflow:visible!important;pointer-events:none!important;
-}
-#stage:has(.vowelAssociationGrid) .progress,
-#stage:has(.vowelAssociationGrid) .stageTitle,
-#stage:has(.vowelAssociationGrid) .mascot{display:none!important}
-#stage:has(.vowelAssociationGrid) .forestPrompt{
- left:27%!important;top:3%!important;width:46%!important;height:10%!important;
-}
-.vowelAssociationGrid{
- position:absolute;z-index:55;left:18%;right:5%;top:18%;bottom:4%;
- display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr;
- gap:2.5% 2%;pointer-events:none;
-}
-.vowelAssocCard{
- border:0;background:transparent;padding:0;cursor:pointer;pointer-events:auto;touch-action:manipulation;
- min-width:0;min-height:0;border-radius:2vw;overflow:hidden;
-}
-.vowelAssocCard:nth-child(1){grid-column:1/3}
-.vowelAssocCard:nth-child(2){grid-column:3/5}
-.vowelAssocCard:nth-child(3){grid-column:5/7}
-.vowelAssocCard:nth-child(4){grid-column:2/4}
-.vowelAssocCard:nth-child(5){grid-column:4/6}
-.vowelAssocCard img{width:100%;height:100%;object-fit:contain;display:block;filter:none!important}
-.vowelAssocCard:hover{transform:scale(1.025)}
-.vowelAssocCard.good{outline:.45vw solid #32d257;outline-offset:-.3vw}
-.vowelAssocCard.bad{animation:shake .22s 2}
-
-/* ←: canto inferior esquerdo, fora da pergunta e dos contadores */
-#stage .top .icon:first-child{
- position:fixed!important;left:1.2%!important;top:auto!important;bottom:2%!important;
- z-index:1200!important;min-width:125px!important;
-}
-
-/* ===== FASE 2: IMAGEM E PALAVRA NO MESMO CARTÃO ===== */
-#stage:has(.imageWordAnswers) .visual{display:none!important}
-.imageWordAnswers{
- display:grid;grid-template-columns:repeat(3,1fr);gap:2.2%;
- width:92%;margin:4% auto 0;
-}
-.imageWordCard{
- min-height:190px!important;display:flex!important;flex-direction:column!important;
- align-items:center!important;justify-content:center!important;gap:8px!important;
- background:#fff!important;border:4px solid #c8a3ff!important;border-radius:24px!important;
-}
-.choicePic{font-size:clamp(58px,7vw,100px);line-height:1}
-.choiceWord{font-size:clamp(24px,3vw,42px);font-weight:1000;color:#071f48}
-
-
-/* CORREÇÃO PONTUAL — seleção de personagem */
-.hdAvatar:focus,
-.hdAvatar:focus-visible,
-.hdAvatar.sel:focus,
-.hdAvatar.selected:focus{
- outline:none!important;
- outline-offset:0!important;
- box-shadow:none!important;
-}
-.hdAvatar.sel,
-.hdAvatar.selected{
- outline:none!important;
- box-shadow:none!important;
-}
-/* Destaque somente dentro do cartão realmente escolhido */
-.hdAvatar.sel::after,
-.hdAvatar.selected::after{
- content:"";
- position:absolute;
- inset:3%;
- border:5px solid #ffd83d;
- border-radius:18px;
- pointer-events:none;
-}
-.hdAvatar{position:relative}
-
-
-/* ===== CORREÇÕES VISUAIS DEFINITIVAS ===== */
-.hdAvatar,.hdAvatar:hover,.hdAvatar:active,.hdAvatar:focus,.hdAvatar:focus-visible,
-.hdAvatar.sel,.hdAvatar.selected,.hdAvatar.sel:focus,.hdAvatar.selected:focus{
- outline:0!important;outline:none!important;outline-offset:0!important;
- box-shadow:none!important;border:0!important;background:transparent!important;
- -webkit-tap-highlight-color:transparent!important;
-}
-.hdAvatar::before,.hdAvatar::after,
-.hdAvatar.sel::before,.hdAvatar.sel::after,
-.hdAvatar.selected::before,.hdAvatar.selected::after{
- content:none!important;display:none!important;border:0!important;outline:0!important;box-shadow:none!important;
-}
-
-/* Botão voltar: apenas seta, sem palavra ← */
-#stage .top .icon:first-child,
-#map .icon:first-child{
- width:74px!important;min-width:74px!important;height:68px!important;
- padding:0!important;border-radius:20px!important;
- font-size:0!important;line-height:0!important;
- display:flex!important;align-items:center!important;justify-content:center!important;
- background:linear-gradient(#ffbf24,#ff991c)!important;
- border:4px solid #fff!important;box-shadow:0 5px 0 #c8680a!important;
-}
-#stage .top .icon:first-child::after,
-#map .icon:first-child::after{
- content:"←"!important;display:block!important;
- font-size:42px!important;line-height:1!important;font-weight:1000!important;color:#fff!important;
-}
-
-/* FASE 1 = a própria imagem aprovada é o jogo */
-#stage.fase1Aprovada #stageArt{
- content:url("assets/fase1_floresta_aprovada.png")!important;
- width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;
- filter:none!important;transform:none!important;image-rendering:auto!important;
-}
-#stage.fase1Aprovada .panel{
+/* Fase 1: as cinco artes aprovadas são a própria tela do jogo. Nada é desenhado por cima,
+   exceto áreas transparentes de clique e pequenos chips funcionais. */
+#stage:has(.vowelHitLayer) #stageArt{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;background:#168fc9!important}
+#stage:has(.vowelHitLayer) .dim,
+#stage:has(.vowelHitLayer) .top,
+#stage:has(.vowelHitLayer) .stageTitle,
+#stage:has(.vowelHitLayer) .mascot,
+#stage:has(.vowelHitLayer) .progress{display:none!important}
+#stage:has(.vowelHitLayer) .panel{
  position:absolute!important;inset:0!important;padding:0!important;margin:0!important;
  background:transparent!important;border:0!important;box-shadow:none!important;
  pointer-events:none!important;overflow:visible!important;
 }
-#stage.fase1Aprovada .progress,
-#stage.fase1Aprovada .stageTitle,
-#stage.fase1Aprovada .mascot{display:none!important}
-#stage.fase1Aprovada .forestPrompt{display:none!important}
-.fase1ClickLayer{position:absolute;inset:0;z-index:60;pointer-events:none}
-.fase1Card{
- position:absolute;border:0!important;background:transparent!important;box-shadow:none!important;
- outline:0!important;padding:0!important;cursor:pointer;pointer-events:auto;touch-action:manipulation;
- -webkit-tap-highlight-color:transparent!important;
+.vowelHitLayer{position:absolute!important;inset:0!important;z-index:100!important;pointer-events:none!important}
+.vowelPictureHit{
+ position:absolute!important;z-index:101!important;border:0!important;outline:0!important;
+ background:transparent!important;box-shadow:none!important;border-radius:50%!important;
+ cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important;
 }
-.fase1Card:focus,.fase1Card:focus-visible{outline:0!important;box-shadow:none!important}
-.fase1Card.good{box-shadow:inset 0 0 0 8px #2fd35a!important;border-radius:50%!important}
-.fase1Card.bad{animation:shake .22s 2}
+.vowelPictureHit:hover{background:rgba(255,255,255,.045)!important}
+.vowelPictureHit.good{box-shadow:inset 0 0 0 .55vw #35d45a!important}
+.vowelPictureHit.bad{box-shadow:inset 0 0 0 .45vw #ef3e35!important;animation:shake .22s 2!important}
+.phaseBackHit{position:absolute;left:1.2%;top:1.4%;width:15.5%;height:9.5%;border:0;background:transparent;pointer-events:auto;cursor:pointer;border-radius:2vw}
+.phaseMusicHit{position:absolute;right:1.4%;top:1.4%;width:6.5%;height:9%;border:0;background:transparent;pointer-events:auto;cursor:pointer;border-radius:1.5vw}
+.phaseName{
+ position:absolute;right:14.7%;top:2.35%;min-width:9%;height:6.4%;padding:0 1%;
+ display:flex;align-items:center;justify-content:center;background:#0d4d93;color:white;
+ border:.22vw solid white;border-radius:1.2vw;font-size:clamp(11px,1.45vw,22px);font-weight:900;
+ pointer-events:none;box-shadow:0 .18vw .4vw #0003;
+}
+.phaseCount{
+ position:absolute;right:7.0%;top:2.35%;width:8.2%;height:6.4%;
+ display:flex;align-items:center;justify-content:center;background:#103d80;color:white;
+ border:.22vw solid white;border-radius:1.2vw;font-size:clamp(10px,1.25vw,20px);font-weight:900;
+ pointer-events:none;box-shadow:0 .18vw .4vw #0003;
+}
 
-/* Mantém a seta da fase sem cobrir a arte principal */
-#stage.fase1Aprovada .top .icon:first-child{
- position:absolute!important;left:1.2%!important;top:2%!important;bottom:auto!important;z-index:1200!important;
-}
-
-
-/* PERSONAGENS — hotspots exatamente sobre os quatro cartões */
-.hdAvatar,.hdAvatar:hover,.hdAvatar:active,.hdAvatar:focus,.hdAvatar:focus-visible,
-.hdAvatar.sel,.hdAvatar.selected{
- outline:none!important;border:0!important;box-shadow:none!important;background:transparent!important;
-}
-.hdAvatar::before,.hdAvatar::after,.hdAvatar.sel::before,.hdAvatar.sel::after,
-.hdAvatar.selected::before,.hdAvatar.selected::after{content:none!important;display:none!important}
-
-/* FASE 1 — uma única associação correta por atividade */
-#stage.fase1Aprovada #stageArt{
- content:none!important;
-}
-#stage.fase1Aprovada .panel{
- position:absolute!important;inset:0!important;padding:0!important;background:transparent!important;
- border:0!important;box-shadow:none!important;pointer-events:none!important;
-}
-#stage.fase1Aprovada .progress,#stage.fase1Aprovada .stageTitle,#stage.fase1Aprovada .mascot{display:none!important}
-.phase1Prompt{
- position:absolute;z-index:80;left:29%;top:7%;width:49%;min-height:9%;
- display:flex;align-items:center;justify-content:center;text-align:center;
- background:rgba(255,255,255,.96);border:4px solid #54c5ff;border-radius:28px;
- color:#0b376f;font-weight:1000;font-size:clamp(22px,2.2vw,38px);padding:.5% 1%;
- pointer-events:none;
-}
-.phase1Choices{
- position:absolute;z-index:75;left:24%;right:5%;top:27%;bottom:9%;
- display:grid;grid-template-columns:repeat(3,1fr);gap:3%;align-items:center;pointer-events:none;
-}
-.phase1Pair{
- height:72%;border:7px solid #f0b52e;border-radius:50px;background:#fff3c8;
- box-shadow:0 10px 0 #b66a18,0 12px 22px rgba(0,0,0,.2);
- display:flex;flex-direction:column;align-items:center;justify-content:center;
- cursor:pointer;pointer-events:auto;touch-action:manipulation;overflow:hidden;padding:3%;
-}
-.phase1Pair .pairLetter{
- font-size:clamp(62px,8vw,125px);line-height:.85;font-weight:1000;color:#164d9c;
- text-shadow:0 4px 0 #fff;
-}
-.phase1Pair img{width:72%;height:52%;object-fit:contain;filter:none!important}
-.phase1Pair .pairWord{
- font-size:clamp(17px,1.8vw,30px);font-weight:1000;color:#4b250b;
- background:#ffc85c;border:3px solid #b86c1c;border-radius:14px;padding:2% 8%;
-}
-.phase1Pair.good{border-color:#2dd455!important;box-shadow:0 0 0 8px #fff,0 0 0 14px #2dd455!important}
-.phase1Pair.bad{animation:shake .22s 2}
-
-
-/* PERSONAGENS — clique/toque confiável */
-.hdAvatars{
- position:absolute!important;z-index:5000!important;
- left:22.8%!important;top:56.0%!important;width:43.2%!important;height:18.0%!important;
- display:flex!important;gap:1.3%!important;pointer-events:auto!important;
-}
-.hdAvatar{
- display:block!important;position:relative!important;flex:1 1 0!important;height:100%!important;
- z-index:5001!important;pointer-events:auto!important;cursor:pointer!important;
- border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;
- touch-action:manipulation!important;-webkit-tap-highlight-color:transparent!important;
-}
-.hdAvatar:focus,.hdAvatar:focus-visible,.hdAvatar:active,
-.hdAvatar[aria-pressed="true"]{
- border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;
-}
-.hdAvatar::before,.hdAvatar::after{content:none!important;display:none!important}
-
-
-/* FASE 1 — modelo solicitado: cinco toras, 3 superiores + 2 inferiores */
-.phase1Choices.fiveChoices{
- left:23.5%!important;right:4.5%!important;top:27.5%!important;bottom:5.5%!important;
- display:grid!important;
- grid-template-columns:repeat(6,1fr)!important;
- grid-template-rows:repeat(2,1fr)!important;
- gap:2.5% 2.2%!important;
- align-items:center!important;
- pointer-events:none!important;
-}
-.phase1Choices.fiveChoices .phase1Pair{
- height:92%!important;width:100%!important;min-width:0!important;
- padding:2%!important;border-radius:50%!important;
- pointer-events:auto!important;
-}
-.phase1Choices.fiveChoices .phase1Pair:nth-child(1){grid-column:1/3;grid-row:1}
-.phase1Choices.fiveChoices .phase1Pair:nth-child(2){grid-column:3/5;grid-row:1}
-.phase1Choices.fiveChoices .phase1Pair:nth-child(3){grid-column:5/7;grid-row:1}
-.phase1Choices.fiveChoices .phase1Pair:nth-child(4){grid-column:2/4;grid-row:2}
-.phase1Choices.fiveChoices .phase1Pair:nth-child(5){grid-column:4/6;grid-row:2}
-.phase1Choices.fiveChoices .pairLetter{font-size:clamp(46px,5.7vw,96px)!important}
-.phase1Choices.fiveChoices img{width:58%!important;height:47%!important;object-fit:contain!important}
-.phase1Choices.fiveChoices .pairWord{font-size:clamp(14px,1.35vw,24px)!important;padding:1.5% 6%!important}
+/* Fases 2–5 continuam no modelo aprovado, sem distorção. */
+#stage:not(:has(.vowelHitLayer)) #stageArt{object-fit:contain!important;object-position:center!important;filter:none!important}
 
 </style>
 </head>
@@ -566,12 +367,12 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 <input id="playerName" class="hdName" maxlength="15" placeholder="Digite seu nome" autocomplete="off">
 <!-- Áreas clicáveis exatamente sobre os quatro personagens desenhados na própria arte HD. -->
 <div class="hdAvatars">
-  <button class="hdAvatar" type="button" data-av="1" aria-label="Menino" onclick="chooseCharacter(1,this)" data-avatar="1"></button>
-  <button class="hdAvatar" type="button" data-av="2" aria-label="Menina" onclick="chooseCharacter(2,this)" data-avatar="2"></button>
-  <button class="hdAvatar" type="button" data-av="3" aria-label="Menino negro" onclick="chooseCharacter(3,this)" data-avatar="3"></button>
-  <button class="hdAvatar" type="button" data-av="4" aria-label="Menina negra" onclick="chooseCharacter(4,this)" data-avatar="4"></button>
+  <button class="hdAvatar" type="button" data-av="1" aria-label="Menino" onclick="chooseCharacter(1,this)"></button>
+  <button class="hdAvatar" type="button" data-av="2" aria-label="Menina" onclick="chooseCharacter(2,this)"></button>
+  <button class="hdAvatar" type="button" data-av="3" aria-label="Menino negro" onclick="chooseCharacter(3,this)"></button>
+  <button class="hdAvatar" type="button" data-av="4" aria-label="Menina negra" onclick="chooseCharacter(4,this)"></button>
 </div>
-<button class="hdStart" type="button" aria-label="Começar" onclick="begin()"></button>
+<button class="hdStart" type="button" aria-label="Começar"></button>
 <button class="hdMusic" type="button" aria-label="Música" onclick="toggleMusic()"></button>
 </section>
 
@@ -579,7 +380,7 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 <img class="art" src="assets/mapa_final_hd.png" alt="">
 
 <button class="mapHot mapBack" onclick="show('setup')" aria-label="Voltar"></button>
-<div class="mapScore">⭐ <span id="mapScoreValue">0</span>/45</div>
+<div class="mapScore">⭐ <span id="mapScoreValue">0</span>/50</div>
 <button class="mapHot mh1" onclick="openWorld(1)" aria-label="Floresta das Vogais"></button>
 <button class="mapHot mh2" onclick="openWorld(2)" aria-label="Vila dos Sons"></button>
 <button class="mapHot mh3" onclick="openWorld(3)" aria-label="Montanha das Sílabas"></button>
@@ -588,8 +389,8 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 </section>
 
 <section id="stage" class="screen">
-<img id="stageArt" class="art" src="assets/floresta_vogais_pro.png" alt=""><div class="dim"></div>
-<div class="top"><button class="icon" onclick="show('map')" aria-label="Voltar ao mapa">←</button><div class="hud"><span class="chip namechip"><span id="hudName">Aventureiro</span></span><span class="chip">⭐ <span id="stars">0</span> • <span id="counter">1/10</span></span><button class="icon" onclick="toggleMusic()">🎵</button></div></div>
+<img id="stageArt" class="art" src="assets/floresta.webp" alt=""><div class="dim"></div>
+<div class="top"><button class="icon" onclick="show('map')" aria-label="Voltar ao mapa">← VOLTAR</button><div class="hud"><span class="chip namechip"><span id="hudName">Aventureiro</span></span><span class="chip">⭐ <span id="stars">0</span> • <span id="counter">1/10</span></span><button class="icon" onclick="toggleMusic()">🎵</button></div></div>
 <div class="stageTitle"><div id="worldTitle" class="wood"></div></div>
 <div class="mascot"><img id="mascotImg" src="assets/avatar1.webp" alt=""></div>
 <div class="panel"><div class="progress"><i id="bar"></i></div><div id="content"></div></div>
@@ -605,54 +406,54 @@ const worlds=["","FLORESTA DAS VOGAIS","VILA DOS SONS","MONTANHA DAS SÍLABAS","
 const arts=["","floresta_vogais_pro.png","vila_hd.jpg","montanha.webp","castelo_silabas.webp","castelo_palavras.webp"];
 const Q={
 1:[
-{p:"ENCONTRE A ÚNICA ASSOCIAÇÃO CORRETA!",a:"A"},
-{p:"ENCONTRE A ÚNICA ASSOCIAÇÃO CORRETA!",a:"E"},
-{p:"ENCONTRE A ÚNICA ASSOCIAÇÃO CORRETA!",a:"I"},
-{p:"ENCONTRE A ÚNICA ASSOCIAÇÃO CORRETA!",a:"O"},
-{p:"ENCONTRE A ÚNICA ASSOCIAÇÃO CORRETA!",a:"U"}],
+{p:"Encontre a única associação correta!",a:"A",art:"fase1_atividade1_A.png"},
+{p:"Encontre a única associação correta!",a:"E",art:"fase1_atividade2_E.png"},
+{p:"Encontre a única associação correta!",a:"I",art:"fase1_atividade3_I.png"},
+{p:"Encontre a única associação correta!",a:"O",art:"fase1_atividade4_O.png"},
+{p:"Encontre a única associação correta!",a:"U",art:"fase1_atividade5_U.png"}],
 2:[
-{p:"Qual palavra começa com B?",pic:"⚽",label:"BOLA",o:["⚽ BOLA","🐱 GATO","🦆 PATO"],a:"⚽ BOLA"},
-{p:"Qual palavra começa com G?",pic:"🐱",label:"GATO",o:["🐸 SAPO","🐱 GATO","🏠 CASA"],a:"🐱 GATO"},
-{p:"Qual palavra começa com P?",pic:"🦆",label:"PATO",o:["🦆 PATO","⚽ BOLA","🌙 LUA"],a:"🦆 PATO"},
-{p:"Qual palavra começa com C?",pic:"🏠",label:"CASA",o:["🎲 DADO","🏠 CASA","🧳 MALA"],a:"🏠 CASA"},
-{p:"Qual palavra começa com M?",pic:"🧳",label:"MALA",o:["🧳 MALA","🐸 SAPO","👄 BOCA"],a:"🧳 MALA"},
-{p:"Qual palavra começa com S?",pic:"🐸",label:"SAPO",o:["🐸 SAPO","🎲 DADO","⚽ BOLA"],a:"🐸 SAPO"},
-{p:"Qual palavra começa com D?",pic:"🎲",label:"DADO",o:["🌙 LUA","🎲 DADO","🐱 GATO"],a:"🎲 DADO"},
-{p:"Qual palavra começa com L?",pic:"🌙",label:"LUA",o:["🏠 CASA","🌙 LUA","🦆 PATO"],a:"🌙 LUA"},
-{p:"Qual palavra começa com F?",pic:"🌸",label:"FLOR",o:["🌸 FLOR","🐱 GATO","🧳 MALA"],a:"🌸 FLOR"},
-{p:"Qual palavra começa com R?",pic:"🐭",label:"RATO",o:["🐭 RATO","🐸 SAPO","⚽ BOLA"],a:"🐭 RATO"}],
+{p:"Qual palavra começa com B?",pic:"⚽",o:["⚽ BOLA","🐱 GATO","🦆 PATO"],a:"⚽ BOLA"},
+{p:"Qual palavra começa com G?",pic:"🐱",o:["🐸 SAPO","🐱 GATO","🏠 CASA"],a:"🐱 GATO"},
+{p:"Qual palavra começa com P?",pic:"🦆",o:["🦆 PATO","⚽ BOLA","🌙 LUA"],a:"🦆 PATO"},
+{p:"Qual palavra começa com C?",pic:"🏠",o:["🎲 DADO","🏠 CASA","🧳 MALA"],a:"🏠 CASA"},
+{p:"Qual palavra começa com M?",pic:"🧳",o:["🧳 MALA","🐸 SAPO","👄 BOCA"],a:"🧳 MALA"},
+{p:"Qual palavra começa com S?",pic:"🐸",o:["🐸 SAPO","🎲 DADO","⚽ BOLA"],a:"🐸 SAPO"},
+{p:"Qual palavra começa com D?",pic:"🎲",o:["🌙 LUA","🎲 DADO","🐱 GATO"],a:"🎲 DADO"},
+{p:"Qual palavra começa com L?",pic:"🌙",o:["🏠 CASA","🌙 LUA","🦆 PATO"],a:"🌙 LUA"},
+{p:"Qual palavra começa com F?",pic:"🌸",o:["🌸 FLOR","🐱 GATO","🧳 MALA"],a:"🌸 FLOR"},
+{p:"Qual palavra começa com R?",pic:"🐭",o:["🐭 RATO","🐸 SAPO","⚽ BOLA"],a:"🐭 RATO"}],
 3:[
-{p:"Qual é a primeira sílaba de BOLA?",pic:"⚽",label:"BOLA",o:["BA","BO","BU"],a:"BO"},
-{p:"Qual é a primeira sílaba de CASA?",pic:"🏠",label:"CASA",o:["CO","CA","CU"],a:"CA"},
-{p:"Qual é a primeira sílaba de MALA?",pic:"🧳",label:"MALA",o:["ME","MI","MA"],a:"MA"},
-{p:"Qual é a primeira sílaba de PATO?",pic:"🦆",label:"PATO",o:["PA","PE","PI"],a:"PA"},
-{p:"Qual é a primeira sílaba de SAPO?",pic:"🐸",label:"SAPO",o:["SA","SO","SU"],a:"SA"},
-{p:"Qual é a primeira sílaba de DADO?",pic:"🎲",label:"DADO",o:["DE","DA","DO"],a:"DA"},
-{p:"Qual é a primeira sílaba de BOCA?",pic:"👄",label:"BOCA",o:["BU","BA","BO"],a:"BO"},
-{p:"Qual é a primeira sílaba de MESA?",pic:"🪑",label:"MESA",o:["MO","ME","MA"],a:"ME"},
-{p:"Qual é a primeira sílaba de FADA?",pic:"🧚",label:"FADA",o:["FI","FA","FO"],a:"FA"},
-{p:"Qual é a primeira sílaba de LATA?",pic:"🥫",label:"LATA",o:["LU","LA","LE"],a:"LA"}],
+{p:"Qual é a primeira sílaba de BOLA?",pic:"⚽",o:["BA","BO","BU"],a:"BO"},
+{p:"Qual é a primeira sílaba de CASA?",pic:"🏠",o:["CO","CA","CU"],a:"CA"},
+{p:"Qual é a primeira sílaba de MALA?",pic:"🧳",o:["ME","MI","MA"],a:"MA"},
+{p:"Qual é a primeira sílaba de PATO?",pic:"🦆",o:["PA","PE","PI"],a:"PA"},
+{p:"Qual é a primeira sílaba de SAPO?",pic:"🐸",o:["SA","SO","SU"],a:"SA"},
+{p:"Qual é a primeira sílaba de DADO?",pic:"🎲",o:["DE","DA","DO"],a:"DA"},
+{p:"Qual é a primeira sílaba de BOCA?",pic:"👄",o:["BU","BA","BO"],a:"BO"},
+{p:"Qual é a primeira sílaba de MESA?",pic:"🪑",o:["MO","ME","MA"],a:"ME"},
+{p:"Qual é a primeira sílaba de FADA?",pic:"🧚",o:["FI","FA","FO"],a:"FA"},
+{p:"Qual é a primeira sílaba de LATA?",pic:"🥫",o:["LU","LA","LE"],a:"LA"}],
 4:[
-{p:"Junte as sílabas e forme CASA",pic:"🏠",label:"CASA",build:["CA","SA"],o:["CA","BO","SA","PA"]},
-{p:"Junte as sílabas e forme BOLA",pic:"⚽",label:"BOLA",build:["BO","LA"],o:["LA","PA","BO","MA"]},
-{p:"Junte as sílabas e forme PATO",pic:"🦆",label:"PATO",build:["PA","TO"],o:["TO","PO","PA","TA"]},
-{p:"Junte as sílabas e forme MALA",pic:"🧳",label:"MALA",build:["MA","LA"],o:["LA","ME","MA","SA"]},
-{p:"Junte as sílabas e forme SAPO",pic:"🐸",label:"SAPO",build:["SA","PO"],o:["PA","SA","PO","SO"]},
-{p:"Junte as sílabas e forme DADO",pic:"🎲",label:"DADO",build:["DA","DO"],o:["DE","DO","DA","DI"]},
-{p:"Junte as sílabas e forme BOCA",pic:"👄",label:"BOCA",build:["BO","CA"],o:["BO","CO","CA","BA"]},
-{p:"Junte as sílabas e forme MESA",pic:"🪑",label:"MESA",build:["ME","SA"],o:["MA","SA","ME","SO"]},
-{p:"Junte as sílabas e forme FADA",pic:"🧚",label:"FADA",build:["FA","DA"],o:["FO","FA","DE","DA"]},
-{p:"Junte as sílabas e forme LATA",pic:"🥫",label:"LATA",build:["LA","TA"],o:["LA","TO","TA","LU"]}],
+{p:"Junte as sílabas e forme CASA",pic:"🏠",build:["CA","SA"],o:["CA","BO","SA","PA"]},
+{p:"Junte as sílabas e forme BOLA",pic:"⚽",build:["BO","LA"],o:["LA","PA","BO","MA"]},
+{p:"Junte as sílabas e forme PATO",pic:"🦆",build:["PA","TO"],o:["TO","PO","PA","TA"]},
+{p:"Junte as sílabas e forme MALA",pic:"🧳",build:["MA","LA"],o:["LA","ME","MA","SA"]},
+{p:"Junte as sílabas e forme SAPO",pic:"🐸",build:["SA","PO"],o:["PA","SA","PO","SO"]},
+{p:"Junte as sílabas e forme DADO",pic:"🎲",build:["DA","DO"],o:["DE","DO","DA","DI"]},
+{p:"Junte as sílabas e forme BOCA",pic:"👄",build:["BO","CA"],o:["BO","CO","CA","BA"]},
+{p:"Junte as sílabas e forme MESA",pic:"🪑",build:["ME","SA"],o:["MA","SA","ME","SO"]},
+{p:"Junte as sílabas e forme FADA",pic:"🧚",build:["FA","DA"],o:["FO","FA","DE","DA"]},
+{p:"Junte as sílabas e forme LATA",pic:"🥫",build:["LA","TA"],o:["LA","TO","TA","LU"]}],
 5:[
 {p:"Complete a palavra: G _ T O",pic:"🐱",o:["A","E","I"],a:"A"},
 {p:"Qual palavra combina com a imagem?",pic:"🏠",o:["CASA","MESA","MALA"],a:"CASA"},
-{p:"Organize as letras e forme CASA",pic:"🏠",label:"CASA",letters:["A","S","C","A"],word:"CASA"},
+{p:"Organize as letras e forme CASA",pic:"🏠",letters:["A","S","C","A"],word:"CASA"},
 {p:"Complete a palavra: B _ L A",pic:"⚽",o:["A","O","U"],a:"O"},
 {p:"Qual palavra combina com a imagem?",pic:"🌙",o:["LUA","RUA","BOCA"],a:"LUA"},
-{p:"Organize as letras e forme GATO",pic:"🐱",label:"GATO",letters:["T","A","G","O"],word:"GATO"},
+{p:"Organize as letras e forme GATO",pic:"🐱",letters:["T","A","G","O"],word:"GATO"},
 {p:"Complete a palavra: P _ T O",pic:"🦆",o:["E","A","I"],a:"A"},
 {p:"Qual palavra combina com a imagem?",pic:"🐸",o:["SAPO","SACO","DADO"],a:"SAPO"},
-{p:"Organize as letras e forme MALA",pic:"🧳",label:"MALA",letters:["A","M","L","A"],word:"MALA"},
+{p:"Organize as letras e forme MALA",pic:"🧳",letters:["A","M","L","A"],word:"MALA"},
 {p:"Complete a palavra: D A D _",pic:"🎲",o:["A","E","O"],a:"O"}]};
 let S={name:"Aventureiro",avatar:null,unlocked:1,done:[],stars:0,world:1,q:0,music:false,sel:[]};
 let ctx=null,timer=null,step=0;
@@ -690,7 +491,7 @@ function openWorld(n){
  S.sel=[];
  lockedAnswer=false;
  const art=document.getElementById("stageArt");
- if(art) art.src=n===1?"assets/fase1_floresta_aprovada.png":`assets/${arts[n]}`;
+ if(art) art.src=`assets/${arts[n]}`;
  const title=document.getElementById("worldTitle");
  if(title) title.textContent=worlds[n];
  show("stage");
@@ -699,8 +500,11 @@ function openWorld(n){
 
 function chooseCharacter(n,el){
  S.avatar=n;
- document.querySelectorAll(".hdAvatar,.avatar").forEach(x=>x.classList.remove("sel","selected"));
- if(el) el.classList.add("sel","selected");
+ document.querySelectorAll(".hdAvatar,.avatar").forEach(x=>{
+   x.classList.remove("sel","selected");
+   x.removeAttribute("data-selected");
+ });
+ if(el) el.setAttribute("data-selected","true");
  try{ tone(660,.08,.025); }catch(e){}
 }
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));document.getElementById(id).classList.add("on");if(id==="map")updateMap()}
@@ -730,69 +534,44 @@ function begin(){
 function render(){
  const q=Q[S.world][S.q];
  if(!q){finishWorld();return;}
-
- const stage=document.getElementById("stage");
- if(stage) stage.classList.toggle("fase1Aprovada",S.world===1);
-
+ const total=(S.world===1?5:10);
  const stars=document.getElementById("stars");
  const counter=document.getElementById("counter");
  const bar=document.getElementById("bar");
  if(stars)stars.textContent=S.stars;
- const totalQ=S.world===1?5:10;
- if(counter)counter.textContent=`${S.q+1}/${totalQ}`;
- if(bar)bar.style.width=`${(S.q/totalQ)*100}%`;
-
+ if(counter)counter.textContent=`${S.q+1}/${total}`;
+ if(bar)bar.style.width=`${(S.q/total)*100}%`;
  const content=document.getElementById("content");
  if(!content)return;
 
  if(S.world===1){
    const art=document.getElementById("stageArt");
-   if(art) art.src="assets/floresta_vogais_pro.png";
-
-   const assoc={
-     A:{img:"fase1_obj_A.png",word:"ABELHA"},
-     E:{img:"fase1_obj_E.png",word:"ELEFANTE"},
-     I:{img:"fase1_obj_I.png",word:"ILHA"},
-     O:{img:"fase1_obj_O.png",word:"OLHO"},
-     U:{img:"fase1_obj_U.png",word:"UVA"}
-   };
-
-   // Cada atividade mantém AS CINCO TORAS.
-   // Somente UMA letra está associada à imagem correta.
-   const screens=[
-     // 1: A + ABELHA é a única correta
-     [{l:"A",i:"A"},{l:"E",i:"I"},{l:"I",i:"O"},{l:"O",i:"E"},{l:"U",i:"U_WRONG"}],
-     // 2: E + ELEFANTE é a única correta
-     [{l:"A",i:"E"},{l:"E",i:"E"},{l:"I",i:"U"},{l:"O",i:"A"},{l:"U",i:"O"}],
-     // 3: I + ILHA é a única correta
-     [{l:"A",i:"E"},{l:"E",i:"O"},{l:"I",i:"I"},{l:"O",i:"U"},{l:"U",i:"A"}],
-     // 4: O + OLHO é a única correta
-     [{l:"A",i:"I"},{l:"E",i:"A"},{l:"I",i:"U"},{l:"O",i:"O"},{l:"U",i:"E"}],
-     // 5: U + UVA é a única correta
-     [{l:"A",i:"E"},{l:"E",i:"I"},{l:"I",i:"O"},{l:"O",i:"A"},{l:"U",i:"U"}]
+   if(art) art.src=`assets/${q.art}`;
+   const targets=[
+     {v:"A",x:24.0,y:28.0,w:20.5,h:31.0},
+     {v:"E",x:43.5,y:28.0,w:20.5,h:31.0},
+     {v:"I",x:65.0,y:28.0,w:21.5,h:31.0},
+     {v:"O",x:34.0,y:59.0,w:22.0,h:35.0},
+     {v:"U",x:56.0,y:59.0,w:22.0,h:35.0}
    ];
-
-   // No primeiro quadro, U não pode ficar correto; usa UVA sob U? Não.
-   // Troca a imagem do U por ELEFANTE, mantendo cinco imagens visuais.
-   screens[0][4].i="E";
-
-   const choices=screens[S.q]||screens[0];
-   let h=`<div class="phase1Prompt">ENCONTRE A ÚNICA<br>ASSOCIAÇÃO CORRETA!</div><div class="phase1Choices fiveChoices">`;
-   choices.forEach(c=>{
-      const im=assoc[c.i];
-      h+=`<button type="button" class="phase1Pair" data-value="${c.l}" data-imgkey="${c.i}" onclick="answerPhase1(this)"
-              aria-label="${c.l} com ${im.word}">
-          <span class="pairLetter">${c.l}</span>
-          <img src="assets/${im.img}" alt="${im.word}">
-          <span class="pairWord">${im.word}</span>
-        </button>`;
+   let h=`<div class="vowelHitLayer">
+      <button type="button" class="phaseBackHit" aria-label="Voltar ao mapa" onclick="show('map')"></button>
+      <button type="button" class="phaseMusicHit" aria-label="Música" onclick="toggleMusic()"></button>
+      <div class="phaseName">${escapeHtml(S.name)}</div>
+      <div class="phaseCount">⭐ ${S.q+1}/5</div>`;
+   targets.forEach(t=>{
+      h+=`<button type="button" class="vowelPictureHit" data-value="${t.v}"
+       aria-label="Associação da letra ${t.v}" style="left:${t.x}%;top:${t.y}%;width:${t.w}%;height:${t.h}%"
+       onclick="answer(this)"></button>`;
    });
    h+=`</div>`;
    content.innerHTML=h;
    return;
  }
- let h=`<div class="prompt">${q.p}</div>`;
- h+=`<div class="visual"><div class="emoji">${q.pic||""}</div>${q.label?`<div class="wordpic">${q.label}</div>`:""}</div>`;
+
+ const art=document.getElementById("stageArt");
+ if(art) art.src=`assets/${arts[S.world]}`;
+ let h=`<div class="prompt">${q.p}</div><div class="visual"><div class="emoji">${q.pic||""}</div>${q.label?`<div class="wordpic">${q.label}</div>`:""}</div>`;
  if(q.build){
    h+=`<div class="slots" id="slots">Toque nas sílabas na ordem</div><div class="tiles">${q.o.map(x=>`<button class="tile" onclick="pickBuild('${x}',this)">${x}</button>`).join("")}</div>`;
  }else if(q.letters){
@@ -801,19 +580,11 @@ function render(){
    h+=`<div class="answers">${q.o.map(x=>`<button class="answer" data-value="${x}" onclick="answer(this)">${x}</button>`).join("")}</div>`;
  }
  content.innerHTML=h;
-}function answerPhase1(el){
- if(lockedAnswer)return;
- const correct=["A","E","I","O","U"][S.q];
- const ok=el.dataset.value===correct && el.dataset.imgkey===correct;
- if(ok){
-   el.classList.add("good");
-   success();
- }else{
-   el.classList.add("bad");
-   tone(180,.14,.045);
-   toast("🌟 Quase! Tente outra vez.");
-   setTimeout(()=>el.classList.remove("bad"),600);
- }
+}
+function escapeHtml(s){
+ const d=document.createElement("div");
+ d.textContent=String(s??"");
+ return d.innerHTML;
 }
 function answer(el){let q=Q[S.world][S.q],v=el.dataset.value;if(v===q.a){el.classList.add("good");success()}else{el.classList.add("bad");tone(180,.14,.045);toast("🌟 Quase! Tente outra vez.");setTimeout(()=>el.classList.remove("bad"),600)}}
 function pickBuild(v,el){let q=Q[S.world][S.q];S.sel.push(v);el.style.visibility="hidden";document.getElementById("slots").textContent=S.sel.join(" + ");if(S.sel.length===q.build.length){S.sel.join("|")===q.build.join("|")?success():retry()}}
@@ -823,7 +594,7 @@ let lockedAnswer=false;
 function success(){
  if(lockedAnswer)return;
  lockedAnswer=true;
- S.stars=Math.min(45,S.stars+1);
+ S.stars=Math.min(50,S.stars+1);
  tone(784,.12,.05);confetti(22);
  toast(["⭐ Muito bem!","🎉 Você conseguiu!","🌈 Excelente!"][Math.floor(Math.random()*3)]);
  save();
@@ -842,7 +613,7 @@ function finishWorld(){
    setTimeout(()=>{
      S.world=next;S.q=0;S.sel=[];lockedAnswer=false;
      const art=document.getElementById("stageArt");
-     if(art)art.src=next===1?"assets/fase1_floresta_aprovada.png":`assets/${arts[next]}`;
+     if(art)art.src=`assets/${arts[next]}`;
      const title=document.getElementById("worldTitle");
      if(title)title.textContent=worlds[next];
      show("stage");render();
@@ -868,7 +639,8 @@ function resetGame(){localStorage.removeItem("wm_aventura_alfabeto_final");locat
 window.addEventListener("load",()=>{setTimeout(()=>{let n=document.getElementById("playerName");if(n){n.value="";n.focus()}},120);setTimeout(()=>document.getElementById("playerName").focus(),180);try{let x=JSON.parse(localStorage.getItem("wm_aventura_alfabeto_final")||"null");if(x)Object.assign(S,x);S.music=false}catch(e){};document.getElementById("playerName").value="";document.getElementById("hudName").textContent=S.name;if(S.avatar){document.getElementById("mascotImg").src=`assets/avatar${S.avatar}.webp`;}document.querySelectorAll(".avatar").forEach((b,i)=>b.classList.toggle("sel",i+1===S.avatar));updateMap()});
 
 const PRELOAD_ASSETS=[
- "assets/tela_inicial_hd.jpg","assets/mapa_final_hd.png","assets/floresta_profissional.png",
+ "assets/tela_inicial_hd.jpg","assets/mapa_final_hd.png","assets/fase1_atividade1_A.png","assets/fase1_atividade2_E.png","assets/fase1_atividade3_I.png",
+ "assets/fase1_atividade4_O.png","assets/fase1_atividade5_U.png",
  "assets/vila_hd.jpg","assets/montanha.webp","assets/castelo_silabas.webp","assets/castelo_palavras.webp","assets/final.webp"
 ];
 window.addEventListener("load",()=>PRELOAD_ASSETS.forEach(src=>{const im=new Image();im.decoding="async";im.src=src;}));
@@ -876,30 +648,24 @@ window.addEventListener("load",()=>PRELOAD_ASSETS.forEach(src=>{const im=new Ima
 
 
 
-document.addEventListener("pointerup",(e)=>{
- const start=e.target.closest?.(".hdStart");
- if(start){e.preventDefault();e.stopPropagation();begin();}
-});
 
-
-function setAvatarChoice(n,btn){
- S.avatar=Number(n);
- document.querySelectorAll(".hdAvatar").forEach((b,i)=>{
-   b.setAttribute("aria-pressed", i+1===S.avatar ? "true":"false");
- });
- save();
- toast("✨ Personagem escolhido!");
-}
-
-document.addEventListener("pointerup",(e)=>{
+document.addEventListener("click",(e)=>{
  const av=e.target.closest?.(".hdAvatar");
  if(av){
-   e.preventDefault();
-   e.stopPropagation();
-   const n=Number(av.dataset.avatar || [...document.querySelectorAll(".hdAvatar")].indexOf(av)+1);
-   setAvatarChoice(n,av);
+   e.preventDefault(); e.stopPropagation();
+   chooseCharacter(Number(av.dataset.av),av);
+   return;
+ }
+ const start=e.target.closest?.(".hdStart");
+ if(start){
+   e.preventDefault(); e.stopPropagation();
+   begin();
  }
 });
 
+document.addEventListener("pointerup",(e)=>{
+ const av=e.target.closest?.(".hdAvatar");
+ if(av && e.pointerType==="touch"){ e.preventDefault(); chooseCharacter(Number(av.dataset.av),av); }
+});
+
 </script></main></div></body></html>
-<!-- WM: correções visuais consolidadas -->
