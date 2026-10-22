@@ -437,6 +437,54 @@ button,[role="button"]{touch-action:manipulation}
 .art,#stageArt{object-fit:contain!important;object-position:center!important;image-rendering:auto!important}
 </style>
 
+
+<style id="wm-pro-edition">
+:root{--navy:#073b78;--sky:#4bc0ff;--wood:#a75a14;--cream:#fff5cf}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0d78a8;font-family:Arial,Helvetica,sans-serif}
+button,input{font:inherit}
+#wmPro{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0d78a8;z-index:99999}
+.proFrame{position:relative;width:min(100vw,150vh);height:min(100vh,66.6667vw);aspect-ratio:3/2;overflow:hidden;background:#123;border-radius:0}
+.proArt{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;user-select:none;-webkit-user-drag:none}
+.proOverlay{position:absolute;inset:0}
+.hidden{display:none!important}
+.proName{position:absolute;left:42%;top:41.2%;width:31%;height:6.8%;border:0;background:transparent;text-align:center;font-weight:900;font-size:clamp(18px,2.3vw,38px);outline:none;color:#123}
+.avatarHit{position:absolute;top:55.3%;width:9.2%;height:15%;border:0;background:transparent;border-radius:18%;cursor:pointer}
+.avatarHit[data-a="0"]{left:36.2%}.avatarHit[data-a="1"]{left:46.2%}.avatarHit[data-a="2"]{left:56.1%}.avatarHit[data-a="3"]{left:66.1%}
+.avatarHit.selected{outline:clamp(3px,.45vw,7px) solid #38d765;outline-offset:-4px;box-shadow:0 0 0 4px white inset}
+.startHit{position:absolute;left:39.8%;top:73.2%;width:31.5%;height:13.2%;border:0;background:transparent;cursor:pointer;border-radius:999px}
+.startHit:disabled{cursor:not-allowed}
+.proMsg{position:absolute;left:50%;top:88%;transform:translateX(-50%);background:rgba(255,255,255,.95);border:3px solid #48bfff;border-radius:18px;padding:.6em 1em;font-weight:900;color:#073b78;display:none}
+.mapBtn{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:22px}
+.mapBtn.one{left:9%;top:42%;width:24%;height:23%}
+.mapBtn.two{left:40%;top:44%;width:22%;height:24%}
+.mapBtn.three{left:69%;top:67%;width:24%;height:26%}
+.mapBtn.four{left:37%;top:72%;width:24%;height:24%}
+.mapBtn.five{left:72%;top:34%;width:23%;height:25%}
+.mapBtn.locked{cursor:not-allowed}
+.realBack{position:absolute;left:1.4%;top:2%;width:5.6%;aspect-ratio:1;border:0;border-radius:25%;background:linear-gradient(#ffd83c,#ff9b16);box-shadow:0 3px 0 #b85b00,0 0 0 3px white;z-index:30;cursor:pointer;color:white;font-size:clamp(22px,3.3vw,54px);font-weight:900}
+.musicBtn{position:absolute;right:1.6%;top:2%;width:5.5%;aspect-ratio:1;border:0;border-radius:25%;background:linear-gradient(#36bfff,#0876d6);box-shadow:0 3px 0 #064d92,0 0 0 3px white;z-index:30;cursor:pointer;font-size:clamp(18px,2.5vw,42px)}
+.phaseHud{position:absolute;right:8%;top:2.2%;z-index:30;background:rgba(255,255,255,.95);border:3px solid #55bfff;border-radius:999px;padding:.45em 1em;font-weight:900;color:#073b78;font-size:clamp(13px,1.45vw,24px)}
+.phaseQuestion{position:absolute;left:30%;top:17.3%;width:43%;height:9%;z-index:31;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;color:#082f6b;font-size:clamp(16px,2vw,33px);pointer-events:none}
+.choice{position:absolute;z-index:40;border:0;background:transparent;cursor:pointer;border-radius:50%;touch-action:manipulation}
+.choice.c1{left:20.5%;top:29.2%;width:22.2%;height:30.5%}
+.choice.c2{left:43.2%;top:29.2%;width:22.2%;height:30.5%}
+.choice.c3{left:68.0%;top:29.2%;width:22.2%;height:30.5%}
+.choice.c4{left:31.0%;top:60.0%;width:22.2%;height:31.0%}
+.choice.c5{left:55.5%;top:60.0%;width:22.2%;height:31.0%}
+.choice:focus-visible{outline:4px solid white;box-shadow:0 0 0 8px #1fb95b}
+.choice.correct{animation:pop .35s ease}
+.choice.wrong{animation:shake .22s 2}
+@keyframes pop{50%{transform:scale(1.04);filter:brightness(1.12)}}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.feedback{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);z-index:70;background:white;border:5px solid #38c96b;border-radius:28px;padding:.7em 1.2em;font-weight:900;color:#086329;font-size:clamp(20px,3vw,48px);box-shadow:0 10px 35px #0005;display:none}
+.finishCard{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(#5bd1ff,#dff9ff);z-index:80}
+.finishInner{width:min(82%,900px);background:white;border:6px solid #ffc62d;border-radius:38px;padding:4%;text-align:center;box-shadow:0 18px 60px #0004}
+.finishInner h1{font-size:clamp(30px,5vw,70px);color:#073b78;margin:.1em}
+.finishInner p{font-size:clamp(18px,2vw,30px)}
+.finishInner button{border:0;border-radius:999px;padding:.8em 1.4em;background:#32c85b;color:white;font-weight:900;font-size:clamp(18px,2vw,30px);cursor:pointer}
+</style>
+
 </head>
 <body><div id="shell"><main id="gameframe">
 <div id="toast" class="toast">Muito bem!</div>
@@ -754,4 +802,116 @@ document.addEventListener("pointerup",(e)=>{
  if(av && e.pointerType==="touch"){ e.preventDefault(); chooseCharacter(Number(av.dataset.av),av); }
 });
 
-</script></main></div></body></html>
+</script></main></div>
+<div id="wmPro">
+ <div class="proFrame" id="proFrame">
+   <section id="proSetup">
+     <img class="proArt" src="assets/tela_inicial_hd.jpg" alt="Aventura do Alfabeto">
+     <input id="proName" class="proName" placeholder="Digite seu nome" autocomplete="off" maxlength="18">
+     <button class="avatarHit" data-a="0" aria-label="Escolher personagem 1"></button>
+     <button class="avatarHit" data-a="1" aria-label="Escolher personagem 2"></button>
+     <button class="avatarHit" data-a="2" aria-label="Escolher personagem 3"></button>
+     <button class="avatarHit" data-a="3" aria-label="Escolher personagem 4"></button>
+     <button id="proStart" class="startHit" aria-label="Começar"></button>
+     <div id="proMsg" class="proMsg">Digite seu nome e escolha um personagem.</div>
+   </section>
+   <section id="proMap" class="hidden">
+     <img class="proArt" src="assets/mapa_final_hd_hq.webp" alt="Mapa da aventura">
+     <button class="realBack" id="mapBack" aria-label="Voltar">←</button>
+     <button class="musicBtn" id="mapMusic" aria-label="Música">♫</button>
+     <button class="mapBtn one" id="world1" aria-label="Floresta das Vogais"></button>
+     <button class="mapBtn two locked" aria-label="Vila dos Sons bloqueada"></button>
+     <button class="mapBtn three locked" aria-label="Montanha das Sílabas bloqueada"></button>
+     <button class="mapBtn four locked" aria-label="Castelo das Sílabas bloqueado"></button>
+     <button class="mapBtn five locked" aria-label="Castelo das Palavras bloqueado"></button>
+   </section>
+   <section id="proPhase1" class="hidden">
+     <img class="proArt" src="assets/fase1_profissional_base.webp" alt="Floresta das Vogais">
+     <button class="realBack" id="phaseBack" aria-label="Voltar ao mapa">←</button>
+     <button class="musicBtn" id="phaseMusic" aria-label="Música">♫</button>
+     <div class="phaseHud" id="phaseHud">★ 0/5</div>
+     <div class="phaseQuestion" id="phaseQuestion">ENCONTRE A ÚNICA ASSOCIAÇÃO CORRETA!</div>
+     <button class="choice c1" data-i="0" aria-label="A de Abelha"></button>
+     <button class="choice c2" data-i="1" aria-label="E de Elefante"></button>
+     <button class="choice c3" data-i="2" aria-label="I de Ilha"></button>
+     <button class="choice c4" data-i="3" aria-label="O de Olho"></button>
+     <button class="choice c5" data-i="4" aria-label="U de Uva"></button>
+     <div class="feedback" id="feedback">Muito bem! ★</div>
+   </section>
+   <section id="proFinish" class="hidden finishCard">
+     <div class="finishInner">
+       <h1>FASE 1 CONCLUÍDA! ⭐</h1>
+       <p id="finishText">Você completou a Floresta das Vogais.</p>
+       <button id="nextWorld">CONTINUAR A AVENTURA</button>
+     </div>
+   </section>
+ </div>
+</div>
+
+<script id="wm-pro-js">
+(()=>{
+ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+ const screens=['#proSetup','#proMap','#proPhase1','#proFinish'];
+ const show=id=>{screens.forEach(s=>$(s).classList.add('hidden'));$(id).classList.remove('hidden')};
+ let avatar=null, step=0, score=0, locked=false, musicOn=true;
+ const acts=[{"target": "A", "correct": 0}, {"target": "E", "correct": 1}, {"target": "I", "correct": 2}, {"target": "O", "correct": 3}, {"target": "U", "correct": 4}];
+ const name=$('#proName');
+ name.value='';
+ name.addEventListener('input',()=>{ if(name.value.trim()) $('#proMsg').style.display='none'; });
+ $$('.avatarHit').forEach(b=>b.onclick=()=>{
+   avatar=Number(b.dataset.a);
+   $$('.avatarHit').forEach(x=>x.classList.remove('selected'));
+   b.classList.add('selected');
+   $('#proMsg').style.display='none';
+ });
+ $('#proStart').onclick=()=>{
+   if(!name.value.trim() || avatar===null){
+     $('#proMsg').style.display='block';
+     if(!name.value.trim()) name.focus();
+     return;
+   }
+   localStorage.setItem('wmAluno',name.value.trim());
+   localStorage.setItem('wmAvatar',String(avatar));
+   show('#proMap');
+ };
+ $('#mapBack').onclick=()=>show('#proSetup');
+ $('#world1').onclick=()=>{step=0;score=0;renderPhase();show('#proPhase1')};
+ $('#phaseBack').onclick=()=>show('#proMap');
+ function toggleMusic(){
+   musicOn=!musicOn;
+   $('#mapMusic').textContent=$('#phaseMusic').textContent=musicOn?'♫':'×';
+ }
+ $('#mapMusic').onclick=toggleMusic; $('#phaseMusic').onclick=toggleMusic;
+ function renderPhase(){
+   locked=false;
+   $('#phaseHud').textContent='★ '+score+'/5';
+   $('#phaseQuestion').textContent='ENCONTRE A ÚNICA ASSOCIAÇÃO CORRETA!';
+   $$('.choice').forEach(x=>x.classList.remove('correct','wrong'));
+ }
+ $$('.choice').forEach(b=>b.onclick=()=>{
+   if(locked)return;
+   const chosen=Number(b.dataset.i), correct=acts[step].correct;
+   if(chosen===correct){
+      locked=true; score++; b.classList.add('correct');
+      const f=$('#feedback'); f.style.display='block';
+      setTimeout(()=>{
+        f.style.display='none'; step++;
+        if(step>=acts.length){
+          $('#finishText').textContent=(name.value.trim()||'Aventureiro')+', você completou as 5 atividades da Floresta das Vogais!';
+          show('#proFinish');
+        } else renderPhase();
+      },650);
+   } else {
+      b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),500);
+   }
+ });
+ $('#nextWorld').onclick=()=>{
+   show('#proMap');
+   const w2=$('.mapBtn.two'); w2.classList.remove('locked');
+   w2.onclick=()=>alert('Vila dos Sons liberada. A próxima fase permanece preservada na versão completa.');
+ };
+ show('#proSetup');
+})();
+</script>
+
+</body></html>

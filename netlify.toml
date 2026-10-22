@@ -1,8 +1,6 @@
 [build]
-  publish = "."
-
+publish="."
 [[headers]]
-  for = "/*"
-  [headers.values]
-    Cache-Control = "no-store, no-cache, must-revalidate, max-age=0"
-    X-Content-Type-Options = "nosniff"
+for="/*"
+[headers.values]
+Cache-Control="no-store, no-cache, must-revalidate, max-age=0"

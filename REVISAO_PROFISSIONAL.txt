@@ -1,0 +1,15 @@
+AVENTURA DO ALFABETO — PRO EDITION
+Revisão:
+- nova arte limpa da Fase 1;
+- sem Weksley, seta, contador ou elementos antigos gravados no fundo da fase;
+- círculos/toras corretos na própria arte;
+- avatar selecionável;
+- nome obrigatório;
+- começar bloqueado logicamente até nome + avatar;
+- 5 atividades da Fase 1, uma resposta correta por atividade;
+- transição automática após acerto;
+- botão voltar real e clicável;
+- música real clicável (controle visual);
+- imagens com object-fit contain, sem esticar;
+- pacote otimizado para GitHub/Netlify;
+- JavaScript validado.
