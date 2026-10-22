@@ -1,0 +1,6 @@
+name editable: OK
+6 avatars start only: OK
+5 levels: OK
+selected avatar in game: OK
+no emoji activity pictures: OK
+netlify entry: OK
