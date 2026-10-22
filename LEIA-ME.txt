@@ -1,0 +1,6 @@
+MUNDO MÁGICO DA ALFABETIZAÇÃO
+1. Para testar: abra index.html no navegador.
+2. Para Netlify: envie a pasta ou o ZIP para o Netlify.
+3. O jogo é responsivo para computador, tablet e celular.
+4. O áudio usa a voz disponível no navegador/dispositivo.
+5. O progresso é salvo localmente no navegador.

@@ -2,131 +2,108 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#123d73">
-<title>Aventura do Alfabeto • WM Jogos Educativos</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Mundo Mágico da Alfabetização</title>
 <style>
-
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:"Trebuchet MS",Arial,sans-serif;background:#0c3155;color:#17304a}
-button,input{font:inherit}button{touch-action:manipulation;cursor:pointer}
-#app{width:100%;height:100%;display:grid;place-items:center;padding:clamp(6px,1vw,14px)}
-.stage{position:relative;width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));aspect-ratio:16/9;overflow:hidden;border-radius:clamp(0px,1.3vw,22px);box-shadow:0 18px 55px #00182c99;background:#cdeeff}
-.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none;user-select:none}
-.scrim{position:absolute;inset:0;background:linear-gradient(180deg,#07284522,#07284508 38%,#061a3266)}
-.brand{position:absolute;left:2%;bottom:2%;z-index:4;background:#ffffffdc;border:2px solid #fff;padding:.35em .75em;border-radius:999px;font-weight:900;color:#123d73;font-size:clamp(10px,1vw,16px);box-shadow:0 5px 14px #0003}
-.topbar{position:absolute;z-index:10;top:2%;left:2%;right:2%;display:flex;justify-content:space-between;align-items:center;gap:1%}
-.iconbtn{width:clamp(42px,4.6vw,72px);aspect-ratio:1;border:3px solid #fff;border-radius:22%;background:linear-gradient(#ffc74a,#f49418);box-shadow:0 6px 0 #9c5312,0 8px 18px #0004;color:#fff;font-size:clamp(19px,2.1vw,32px);font-weight:900}
-.titleplate{max-width:70%;padding:.38em 1.1em;border-radius:18px;border:3px solid #ffe29a;background:linear-gradient(#1675c6,#0c4e9a);color:#fff;text-shadow:0 2px 0 #123;font-weight:1000;font-size:clamp(15px,2vw,31px);box-shadow:0 6px 0 #073c78,0 10px 22px #0003;text-align:center}
-.start-wrap{position:absolute;inset:0;z-index:5;display:grid;grid-template-columns:42% 58%;align-items:center;padding:7% 5% 5%}
-.hero-copy{align-self:start;padding-top:2%;color:#fff;text-shadow:0 4px 0 #123d73,0 7px 18px #0008}
-.hero-copy h1{font-size:clamp(30px,4.6vw,76px);line-height:.9;margin:0 0 .18em;font-weight:1000;letter-spacing:-.035em}
-.hero-copy h1 span{color:#ffe45e}.hero-copy p{font-size:clamp(13px,1.5vw,24px);line-height:1.25;font-weight:800;max-width:90%}
-.panel{background:linear-gradient(180deg,#fffdf2f5,#fff4ccef);border:4px solid #fff;outline:3px solid #f2a52a;border-radius:clamp(18px,2vw,32px);box-shadow:0 14px 35px #002b4c66;padding:clamp(12px,1.4vw,24px)}
-.setup{width:95%;justify-self:end}.label{display:block;font-weight:1000;color:#7d4a00;font-size:clamp(13px,1.2vw,20px);margin-bottom:.35em}
-.name{width:100%;border:3px solid #74c7ed;border-radius:14px;padding:.65em .85em;background:#fff;font-weight:900;color:#17416b;outline:none}
-.name:focus{border-color:#2b9b52;box-shadow:0 0 0 4px #8cf3ad88}
-.avatar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2.2%;margin:.8em 0}
-.avatar{position:relative;border:3px solid #8bd5f4;border-radius:16px;background:#fff;overflow:hidden;padding:0;aspect-ratio:3/4;box-shadow:0 5px 0 #3a8db1;transition:.18s}
-.avatar img{width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none}
-.avatar:hover{transform:translateY(-3px)}.avatar.sel{border-color:#35b95d;box-shadow:inset 0 0 0 4px #9cf3b3,0 5px 0 #187d38;transform:translateY(-3px)}
-.avatar.sel:after{content:"✓";position:absolute;right:6%;top:5%;display:grid;place-items:center;width:26%;aspect-ratio:1;border-radius:50%;background:#2fbd5b;color:white;font-weight:1000;border:2px solid white}
-.primary{width:100%;border:0;border-radius:16px;padding:.72em 1em;background:linear-gradient(#5bdc75,#1ba847);box-shadow:0 7px 0 #126c31;color:white;font-weight:1000;font-size:clamp(14px,1.45vw,23px);text-shadow:0 2px #126c31}
-.primary:active,.iconbtn:active,.choice:active{transform:translateY(3px);box-shadow:none}
-.game-ui{position:absolute;z-index:5;inset:0;padding:8% 4% 3%;display:grid;grid-template-rows:auto auto 1fr;gap:1.5%}
-.hud{display:flex;justify-content:center}.progress{background:#fffffff0;border:3px solid #fff;border-radius:999px;padding:.35em .9em;display:flex;align-items:center;gap:.45em;box-shadow:0 5px 15px #0003;font-weight:1000}
-.dot{width:clamp(11px,1.2vw,18px);aspect-ratio:1;border-radius:50%;background:#cbd6df;border:2px solid #6b879d}.dot.done{background:#39c65b;border-color:#147c30}
-.prompt{justify-self:center;width:min(72%,950px);background:#fff8dcef;border:3px solid #f0ad32;border-radius:18px;padding:.55em 1em;text-align:center;font-weight:1000;font-size:clamp(15px,1.55vw,25px);box-shadow:0 6px 15px #0003}
-.challenge{display:flex;justify-content:center;align-items:center;gap:1%;margin-top:.5%}.token{min-width:clamp(78px,8vw,130px);padding:.18em .5em;border-radius:18px;border:5px solid #fff;background:linear-gradient(#fff4b7,#ffd66c);box-shadow:0 8px 0 #9e5818;color:#e33a38;font-size:clamp(40px,5vw,84px);font-weight:1000;text-align:center;text-shadow:0 2px white}
-.player-mini{position:absolute;left:2.2%;bottom:4%;z-index:6;width:clamp(76px,10vw,160px);aspect-ratio:3/4;border-radius:22px;overflow:hidden;border:4px solid #fff;background:#fff;box-shadow:0 8px 20px #0005}.player-mini img{width:100%;height:100%;object-fit:cover}
-.choices{align-self:end;margin-left:10%;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.2%;align-items:end}
-.choices.four{grid-template-columns:repeat(4,minmax(0,1fr));margin-left:13%;margin-right:3%}
-.choice{border:4px solid #72c9ee;background:linear-gradient(#fff,#f8fbff);border-radius:18px;box-shadow:0 7px 0 #2b7fa4,0 12px 20px #0003;padding:5% 5% 4%;min-width:0;transition:.15s}
-.choice:hover{transform:translateY(-5px);border-color:#ffd24f}.choice img{display:block;width:100%;height:clamp(72px,10.5vw,168px);object-fit:contain;pointer-events:none}
-.choice b{display:block;margin-top:.25em;font-size:clamp(11px,1.2vw,19px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#25394a}
-.choice.wrong{animation:shake .32s;border-color:#ef3f47;background:#ffe5e7}.choice.correct{border-color:#31b65a;background:#e3ffe9;box-shadow:0 7px 0 #187c39,0 0 25px #6dff91}
-@keyframes shake{25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
-#toast{position:fixed;z-index:99;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);opacity:0;pointer-events:none;background:#fff;border:5px solid #3ac25e;border-radius:24px;padding:.45em 1em;font-weight:1000;font-size:clamp(24px,3vw,50px);color:#17833a;box-shadow:0 14px 45px #0006;transition:.18s}
-#toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.map-ui{position:absolute;z-index:5;inset:0;padding:9% 5% 5%;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;gap:1.4%}
-.world{border:4px solid white;border-radius:20px;background:#ffffffeb;padding:.8em .5em;box-shadow:0 7px 0 #285d89,0 10px 20px #0004;font-weight:1000;color:#19426a;min-height:30%;font-size:clamp(11px,1.1vw,18px)}.world:disabled{filter:grayscale(.7);opacity:.78;cursor:not-allowed}.world.done{border-color:#59d278;background:#ecfff0}.world .state{display:block;font-size:clamp(24px,3vw,50px);margin-bottom:.25em}
-.final-ui{position:absolute;z-index:5;inset:0;display:grid;grid-template-columns:42% 58%;align-items:center;padding:8% 7% 5%}.final-avatar{height:70%;justify-self:center;border-radius:28px;border:5px solid white;box-shadow:0 14px 30px #0005}.final-card{text-align:center}.final-card h1{margin:.1em;font-size:clamp(30px,4vw,66px);color:#165db1}.final-card h2{margin:.25em 0;color:#7d4a00;font-size:clamp(18px,2.2vw,36px)}.btnrow{display:flex;gap:3%;margin-top:1em}.btnrow button{flex:1}
-.confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:20}.confetti i{position:absolute;top:-10%;width:10px;height:18px;border-radius:3px;animation:fall 1.6s linear forwards}@keyframes fall{to{transform:translateY(120vh) rotate(720deg)}}
-@media(max-aspect-ratio:10/9){
- body{overflow:auto;background:#d8f3ff}#app{min-height:100%;height:auto;padding:0}.stage{width:100vw;height:100svh;aspect-ratio:auto;border-radius:0}
- .start-wrap{grid-template-columns:1fr;padding:8vh 5vw 3vh;align-content:center}.hero-copy{text-align:center;padding:0}.hero-copy h1{font-size:clamp(34px,10vw,60px)}.hero-copy p{margin:.4em auto;max-width:90%}.setup{width:100%;max-height:63vh;overflow:hidden;padding:12px}
- .avatar-grid{gap:2%}.avatar{aspect-ratio:1/1.15}.primary{padding:.6em}.topbar{top:1%}.titleplate{font-size:clamp(13px,4vw,20px)}
- .game-ui{padding:9vh 3vw 2vh;grid-template-rows:auto auto 1fr}.prompt{width:92%;font-size:clamp(14px,4vw,20px)}.token{font-size:clamp(34px,12vw,56px)}
- .player-mini{display:none}.choices,.choices.four{margin:0;grid-template-columns:repeat(2,1fr);gap:1.2vh 2vw;align-self:end}.choices.five .choice:last-child{grid-column:1/3;width:49%;justify-self:center}
- .choice{padding:2.5%}.choice img{height:clamp(70px,16vh,125px)}.choice b{font-size:clamp(12px,3.4vw,16px)}
- .map-ui{padding:9vh 4vw 3vh;grid-template-columns:1fr 1fr;align-content:end;gap:1vh 2vw}.world{min-height:0}.world:last-child{grid-column:1/3}
- .final-ui{grid-template-columns:1fr;padding:10vh 6vw 4vh}.final-avatar{height:28vh}.final-card{padding:10px}.btnrow{flex-direction:column;gap:12px}
-}
-
+:root{--card:#fff9e8;--ink:#17324d;--yellow:#ffd84d;--green:#37c871;--orange:#ff8a3d;--blue:#42a5f5}
+*{box-sizing:border-box} body{margin:0;font-family:Trebuchet MS,Arial,sans-serif;color:var(--ink);overflow-x:hidden;
+background:linear-gradient(#58c9ff 0 43%,#74d85e 43% 100%);min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.23;background:
+radial-gradient(circle at 8% 16%,#fff 0 35px,transparent 37px),
+radial-gradient(circle at 86% 13%,#fff 0 50px,transparent 52px),
+radial-gradient(circle at 65% 29%,#fff 0 25px,transparent 27px)}
+#app{width:min(1050px,100%);margin:auto;min-height:100vh;padding:10px}
+.top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.logo{font-size:clamp(23px,5vw,50px);font-weight:1000;color:#fff;text-shadow:0 3px 0 #0c72a9,2px 2px 7px #17324d;line-height:.9}
+.logo b{color:#ffe33f}.round{border:3px solid #fff;border-radius:50%;width:48px;height:48px;background:#ff9d2e;font-size:25px;cursor:pointer;box-shadow:0 4px 0 #c96916}
+.panel{background:rgba(255,249,232,.96);border:5px solid #fff;border-radius:25px;box-shadow:0 8px 0 rgba(29,86,42,.25);padding:18px;margin:12px auto;max-width:900px;text-align:center}
+h1,h2,h3{margin:5px 0 12px}.hero{font-size:80px}.avatars{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.avatar{font-size:55px;padding:7px;border:5px solid transparent;border-radius:20px;background:#e9f8ff;cursor:pointer}
+.avatar.sel{border-color:#ffb000;transform:scale(1.06)} input{font-size:22px;padding:12px;border-radius:15px;border:3px solid #7ac9ef;width:min(330px,90%)}
+.big{border:0;border-radius:18px;background:linear-gradient(#59df7e,#1cab4c);color:#fff;font-weight:900;font-size:23px;padding:14px 28px;box-shadow:0 6px 0 #147c38;cursor:pointer;margin:9px}
+.big:active,.choice:active,.level:active{transform:translateY(3px);box-shadow:none}
+.map{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.level{position:relative;min-height:160px;border:5px solid #fff;border-radius:24px;padding:12px;color:#fff;cursor:pointer;box-shadow:0 6px 0 rgba(0,0,0,.2);display:flex;flex-direction:column;justify-content:center;align-items:center;text-shadow:0 2px 2px #244}
+.level:nth-child(1){background:linear-gradient(135deg,#ff8b4a,#ffd54f)}.level:nth-child(2){background:linear-gradient(135deg,#7e57c2,#42a5f5)}
+.level:nth-child(3){background:linear-gradient(135deg,#ef5350,#ffca28)}.level:nth-child(4){background:linear-gradient(135deg,#26a69a,#66bb6a)}
+.level:nth-child(5){background:linear-gradient(135deg,#42a5f5,#5c6bc0)}.level:nth-child(6){background:linear-gradient(135deg,#ab47bc,#ff7043)}
+.level.lock{filter:grayscale(.7);opacity:.65}.level .ico{font-size:55px}.stars{font-size:22px;color:#ffe13a;text-shadow:0 1px 2px #6d4b00}
+.progress{height:18px;background:#d9e9ef;border-radius:20px;overflow:hidden;margin:8px}.progress i{display:block;height:100%;background:#43c96b;width:0;transition:.4s}
+.question{font-size:clamp(22px,4vw,35px);font-weight:900}.choices{display:grid;grid-template-columns:repeat(2,minmax(120px,1fr));gap:14px;margin:18px auto;max-width:700px}
+.choice{min-height:120px;border:5px solid #fff;border-radius:23px;background:#fff7d6;box-shadow:0 6px 0 #e0b23a;font-size:clamp(25px,5vw,45px);font-weight:1000;cursor:pointer;padding:10px;color:#263f57}
+.choice small{display:block;font-size:18px}.choice.good{background:#8ff0a9}.choice.bad{background:#ffaaaa;animation:shake .25s}.speaker{font-size:28px;border:0;background:#ff9d2e;color:#fff;border-radius:50%;width:52px;height:52px;cursor:pointer}
+.feedback{font-size:25px;font-weight:900;min-height:36px}.hidden{display:none!important}
+.wordslots{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:15px}.slot{min-width:85px;padding:15px;border:4px dashed #4ba4d8;border-radius:15px;background:white;font-size:30px}
+.confetti{position:fixed;top:-20px;font-size:25px;animation:fall 1.7s linear forwards;z-index:10}@keyframes fall{to{transform:translateY(110vh) rotate(600deg)}}@keyframes shake{50%{transform:translateX(8px)}}
+.footer{font-weight:800;text-align:center;color:#174b36;padding:8px}.teacher{font-size:14px;background:#ffffffbb;border-radius:15px;padding:10px;margin-top:10px}
+@media(max-width:700px){.map{grid-template-columns:1fr 1fr}.level{min-height:135px}.choices{grid-template-columns:1fr 1fr}.choice{min-height:100px}.panel{padding:12px}.top .logo{max-width:75%}}
 </style>
 </head>
-<body>
-<main id="app" aria-live="polite"></main>
-<div id="toast" role="status" aria-live="polite"></div>
+<body><div id="app"></div>
 <script>
-window.addEventListener("error", function(e){
-  const app=document.getElementById("app");
-  if(app && !app.children.length){
-    app.innerHTML='<div style="margin:auto;background:white;padding:24px;border-radius:18px;font-family:Arial;color:#123d73"><b>AVENTURA DO ALFABETO</b><br>Recarregue a página.</div>';
-  }
-});
-
-const ART={"academy": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/1a0c7e4f-43bd-46f6-9c66-f68fb8a38573/954835f6-e707-4432-ac2f-b8b8266c05d3/Original_premium_children_s_educational_game_environment_for.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiNmNkM2E2ZmQwNzYzYjE0ZSIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MjgwNTM3M30.cbrzr1bWajDyDS4pwJR_inELqWXHvEUdMDp_4uCWUpM", "forest": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/e82ce110-00f3-411e-89da-4f6cf3d1941b/562a4e97-94b1-418d-9577-2f7c20e2d18e/Original_premium_children_s_educational_game_environment__ma.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiMzAwMDg2MmQzODFmMmVmNCIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MjgwNjMxN30.e9yt7LCB54ekSIUYgPilBkkMPgEqULtgE5whPYEDW_c", "tower": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/c26ef287-0543-44f7-9d97-4d32962a3b26/b5cfef70-efae-4012-ada7-3582367359d5/Original_premium_children_s_educational_game_environment__ma.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiMDNkMzY2N2JjY2QwNTYyMiIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjc5MDc3OX0.GIf6tEL1ooXdVYcKsEaQKDQcCg0L7X-9Lgk9-AEc1sI", "city": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/7c6f047f-c9b8-4a80-81fe-faf3e9058feb/d65cc0ec-5f20-4e28-869c-2c113e289d38/Original_premium_children_s_educational_game_environment__co.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiOGI1YTY3ZmRlZTFkMjU1NSIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjc3Mzg4NX0.02stTZeUk-1V5UVFQQgpiqMtjFFmDDzjDgRbECgtz08", "island": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/462d56ea-aca4-445f-8a69-509d0693b90c/ab2ddf84-73e2-45b1-abb4-d89389a2af91/Original_premium_children_s_educational_game_environment__tr.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiNDEzMmM1MzRkMWU4ODk0ZCIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MjgyMjMyNH0.YX8sue9B3V6sodFcI2tQHvg9poD8sXeBYe3KjLqQjJE", "mountain": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/749f9cb9-c2c9-44e3-839f-4cf16a8eed9a/53059b7a-f309-45ea-8279-7386ca5eb1ae/Original_premium_children_s_educational_game_environment__ma.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiODY0ZmY2MDdjMTlhZGJkYiIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjc4ODg3MX0.jiDC4ZGieGbJfHt2yIeYAaB16eyXHxU6wPz6RjAvypI", "map": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/72f6bd19-5db9-4e60-91f8-3333e47197bd/719f8a49-7e86-4e9e-a6ba-b5a40e23ac67/Original_premium_children_s_educational_game_fantasy_world_m.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiNDE2NDNiYWIwYTZjYjBkMiIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjc4MDcxNX0.yElkH0KxkilgomYQ6to7JU8SRgc6Wl6PGz9p7-84tKY", "hero_blue": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/2b84d610-2460-414b-aa41-1b34e9d38112/3f19cd46-e381-4ba0-9883-ff31d8333e9c/Single_standalone_original_child_adventure_hero_avatar_for_a.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiZWVjZGUzMmY2OTExM2QyNCIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MjgxNjA0N30.HG5uGGlIlaeMKiuO2FItcCGr-LVZLsqdnkjwezRllRI", "hero_pink": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/38860a3d-31cc-441d-86fc-17ad4d002d87/b780069a-c658-4c99-be22-6280118dc79a/Single_standalone_original_child_adventure_hero_avatar_for_a.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiOTkxMjUwODMwZjcxNzI1NSIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjg0NzEwN30.u16Vk0ebKVeJVZtHaPwrsq-VHSghlwQa2xu4lLiQ07Q", "hero_green": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3.1-flash-lite-image/images/7633d827-d256-4248-9542-6b525b1f3217/36c56010-3653-4788-9761-6209a20059e1/Single_standalone_original_child_adventure_hero_avatar_for_a.jpg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiMzRjZmRhM2UxNGFlN2I4YSIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MjgwNTA1NH0.whFdk3bPTFHtAwccEqRPndQTKQS6sX1v4GGnmVs5LoE", "hero_purple": "https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3.1-flash-lite-image/images/f8e86780-e865-41f1-9e4f-f0e616e2a06b/90bf6162-8490-476d-ab40-4c84f0423236/Single_standalone_original_child_adventure_hero_avatar_for_a.jpg?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiMzk2ZTA4ZmNiMzg0ODlkMiIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5Mjc3OTc3Mn0.C32VSK-dK3Fr0ZeLGD6JDVhxTomDxAosgjsCQ1x5O_8"};
-const PHASES={"1": ["FLORESTA DAS VOGAIS", "forest", "Qual imagem começa com a letra:", [["A", "abelha", ["gato", "uva", "abelha", "casa", "olho"]], ["E", "elefante", ["ilha", "bola", "gato", "elefante", "uva"]], ["I", "ilha", ["casa", "ilha", "abelha", "pato", "uva"]], ["O", "olho", ["elefante", "bola", "olho", "gato", "casa"]], ["U", "uva", ["pato", "uva", "casa", "olho", "ilha"]]]], "2": ["TORRE DAS SÍLABAS", "tower", "Qual imagem começa com a sílaba:", [["CA", "casa", ["bola", "casa", "uva", "pato"]], ["BO", "bola", ["gato", "uva", "bola", "macaco"]], ["GA", "gato", ["gato", "casa", "pato", "elefante"]], ["MA", "macaco", ["bola", "macaco", "uva", "gato"]], ["PA", "pato", ["casa", "olho", "pato", "bola"]]]], "3": ["CIDADE DOS SONS", "city", "Qual imagem começa com este som:", [["M", "macaco", ["gato", "bola", "macaco", "uva"]], ["B", "bola", ["bola", "casa", "pato", "olho"]], ["G", "gato", ["uva", "gato", "casa", "elefante"]], ["C", "casa", ["pato", "bola", "casa", "uva"]], ["P", "pato", ["macaco", "olho", "gato", "pato"]]]], "4": ["ILHA DAS LETRAS", "island", "Encontre a imagem que começa com:", [["A", "abelha", ["abelha", "gato", "bola", "uva"]], ["E", "elefante", ["casa", "elefante", "pato", "olho"]], ["I", "ilha", ["gato", "uva", "ilha", "bola"]], ["O", "olho", ["casa", "pato", "olho", "abelha"]], ["U", "uva", ["elefante", "uva", "gato", "casa"]]]], "5": ["MONTANHA DAS PALAVRAS", "mountain", "Clique na imagem da palavra:", [["SOL", "sol", ["lua", "sol", "estrela", "nuvem"]], ["LUA", "lua", ["estrela", "casa", "lua", "sol"]], ["ESTRELA", "estrela", ["nuvem", "estrela", "lua", "casa"]], ["NUVEM", "nuvem", ["sol", "casa", "nuvem", "estrela"]], ["CASA", "casa", ["lua", "bola", "sol", "casa"]]]]};
-const names={abelha:"ABELHA",elefante:"ELEFANTE",ilha:"ILHA",olho:"OLHO",uva:"UVA",casa:"CASA",bola:"BOLA",gato:"GATO",macaco:"MACACO",pato:"PATO",sol:"SOL",lua:"LUA",estrela:"ESTRELA",nuvem:"NUVEM",maca:"MAÇÃ",banana:"BANANA"};
-const state={name:"",avatar:null,phase:1,mission:0,unlocked:1,completed:new Set(),sound:true,locked:false};
-const app=document.querySelector("#app"),toast=document.querySelector("#toast");
-const avatarKeys=["hero_blue","hero_pink","hero_green","hero_purple"];
-let audioCtx=null,musicTimer=null;
-function bg(src){return `<img class="bg" src="${src}" alt="" draggable="false"><div class="scrim"></div>`}
-function top(title,home=true){return `<div class="topbar">${home?'<button class="iconbtn" id="home" aria-label="Mapa">⌂</button>':'<span></span>'}<div class="titleplate">${title}</div><button class="iconbtn" id="sound" aria-label="Som">${state.sound?'♪':'×'}</button></div>`}
-function bindTop(){document.querySelector("#sound")?.addEventListener("click",toggleSound);document.querySelector("#home")?.addEventListener("click",showMap)}
-function toggleSound(){state.sound=!state.sound;if(state.sound) startMusic(); else stopMusic(); document.querySelector("#sound").textContent=state.sound?'♪':'×';}
-function tone(freq,d=.12,type="sine",vol=.035){if(!state.sound)return;try{audioCtx ||= new (window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.value=vol;o.connect(g);g.connect(audioCtx.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+d);o.stop(audioCtx.currentTime+d)}catch(e){}}
-function startMusic(){if(!state.sound||musicTimer)return;let seq=[392,523,659,523,440,587,698,587],i=0;musicTimer=setInterval(()=>tone(seq[i++%seq.length],.25,"sine",.012),420)}
-function stopMusic(){clearInterval(musicTimer);musicTimer=null}
-function showToast(t){toast.textContent=t;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),700)}
-function confetti(){let c=document.createElement("div");c.className="confetti";for(let i=0;i<45;i++){let p=document.createElement("i");p.style.left=Math.random()*100+"%";p.style.background=`hsl(${Math.random()*360} 85% 55%)`;p.style.animationDelay=Math.random()*.25+"s";c.append(p)}document.querySelector(".stage").append(c);setTimeout(()=>c.remove(),1900)}
-function startScreen(){
- app.innerHTML=`<section class="stage">${bg(ART.academy)}<div class="brand">WM JOGOS EDUCATIVOS</div><div class="start-wrap">
- <div class="hero-copy"><h1>AVENTURA DO <span>ALFABETO</span></h1><p>Explore cinco mundos mágicos e descubra os poderes das letras, dos sons, das sílabas e das palavras!</p></div>
- <div class="panel setup"><label class="label" for="name">QUAL É O SEU NOME?</label><input id="name" class="name" maxlength="20" autocomplete="off" placeholder="Digite seu nome">
- <div class="label" style="margin-top:.7em">ESCOLHA SEU AVENTUREIRO</div><div class="avatar-grid">${avatarKeys.map((k,i)=>`<button class="avatar" data-av="${k}" aria-label="Aventureiro ${i+1}"><img src="${ART[k]}" alt=""></button>`).join("")}</div>
- <button class="primary" id="start">▶ COMEÇAR A AVENTURA</button></div></div></section>`;
- document.querySelectorAll(".avatar").forEach(b=>b.onclick=()=>{state.avatar=b.dataset.av;document.querySelectorAll(".avatar").forEach(x=>x.classList.toggle("sel",x===b));tone(620,.08)});
- document.querySelector("#start").onclick=()=>{let n=document.querySelector("#name").value.trim();if(!n)return showToast("DIGITE SEU NOME");if(!state.avatar)return showToast("ESCOLHA SEU AVENTUREIRO");state.name=n;state.phase=1;state.mission=0;startMusic();showPhase()};
+const A=document.querySelector('#app');
+const levels=[
+ {name:'Caça às Letras',ico:'🔤',desc:'Reconheça as letras'},
+ {name:'Som Inicial',ico:'🐝',desc:'Letra e imagem'},
+ {name:'Batalha das Sílabas',ico:'👏',desc:'Descubra as sílabas'},
+ {name:'Escute e Encontre',ico:'🔊',desc:'Ouça e associe'},
+ {name:'Monte a Palavra',ico:'🧩',desc:'Forme palavras'},
+ {name:'Desafio Final',ico:'🏆',desc:'Mostre o que aprendeu'}];
+let st=JSON.parse(localStorage.getItem('mma_state')||'null')||{name:'',avatar:'🧒',mode:'4-5',unlocked:1,stars:[0,0,0,0,0,0]};
+let phase=0,q=0,score=0,currentSpeech='';
+function save(){localStorage.setItem('mma_state',JSON.stringify(st))}
+function speak(t){currentSpeech=t; if(!('speechSynthesis'in window))return; speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';u.rate=.82;u.pitch=1.08;speechSynthesis.speak(u)}
+function top(){return `<div class="top"><div class="logo">MUNDO MÁGICO<br><b>DA ALFABETIZAÇÃO</b></div><button class="round" onclick="home()">🏠</button></div>`}
+function start(){
+ A.innerHTML=`${top()}<section class="panel"><div class="hero">🌈📚✨</div><h1>UMA AVENTURA PARA APRENDER BRINCANDO!</h1>
+ <p>Escolha seu personagem:</p><div class="avatars">${['🧒','👧','👦','👩🏽‍🦱'].map(x=>`<button class="avatar ${st.avatar==x?'sel':''}" onclick="pickAvatar(this,'${x}')">${x}</button>`).join('')}</div>
+ <p><input id="nm" maxlength="18" placeholder="Digite o nome da criança" value="${st.name}"></p>
+ <p><b>Faixa:</b> <label><input style="width:auto" type="radio" name="m" value="4-5" ${st.mode==='4-5'?'checked':''}> 4–5 anos</label> &nbsp; <label><input style="width:auto" type="radio" name="m" value="6-7" ${st.mode==='6-7'?'checked':''}> 6–7 anos</label></p>
+ <button class="big" onclick="enter()">▶ COMEÇAR</button><div class="teacher">🔒 O progresso fica salvo neste aparelho. O jogo usa voz do próprio navegador e funciona sem internet depois de baixado.</div></section><div class="footer">Aprender • Ouvir • Clicar • Descobrir</div>`}
+function pickAvatar(el,x){st.avatar=x;document.querySelectorAll('.avatar').forEach(e=>e.classList.remove('sel'));el.classList.add('sel')}
+function enter(){st.name=document.querySelector('#nm').value.trim()||'Aventureiro';st.mode=document.querySelector('input[name=m]:checked').value;save();home();speak(`Olá ${st.name}! Escolha uma fase para começar.`)}
+function home(){
+ A.innerHTML=`${top()}<section class="panel"><h2>${st.avatar} Olá, ${st.name||'Aventureiro'}!</h2><p>ESCOLHA UMA FASE</p><div class="map">${levels.map((l,i)=>`<button class="level ${i+1>st.unlocked?'lock':''}" onclick="openLevel(${i})"><span class="ico">${i+1>st.unlocked?'🔒':l.ico}</span><b>FASE ${i+1}</b><strong>${l.name}</strong><small>${l.desc}</small><span class="stars">${'★'.repeat(st.stars[i])}${'☆'.repeat(3-st.stars[i])}</span></button>`).join('')}</div>
+ <button class="big" onclick="start()">⚙ PERFIL</button><button class="big" onclick="resetGame()">↻ RECOMEÇAR</button></section>`}
+function resetGame(){if(confirm('Apagar o progresso e recomeçar?')){st.unlocked=1;st.stars=[0,0,0,0,0,0];save();home()}}
+const easy=[
+ [{ask:'Clique na letra A',say:'Encontre a letra A',ans:'A',opts:['A','E','O','M']},{ask:'Clique na letra M',say:'Encontre a letra M',ans:'M',opts:['N','M','B','P']},{ask:'Clique na letra S',say:'Encontre a letra S',ans:'S',opts:['C','F','S','V']}],
+ [{ask:'Qual começa com A?',say:'Qual destas figuras começa com a letra A?',ans:'🐝',opts:['🐝','🏠','🐱','🦆'],labels:['ABELHA','CASA','GATO','PATO']},{ask:'Qual começa com C?',say:'Qual destas figuras começa com C?',ans:'🏠',opts:['🐟','🏠','🐝','🦆'],labels:['PEIXE','CASA','ABELHA','PATO']},{ask:'Qual começa com G?',say:'Qual destas figuras começa com G?',ans:'🐱',opts:['🐱','🐸','🍎','🦆'],labels:['GATO','SAPO','MAÇÃ','PATO']}],
+ [{ask:'Complete: CA + ?',say:'Casa. Complete a palavra. Cá mais...',ans:'SA',opts:['SA','PA','MA','LA']},{ask:'Complete: PA + ?',say:'Pato. Complete a palavra. Pá mais...',ans:'TO',opts:['BO','TO','LO','NO']},{ask:'Complete: BO + ?',say:'Bola. Complete a palavra. Bó mais...',ans:'LA',opts:['LA','TA','CA','DA']}],
+ [{ask:'🔊 Ouça e clique',say:'Gato',ans:'🐱',opts:['🐱','🐶','🐟','🐸'],labels:['GATO','CACHORRO','PEIXE','SAPO']},{ask:'🔊 Ouça e clique',say:'Casa',ans:'🏠',opts:['🌳','🏠','🚗','⭐'],labels:['ÁRVORE','CASA','CARRO','ESTRELA']},{ask:'🔊 Ouça e clique',say:'Sol',ans:'☀️',opts:['🌙','⭐','☀️','☁️'],labels:['LUA','ESTRELA','SOL','NUVEM']}],
+ [{ask:'Monte a palavra da figura: ☀️',say:'Monte a palavra Sol',ans:'SOL',parts:['S','O','L']},{ask:'Monte a palavra da figura: 🏠',say:'Monte a palavra Casa',ans:'CASA',parts:['CA','SA']},{ask:'Monte a palavra da figura: ⚽',say:'Monte a palavra Bola',ans:'BOLA',parts:['BO','LA']}],
+ [{ask:'Qual palavra combina com 🐱?',say:'Qual palavra é gato?',ans:'GATO',opts:['GATO','PATO','RATO','MATO']},{ask:'Qual começa com S?',say:'Qual figura começa com S?',ans:'☀️',opts:['☀️','🐱','🏠','🍎'],labels:['SOL','GATO','CASA','MAÇÃ']},{ask:'Complete: BO + ?',say:'Complete a palavra Bola. Bó mais...',ans:'LA',opts:['LA','SA','TA','PA']}]
+];
+const hard=[
+ easy[0],
+ [{ask:'Qual começa com F?',say:'Qual destas figuras começa com F?',ans:'🔪',opts:['🔪','🐱','🏠','☀️'],labels:['FACA','GATO','CASA','SOL']},{ask:'Qual começa com P?',say:'Qual destas figuras começa com P?',ans:'🐟',opts:['🐟','🍎','🐱','🏠'],labels:['PEIXE','MAÇÃ','GATO','CASA']},{ask:'Qual começa com B?',say:'Qual destas figuras começa com B?',ans:'⚽',opts:['⚽','☀️','🐸','🏠'],labels:['BOLA','SOL','SAPO','CASA']}],
+ [{ask:'Complete: JA + ?',say:'Janela. Complete a palavra.',ans:'NE',opts:['NE','ME','LE','PE']},{ask:'Complete: CA + DEI + ?',say:'Cadeira. Complete a palavra.',ans:'RA',opts:['RA','LA','SA','TA']},{ask:'Complete: BO + NE + ?',say:'Boneca. Complete a palavra.',ans:'CA',opts:['CA','GA','DA','PA']}],
+ easy[3],
+ [{ask:'Monte a palavra: 🐸',say:'Monte a palavra Sapo',ans:'SAPO',parts:['SA','PO']},{ask:'Monte a palavra: 🍌',say:'Monte a palavra Banana',ans:'BANANA',parts:['BA','NA','NA']},{ask:'Monte a palavra: 🪟',say:'Monte a palavra Janela',ans:'JANELA',parts:['JA','NE','LA']}],
+ [{ask:'Qual palavra tem 3 sílabas?',say:'Qual palavra tem três sílabas?',ans:'BANANA',opts:['SOL','CASA','BANANA','PÃO']},{ask:'Complete JA + NE + ?',say:'Complete Janela.',ans:'LA',opts:['LA','RA','MA','TA']},{ask:'Qual começa com o som de B?',say:'Qual figura começa com o som B?',ans:'⚽',opts:['🐱','⚽','☀️','🏠'],labels:['GATO','BOLA','SOL','CASA']}]
+];
+function openLevel(i){if(i+1>st.unlocked){speak('Esta fase ainda está bloqueada. Complete a fase anterior.');return} phase=i;q=0;score=0;renderQ()}
+function bank(){return st.mode==='6-7'?hard:easy}
+let build='';
+function renderQ(){
+ let item=bank()[phase][q]; build='';
+ A.innerHTML=`${top()}<section class="panel"><h3>FASE ${phase+1} • ${levels[phase].name}</h3><div class="progress"><i style="width:${q/3*100}%"></i></div><div class="question">${item.ask} <button class="speaker" onclick="speak(currentSpeech)">🔊</button></div>
+ <div id="activity"></div><div class="feedback" id="fb"></div><p>⭐ Acertos: ${score}</p></section>`;
+ currentSpeech=item.say;
+ let act=document.querySelector('#activity');
+ if(item.parts){
+   let shuffled=[...item.parts].sort(()=>Math.random()-.5);
+   act.innerHTML=`<div class="wordslots" id="slots"><span class="slot">?</span></div><div class="choices">${shuffled.map(x=>`<button class="choice" onclick="addPart('${x}',this)">${x}</button>`).join('')}</div><button class="big" onclick="checkBuild('${item.ans}')">✓ CONFERIR</button><button class="big" onclick="build='';document.querySelector('#slots').innerHTML='<span class=slot>?</span>'">↻ LIMPAR</button>`;
+ }else{
+   act.innerHTML=`<div class="choices">${item.opts.map((x,k)=>`<button class="choice" onclick="answer(this,'${String(x).replace(/'/g,"\\'")}','${String(item.ans).replace(/'/g,"\\'")}')">${x}${item.labels?`<small>${item.labels[k]}</small>`:''}</button>`).join('')}</div>`;
+ }
+ setTimeout(()=>speak(item.say),350)
 }
-function showPhase(){
- let [title,bgkey,instruction,missions]=PHASES[state.phase], [token,answer,opts]=missions[state.mission];
- let dots=missions.map((_,i)=>`<span class="dot ${i<state.mission?'done':''}"></span>`).join("");
- app.innerHTML=`<section class="stage">${bg(ART[bgkey])}${top(`FASE ${state.phase} • ${title}`)}<div class="brand">WM JOGOS EDUCATIVOS</div>
- <div class="game-ui"><div class="hud"><div class="progress">${dots} <b>${state.mission+1}/5</b></div></div>
- <div><div class="prompt">${instruction}</div><div class="challenge"><div class="token">${token}</div></div></div>
- <div class="choices ${opts.length===4?'four':'five'}">${opts.map(o=>`<button class="choice" data-o="${o}" aria-label="${names[o]}"><img src="assets/objects/${o}.svg" alt="${names[o]}"><b>${names[o]}</b></button>`).join("")}</div></div>
- <div class="player-mini"><img src="${ART[state.avatar]}" alt=""></div></section>`;
- bindTop();document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>answerChoice(b,b.dataset.o===answer));
-}
-function answerChoice(btn,ok){
- if(state.locked)return;if(!ok){btn.classList.add("wrong");tone(180,.18,"sawtooth",.025);setTimeout(()=>btn.classList.remove("wrong"),420);return}
- state.locked=true;btn.classList.add("correct");tone(660,.1);setTimeout(()=>tone(880,.16),90);showToast("MUITO BEM!");confetti();
- setTimeout(()=>{state.mission++;if(state.mission<5){state.locked=false;showPhase()}else{state.completed.add(state.phase);state.unlocked=Math.max(state.unlocked,state.phase+1);if(state.phase<5){state.phase++;state.mission=0;state.locked=false;showPhase()}else showFinal()}},850)
-}
-function showMap(){
- const worlds=[[1,"FLORESTA DAS VOGAIS"],[2,"TORRE DAS SÍLABAS"],[3,"CIDADE DOS SONS"],[4,"ILHA DAS LETRAS"],[5,"MONTANHA DAS PALAVRAS"]];
- app.innerHTML=`<section class="stage">${bg(ART.map)}${top("MAPA DA AVENTURA",false)}<div class="brand">WM JOGOS EDUCATIVOS</div><div class="map-ui">${worlds.map(([n,t])=>{let done=state.completed.has(n),open=n<=state.unlocked;return `<button class="world ${done?'done':''}" data-p="${n}" ${open?'':'disabled'}><span class="state">${done?'✓ ★':open?'▶':'🔒'}</span>${n}. ${t}</button>`}).join("")}</div></section>`;
- bindTop();document.querySelectorAll(".world:not(:disabled)").forEach(b=>b.onclick=()=>{state.phase=+b.dataset.p;state.mission=0;showPhase()});
-}
-function showFinal(){
- tone(523,.18);setTimeout(()=>tone(659,.18),120);setTimeout(()=>tone(784,.35),240);
- app.innerHTML=`<section class="stage">${bg(ART.academy)}${top("MISSÃO CONCLUÍDA!",false)}<div class="brand">WM JOGOS EDUCATIVOS</div><div class="final-ui"><img class="final-avatar" src="${ART[state.avatar]}" alt=""><div class="panel final-card"><h1>PARABÉNS, ${state.name.toUpperCase()}!</h1><h2>VOCÊ COMPLETOU A<br>AVENTURA DO ALFABETO!</h2><p>★★★★★</p><div class="btnrow"><button class="primary" id="again">JOGAR NOVAMENTE</button><button class="primary" id="mapbtn">VOLTAR AO MAPA</button></div></div></div></section>`;
- bindTop();confetti();document.querySelector("#again").onclick=()=>{state.phase=1;state.mission=0;state.unlocked=1;state.completed.clear();showPhase()};document.querySelector("#mapbtn").onclick=showMap;
-}
-startScreen();
-
-</script>
-</body>
-</html>
+function addPart(x,b){build+=x;b.disabled=true;document.querySelector('#slots').innerHTML=build.split(/(?=[A-Z])/).length?`<span class="slot">${build}</span>`:''}
+function checkBuild(ans){if(build===ans){correct()}else{document.querySelector('#fb').textContent='💡 TENTE OUTRA VEZ!';speak('Quase! Tente outra vez.');build='';document.querySelectorAll('.choice').forEach(b=>b.disabled=false);document.querySelector('#slots').innerHTML='<span class="slot">?</span>'}}
+function answer(btn,val,ans){if(val===ans){btn.classList.add('good');correct()}else{btn.classList.add('bad');document.querySelector('#fb').textContent='💡 TENTE OUTRA VEZ!';speak('Quase! Tente outra vez.');setTimeout(()=>btn.classList.remove('bad'),500)}}
+function correct(){score++;document.querySelector('#fb').textContent='🎉 MUITO BEM!';speak('Muito bem!');confetti();document.querySelectorAll('.choice').forEach(b=>b.disabled=true);setTimeout(()=>{q++; if(q>=3)finish();else renderQ()},1200)}
+function confetti(){for(let i=0;i<18;i++){let e=document.createElement('i');e.className='confetti';e.textContent=['🎉','⭐','✨','🎈'][i%4];e.style.left=Math.random()*95+'%';e.style.animationDelay=Math.random()*.4+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),2300)}}
+function finish(){let stars=score===3?3:score===2?2:1;st.stars[phase]=Math.max(st.stars[phase],stars);st.unlocked=Math.max(st.unlocked,Math.min(6,phase+2));save();confetti();
+ A.innerHTML=`${top()}<section class="panel"><div class="hero">🏆</div><h1>PARABÉNS, ${st.name}!</h1><h2>Você completou a Fase ${phase+1}!</h2><div class="stars" style="font-size:55px">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div><p>Você acertou ${score} de 3 desafios.</p><button class="big" onclick="home()">🗺 VOLTAR AO MAPA</button>${phase<5?`<button class="big" onclick="openLevel(${phase+1})">▶ PRÓXIMA FASE</button>`:''}</section>`;speak(`Parabéns ${st.name}! Você completou a fase!`)}
+start();
+</script></body></html>
