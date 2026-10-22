@@ -505,6 +505,25 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 .phase1Pair.good{border-color:#2dd455!important;box-shadow:0 0 0 8px #fff,0 0 0 14px #2dd455!important}
 .phase1Pair.bad{animation:shake .22s 2}
 
+
+/* PERSONAGENS — clique/toque confiável */
+.hdAvatars{
+ position:absolute!important;z-index:5000!important;
+ left:22.8%!important;top:56.0%!important;width:43.2%!important;height:18.0%!important;
+ display:flex!important;gap:1.3%!important;pointer-events:auto!important;
+}
+.hdAvatar{
+ display:block!important;position:relative!important;flex:1 1 0!important;height:100%!important;
+ z-index:5001!important;pointer-events:auto!important;cursor:pointer!important;
+ border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;
+ touch-action:manipulation!important;-webkit-tap-highlight-color:transparent!important;
+}
+.hdAvatar:focus,.hdAvatar:focus-visible,.hdAvatar:active,
+.hdAvatar[aria-pressed="true"]{
+ border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;
+}
+.hdAvatar::before,.hdAvatar::after{content:none!important;display:none!important}
+
 </style>
 </head>
 <body><div id="shell"><main id="gameframe">
@@ -522,10 +541,10 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 <input id="playerName" class="hdName" maxlength="15" placeholder="Digite seu nome" autocomplete="off">
 <!-- Áreas clicáveis exatamente sobre os quatro personagens desenhados na própria arte HD. -->
 <div class="hdAvatars">
-  <button class="hdAvatar" type="button" data-av="1" aria-label="Menino" onclick="chooseCharacter(1,this)"></button>
-  <button class="hdAvatar" type="button" data-av="2" aria-label="Menina" onclick="chooseCharacter(2,this)"></button>
-  <button class="hdAvatar" type="button" data-av="3" aria-label="Menino negro" onclick="chooseCharacter(3,this)"></button>
-  <button class="hdAvatar" type="button" data-av="4" aria-label="Menina negra" onclick="chooseCharacter(4,this)"></button>
+  <button class="hdAvatar" type="button" data-av="1" aria-label="Menino" onclick="chooseCharacter(1,this)" data-avatar="1"></button>
+  <button class="hdAvatar" type="button" data-av="2" aria-label="Menina" onclick="chooseCharacter(2,this)" data-avatar="2"></button>
+  <button class="hdAvatar" type="button" data-av="3" aria-label="Menino negro" onclick="chooseCharacter(3,this)" data-avatar="3"></button>
+  <button class="hdAvatar" type="button" data-av="4" aria-label="Menina negra" onclick="chooseCharacter(4,this)" data-avatar="4"></button>
 </div>
 <button class="hdStart" type="button" aria-label="Começar"></button>
 <button class="hdMusic" type="button" aria-label="Música" onclick="toggleMusic()"></button>
@@ -562,15 +581,15 @@ const arts=["","floresta_vogais_pro.png","vila_hd.jpg","montanha.webp","castelo_
 const Q={
 1:[
 {p:"Encontre a letra A — A de ABELHA!",pic:"🌳 🦋",o:["E","A","O"],a:"A"},
-{p:"Qual vogal inicia ABELHA? A de ABELHA.",pic:"🐝",label:"ABELHA",o:["A","E","I"],a:"A"},
+{p:"Qual associação está correta?",pic:"🐝",label:"ABELHA",o:["A","E","I"],a:"A"},
 {p:"Encontre a letra E — E de ELEFANTE!",pic:"⭐",o:["U","O","E"],a:"E"},
-{p:"Qual vogal inicia ELEFANTE? E de ELEFANTE.",pic:"🐘",label:"ELEFANTE",o:["A","E","O"],a:"E"},
+{p:"Qual associação está correta?",pic:"🐘",label:"ELEFANTE",o:["A","E","O"],a:"E"},
 {p:"Encontre a letra I — I de ILHA!",pic:"🏝️",o:["I","A","U"],a:"I"},
-{p:"Qual vogal inicia IGREJA? I de IGREJA.",pic:"⛪",label:"IGREJA",o:["O","I","E"],a:"I"},
+{p:"Qual associação está correta?",pic:"⛪",label:"IGREJA",o:["O","I","E"],a:"I"},
 {p:"Encontre a letra O — O de OLHO!",pic:"👓",o:["U","A","O"],a:"O"},
-{p:"Qual vogal inicia OVELHA? O de OVELHA.",pic:"🐑",label:"OVELHA",o:["E","O","A"],a:"O"},
+{p:"Qual associação está correta?",pic:"🐑",label:"OVELHA",o:["E","O","A"],a:"O"},
 {p:"Encontre a letra U — U de UVA!",pic:"🌈",o:["I","U","E"],a:"U"},
-{p:"Qual vogal inicia UVA? U de UVA.",pic:"🍇",label:"UVA",o:["A","O","U"],a:"U"}],
+{p:"Qual associação está correta?",pic:"🍇",label:"UVA",o:["A","O","U"],a:"U"}],
 2:[
 {p:"Qual palavra começa com B?",pic:"⚽",label:"BOLA",o:["⚽ BOLA","🐱 GATO","🦆 PATO"],a:"⚽ BOLA"},
 {p:"Qual palavra começa com G?",pic:"🐱",label:"GATO",o:["🐸 SAPO","🐱 GATO","🏠 CASA"],a:"🐱 GATO"},
@@ -716,34 +735,47 @@ function render(){
      O:{img:"fase1_obj_O.png",word:"OLHO"},
      U:{img:"fase1_obj_U.png",word:"UVA"}
    };
-   const correct=(q.a||"").toUpperCase();
-
-   // Em cada atividade há exatamente UMA associação letra-imagem correta.
-   // As outras duas alternativas usam imagens trocadas.
    const letters=["A","E","I","O","U"];
-   const wrongLetters=letters.filter(v=>v!==correct);
-   const d1=wrongLetters[(S.q*2)%wrongLetters.length];
-   const d2=wrongLetters[(S.q*2+1)%wrongLetters.length];
-   const imageKeys=letters.filter(v=>v!==d1 && v!==d2 && v!==correct);
-   const wrongImg1=imageKeys[0]||letters.find(v=>v!==d1 && v!==correct);
-   const wrongImg2=imageKeys[1]||letters.find(v=>v!==d2 && v!==correct && v!==wrongImg1);
+   const correct=(q.a||"").toString().trim().toUpperCase();
+
+   // Monta exatamente 3 alternativas.
+   // Uma única alternativa tem letra e imagem correspondentes.
+   const otherLetters=letters.filter(v=>v!==correct);
+   const l1=otherLetters[(S.q*2)%otherLetters.length];
+   const l2=otherLetters[(S.q*2+1)%otherLetters.length];
+
+   // imagens erradas escolhidas de modo que NUNCA correspondam à letra mostrada
+   const wrongImageFor=(letter,offset)=>{
+      const pool=letters.filter(v=>v!==letter && v!==correct);
+      return pool[(S.q+offset)%pool.length];
+   };
+   const i1=wrongImageFor(l1,0);
+   let i2=wrongImageFor(l2,1);
+   if(i2===i1){
+      const pool=letters.filter(v=>v!==l2 && v!==correct && v!==i1);
+      if(pool.length)i2=pool[0];
+   }
 
    let choices=[
-     {value:correct,letter:correct,img:correct,word:assoc[correct].word},
-     {value:d1,letter:d1,img:wrongImg1,word:assoc[wrongImg1].word},
-     {value:d2,letter:d2,img:wrongImg2,word:assoc[wrongImg2].word}
+     {value:correct,letter:correct,imgKey:correct},
+     {value:l1,letter:l1,imgKey:i1},
+     {value:l2,letter:l2,imgKey:i2}
    ];
-   // varia a posição da resposta correta entre as atividades
-   const shift=S.q%3;
-   choices=choices.slice(shift).concat(choices.slice(0,shift));
+
+   // muda a posição da resposta correta
+   const pos=S.q%3;
+   if(pos===1) choices=[choices[1],choices[0],choices[2]];
+   if(pos===2) choices=[choices[1],choices[2],choices[0]];
 
    let h=`<div class="phase1Prompt">${q.p}</div><div class="phase1Choices">`;
    choices.forEach(c=>{
-      h+=`<button type="button" class="phase1Pair" data-value="${c.value}" onclick="answer(this)">
-        <span class="pairLetter">${c.letter}</span>
-        <img src="assets/${assoc[c.img].img}" alt="${assoc[c.img].word}">
-        <span class="pairWord">${assoc[c.img].word}</span>
-      </button>`;
+      const im=assoc[c.imgKey];
+      h+=`<button type="button" class="phase1Pair" data-value="${c.value}" onclick="answer(this)"
+              aria-label="${c.letter} com ${im.word}">
+          <span class="pairLetter">${c.letter}</span>
+          <img src="assets/${im.img}" alt="${im.word}">
+          <span class="pairWord">${im.word}</span>
+        </button>`;
    });
    h+=`</div>`;
    content.innerHTML=h;
@@ -824,6 +856,26 @@ window.addEventListener("load",()=>PRELOAD_ASSETS.forEach(src=>{const im=new Ima
 document.addEventListener("pointerup",(e)=>{
  const start=e.target.closest?.(".hdStart");
  if(start){e.preventDefault();e.stopPropagation();begin();}
+});
+
+
+function setAvatarChoice(n,btn){
+ S.avatar=Number(n);
+ document.querySelectorAll(".hdAvatar").forEach((b,i)=>{
+   b.setAttribute("aria-pressed", i+1===S.avatar ? "true":"false");
+ });
+ save();
+ toast("✨ Personagem escolhido!");
+}
+
+document.addEventListener("pointerup",(e)=>{
+ const av=e.target.closest?.(".hdAvatar");
+ if(av){
+   e.preventDefault();
+   e.stopPropagation();
+   const n=Number(av.dataset.avatar || [...document.querySelectorAll(".hdAvatar")].indexOf(av)+1);
+   setAvatarChoice(n,av);
+ }
 });
 
 </script></main></div></body></html>

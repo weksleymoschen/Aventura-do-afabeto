@@ -1,0 +1,19 @@
+CORREÇÕES
+
+PERSONAGENS
+- Clique/toque reconstruído com delegação de evento.
+- Os 4 cartões possuem data-avatar 1, 2, 3 e 4.
+- Seleção é gravada em S.avatar.
+- Não existe quadrado amarelo de foco/seleção.
+- Compatível com mouse e toque.
+
+FASE 1
+- Cada atividade possui 3 alternativas.
+- Cada alternativa combina UMA LETRA + UMA IMAGEM + o nome da imagem.
+- Exemplo de lógica:
+  A + ABELHA = correta.
+  E + OLHO = incorreta.
+  I + UVA = incorreta.
+- Em cada atividade há EXATAMENTE UMA associação correta.
+- A posição da resposta correta varia.
+- Mantidas imagens no estilo aprovado, sem emojis.
