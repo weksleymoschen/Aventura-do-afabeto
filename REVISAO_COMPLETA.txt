@@ -1,13 +1,38 @@
-REVISÃO:
-- Avatar: 4 botões reais; nome + avatar obrigatórios.
-- Fase 1: 5 páginas, uma vogal-alvo por página, duas imagens, exatamente uma correta.
-  1 A -> ABELHA
-  2 E -> ELEFANTE
-  3 I -> IGREJA
-  4 O -> OLHO
-  5 U -> UVA
-- Cada acerto abre nova página; após U abre automaticamente Fase 2.
-- Fases 2–5: imagens corrigidas para BOLA, CASA, GATO, PATO e MALA.
-- Imagens complementares em SVG vetorial para não embaçar.
-- Botão voltar permanece apenas como seta.
-- JavaScript validado.
+REVISÃO COMPLETA DO JOGO
+
+FUNCIONALIDADE
+[OK] Nome obrigatório.
+[OK] Personagem obrigatório.
+[OK] Quatro personagens clicáveis.
+[OK] COMEÇAR abre o mapa.
+[OK] Nova aventura inicia em 0/50, sem reaproveitar estrelas antigas.
+[OK] SOM liga/desliga por clique/toque.
+[OK] Mapa possui hotspots clicáveis.
+[OK] Fase bloqueada não abre antes da anterior.
+[OK] render() restaurada para todas as cinco fases.
+[OK] Resposta correta avança a atividade.
+[OK] Resposta errada permite nova tentativa.
+[OK] Atividades de montar sílabas funcionam.
+[OK] Atividades de organizar letras funcionam.
+[OK] 10 atividades por fase.
+[OK] Fase 1 -> Fase 2 automaticamente.
+[OK] Fase 2 -> Fase 3 automaticamente.
+[OK] Fase 3 -> Fase 4 automaticamente.
+[OK] Fase 4 -> Fase 5 automaticamente.
+[OK] Fase 5 -> conclusão.
+[OK] Máximo de 50 estrelas.
+[OK] Jogar novamente limpa o progresso.
+
+VISUAL
+[OK] Sem object-fit: fill nas artes principais.
+[OK] Sem blur/filtro nas artes principais.
+[OK] Imagens mantêm proporção.
+[OK] Letras da Floresta sem círculos artificiais por cima.
+[OK] Botões funcionais ficam acima da arte e recebem toque.
+[OK] Textos das atividades permanecem HTML nítido.
+[OK] Painel das fases 2–5 sem backdrop blur.
+
+PUBLICAÇÃO
+[OK] Netlify: site estático, sem build.
+[OK] GitHub Pages: workflow incluído.
+[OK] Caminhos relativos.

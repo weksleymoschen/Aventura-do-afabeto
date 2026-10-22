@@ -1,0 +1,18 @@
+CORREÇÃO DO AVATAR
+
+A seleção foi reconstruída, não apenas ajustada.
+
+- Existem 4 hotspots independentes, um exatamente sobre cada personagem.
+- Cada hotspot possui data-avatar 1, 2, 3 ou 4.
+- A imagem de fundo não intercepta cliques.
+- A seleção funciona por pointerdown e também por click.
+- Ao selecionar, aparece um pequeno ✓ verde somente no personagem escolhido.
+- O jogo não começa se nenhum avatar tiver sido selecionado.
+- O quadrado amarelo grande continua removido.
+- A Fase 1 com 5 telas e uma única associação correta por atividade foi preservada.
+
+TESTE:
+1. Digite o nome.
+2. Toque/clique em qualquer um dos quatro personagens.
+3. Deve aparecer ✓ verde no escolhido e a mensagem PERSONAGEM ESCOLHIDO.
+4. Clique COMEÇAR.

@@ -1,0 +1,19 @@
+VERSÃO RESTAURADA E CORRIGIDA
+
+- A tela inicial voltou ao layout HD que estava correto; não há painel branco novo sobre a arte.
+- Nome começa vazio.
+- Os quatro personagens continuam na própria arte e são clicáveis.
+- A seleção mostra apenas um pequeno check verde; nenhum quadrado amarelo aparece.
+- O jogo não inicia sem nome e sem personagem.
+- Botão COMEÇAR continua na própria arte e é clicável.
+- Fase 1 possui 5 telas independentes.
+- Cada tela possui três associações e exatamente UMA associação correta:
+  1) A + ABELHA
+  2) E + ELEFANTE
+  3) I + ILHA
+  4) O + OLHO
+  5) U + UVA
+- Ao acertar, passa para uma nova tela dentro da Fase 1.
+- Ao concluir 5/5, segue automaticamente para a Fase 2.
+- O mapa HD e os cenários originais foram preservados; não foram substituídos por painéis ou SVGs.
+- JavaScript validado sem erro de sintaxe.
