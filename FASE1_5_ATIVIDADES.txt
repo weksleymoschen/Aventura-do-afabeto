@@ -1,0 +1,37 @@
+FASE 1 REFEITA — 5 ATIVIDADES
+
+A Fase 1 agora possui SOMENTE 5 atividades.
+
+ATIVIDADE 1
+A + ABELHA = correta
+E + UVA = errada
+I + OLHO = errada
+
+ATIVIDADE 2
+A + OLHO = errada
+E + ELEFANTE = correta
+U + ABELHA = errada
+
+ATIVIDADE 3
+I + ILHA = correta
+O + UVA = errada
+E + ABELHA = errada
+
+ATIVIDADE 4
+U + ILHA = errada
+O + OLHO = correta
+A + ELEFANTE = errada
+
+ATIVIDADE 5
+E + OLHO = errada
+I + ELEFANTE = errada
+U + UVA = correta
+
+FUNCIONAMENTO
+- Cada atividade aparece em uma tela/página própria.
+- Há transição animada ao acertar.
+- A criança só avança quando toca na única associação correta.
+- Ao acertar: feedback -> transição -> próxima atividade.
+- Depois da quinta atividade, a Fase 1 termina e segue para a Fase 2.
+- O contador da Fase 1 agora mostra 1/5, 2/5, 3/5, 4/5 e 5/5.
+- As demais fases foram preservadas.

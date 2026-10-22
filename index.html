@@ -597,6 +597,99 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 }
 .phase1LogPair.bad{animation:shake .22s 2!important}
 
+
+/* =========================================================
+   FASE 1 FINAL — 5 PÁGINAS / UMA ASSOCIAÇÃO CORRETA POR TELA
+   ========================================================= */
+#stage.fase1Aprovada #stageArt{
+ content:none!important;
+ width:100%!important;height:100%!important;
+ object-fit:contain!important;object-position:center!important;
+ filter:none!important;transform:none!important;
+}
+#stage.fase1Aprovada .panel{
+ position:absolute!important;inset:0!important;
+ padding:0!important;margin:0!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+ overflow:visible!important;pointer-events:none!important;
+}
+#stage.fase1Aprovada .progress,
+#stage.fase1Aprovada .stageTitle,
+#stage.fase1Aprovada .mascot{display:none!important}
+
+.phase1Page{
+ position:absolute;inset:0;z-index:70;pointer-events:none;
+}
+.phaseEnter{animation:phaseIn .42s ease both}
+.phaseExit{animation:phaseOut .42s ease both}
+@keyframes phaseIn{
+ from{opacity:0;transform:translateX(5%) scale(.985)}
+ to{opacity:1;transform:translateX(0) scale(1)}
+}
+@keyframes phaseOut{
+ from{opacity:1;transform:translateX(0)}
+ to{opacity:0;transform:translateX(-5%)}
+}
+
+.phase1Prompt{
+ position:absolute!important;
+ left:31%!important;top:4.2%!important;width:46%!important;min-height:11%!important;
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+ padding:.5% 1.2%!important;
+ background:rgba(255,255,255,.97)!important;
+ border:4px solid #55c4ff!important;border-radius:25px!important;
+ color:#0a376f!important;text-align:center!important;
+ box-shadow:0 5px 0 rgba(11,84,140,.2)!important;
+ pointer-events:none!important;
+}
+.phase1Prompt strong{
+ font-size:clamp(18px,1.55vw,27px)!important;color:#8b480e!important;line-height:1.05!important
+}
+.phase1Prompt span{
+ font-size:clamp(19px,1.7vw,30px)!important;font-weight:900!important;line-height:1.08!important
+}
+
+/* As três opções ficam exatamente sobre as três toras superiores do cenário. */
+.phase1ThreeChoices{
+ position:absolute!important;
+ left:28.3%!important;right:5.7%!important;top:31.5%!important;height:29.5%!important;
+ display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:4.3%!important;
+ pointer-events:none!important;
+}
+.phase1Choice{
+ height:100%!important;min-width:0!important;
+ display:grid!important;grid-template-columns:38% 62%!important;grid-template-rows:76% 24%!important;
+ align-items:center!important;justify-items:center!important;
+ padding:3% 4%!important;
+ border:0!important;outline:0!important;background:transparent!important;box-shadow:none!important;
+ cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important;
+ -webkit-tap-highlight-color:transparent!important;
+}
+.phase1Choice:focus,.phase1Choice:focus-visible{
+ outline:0!important;box-shadow:none!important;
+}
+.phaseLetter{
+ grid-column:1;grid-row:1;
+ font-size:clamp(58px,6.2vw,100px)!important;font-weight:1000!important;line-height:1!important;
+ color:#174f9d!important;text-shadow:0 3px 0 #fff,0 5px 6px #0003!important;
+}
+.phase1Choice img{
+ grid-column:2;grid-row:1;
+ width:96%!important;height:96%!important;object-fit:contain!important;
+ border-radius:18px!important;filter:none!important;transform:none!important;
+}
+.phaseWord{
+ grid-column:1/3;grid-row:2;
+ font-size:clamp(15px,1.45vw,24px)!important;font-weight:1000!important;line-height:1!important;
+ color:#4b250c!important;background:#ffc95d!important;
+ border:3px solid #aa6019!important;border-radius:13px!important;
+ padding:2% 9%!important;box-shadow:0 2px 0 #fff8 inset!important;
+}
+.phase1Choice.good{
+ filter:drop-shadow(0 0 8px #2bd552) drop-shadow(0 0 15px #2bd552)!important;
+}
+.phase1Choice.bad{animation:shake .22s 2!important}
+
 </style>
 </head>
 <body><div id="shell"><main id="gameframe">
@@ -653,16 +746,11 @@ const worlds=["","FLORESTA DAS VOGAIS","VILA DOS SONS","MONTANHA DAS SÍLABAS","
 const arts=["","floresta_vogais_pro.png","vila_hd.jpg","montanha.webp","castelo_silabas.webp","castelo_palavras.webp"];
 const Q={
 1:[
-{p:"Qual associação está correta?",pairs:[["A","A"],["E","U"],["I","O"]],a:"0"},
-{p:"Qual associação está correta?",pairs:[["A","O"],["E","U"],["I","I"]],a:"2"},
-{p:"Qual associação está correta?",pairs:[["U","A"],["E","E"],["O","I"]],a:"1"},
-{p:"Qual associação está correta?",pairs:[["O","O"],["A","U"],["E","I"]],a:"0"},
-{p:"Qual associação está correta?",pairs:[["I","E"],["U","U"],["A","O"]],a:"1"},
-{p:"Qual associação está correta?",pairs:[["E","A"],["A","A"],["U","O"]],a:"1"},
-{p:"Qual associação está correta?",pairs:[["I","U"],["O","E"],["E","E"]],a:"2"},
-{p:"Qual associação está correta?",pairs:[["U","I"],["O","O"],["A","E"]],a:"1"},
-{p:"Qual associação está correta?",pairs:[["I","I"],["E","O"],["U","A"]],a:"0"},
-{p:"Qual associação está correta?",pairs:[["A","I"],["E","A"],["U","U"]],a:"2"}],
+{p:"ATIVIDADE 1 DE 5",pairs:[["A","A"],["E","U"],["I","O"]],a:"0"},
+{p:"ATIVIDADE 2 DE 5",pairs:[["A","O"],["E","E"],["U","A"]],a:"1"},
+{p:"ATIVIDADE 3 DE 5",pairs:[["I","I"],["O","U"],["E","A"]],a:"0"},
+{p:"ATIVIDADE 4 DE 5",pairs:[["U","I"],["O","O"],["A","E"]],a:"1"},
+{p:"ATIVIDADE 5 DE 5",pairs:[["E","O"],["I","E"],["U","U"]],a:"2"}],
 2:[
 {p:"Qual palavra começa com B?",pic:"⚽",label:"BOLA",o:["⚽ BOLA","🐱 GATO","🦆 PATO"],a:"⚽ BOLA"},
 {p:"Qual palavra começa com G?",pic:"🐱",label:"GATO",o:["🐸 SAPO","🐱 GATO","🏠 CASA"],a:"🐱 GATO"},
@@ -796,8 +884,8 @@ function render(){
  const counter=document.getElementById("counter");
  const bar=document.getElementById("bar");
  if(stars)stars.textContent=S.stars;
- if(counter)counter.textContent=`${S.q+1}/10`;
- if(bar)bar.style.width=`${S.q*10}%`;
+ const total=Q[S.world].length;if(counter)counter.textContent=`${S.q+1}/${total}`;
+ if(bar)bar.style.width=`${(S.q/total)*100}%`;
 
  const content=document.getElementById("content");
  if(!content)return;
@@ -814,22 +902,24 @@ function render(){
      U:{img:"fase1_obj_U.png",word:"UVA"}
    };
 
-   let h=`<div class="phase1Prompt">
-      <strong>ATIVIDADE ${S.q+1} DE 10</strong><br>
-      Escolha a única associação correta entre a letra e a imagem.
-   </div>
-   <div class="phase1LogChoices">`;
+   let h=`<div class="phase1Page phaseEnter">
+      <div class="phase1Prompt">
+        <strong>${q.p}</strong>
+        <span>Qual associação entre LETRA e IMAGEM está correta?</span>
+      </div>
+      <div class="phase1ThreeChoices">`;
 
    q.pairs.forEach((pair,idx)=>{
       const letter=pair[0], imageKey=pair[1], item=assoc[imageKey];
-      h+=`<button type="button" class="phase1LogPair" data-value="${idx}" onclick="answer(this)"
-             aria-label="Letra ${letter} com ${item.word}">
-          <span class="logLetter">${letter}</span>
+      h+=`<button type="button" class="phase1Choice" data-value="${idx}"
+              onclick="answer(this)" aria-label="${letter} com ${item.word}">
+          <span class="phaseLetter">${letter}</span>
           <img src="assets/${item.img}" alt="${item.word}">
-          <span class="logWord">${item.word}</span>
+          <span class="phaseWord">${item.word}</span>
       </button>`;
    });
-   h+=`</div>`;
+
+   h+=`</div></div>`;
    content.innerHTML=h;
    return;
  }
@@ -856,10 +946,15 @@ function success(){
  tone(784,.12,.05);confetti(22);
  toast(["⭐ Muito bem!","🎉 Você conseguiu!","🌈 Excelente!"][Math.floor(Math.random()*3)]);
  save();
+
+ const page=document.querySelector(".phase1Page");
+ if(page && S.world===1) page.classList.add("phaseExit");
+
  setTimeout(()=>{
    S.q++;S.sel=[];lockedAnswer=false;
-   if(S.q>=10){finishWorld()}else{render()}
- },700)
+   const total=Q[S.world].length;
+   if(S.q>=total){finishWorld()}else{render()}
+ },900)
 }
 function finishWorld(){
  if(!S.done.includes(S.world))S.done.push(S.world);
