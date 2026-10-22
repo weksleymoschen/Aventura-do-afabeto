@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#148ed1">
@@ -293,8 +296,8 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
 }
 .vowelPictureHit:hover{background:rgba(255,255,255,.06)}
 .vowelPictureHit:active{background:rgba(255,223,64,.13)}
-.vowelPictureHit.good{outline:.45vw solid #35d45a;outline-offset:-.45vw}
-.vowelPictureHit.bad{animation:shake .22s 2}
+.vowelPictureHit.good{}
+.vowelPictureHit.bad{}
 
 
 /* ===== CORREÇÃO PROFISSIONAL DEFINITIVA ===== */
@@ -330,8 +333,8 @@ button:focus-visible,input:focus-visible{outline:4px solid #ffe45c;outline-offse
  cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important;
 }
 .vowelPictureHit:hover{background:rgba(255,255,255,.045)!important}
-.vowelPictureHit.good{box-shadow:inset 0 0 0 .55vw #35d45a!important}
-.vowelPictureHit.bad{box-shadow:inset 0 0 0 .45vw #ef3e35!important;animation:shake .22s 2!important}
+.vowelPictureHit.good{}
+.vowelPictureHit.bad{}
 .phaseBackHit{position:absolute;left:1.2%;top:1.4%;width:15.5%;height:9.5%;border:0;background:transparent;pointer-events:auto;cursor:pointer;border-radius:2vw}
 .phaseMusicHit{position:absolute;right:1.4%;top:1.4%;width:6.5%;height:9%;border:0;background:transparent;pointer-events:auto;cursor:pointer;border-radius:1.5vw}
 .phaseName{
@@ -398,6 +401,42 @@ img,.art,.screenArt,.phaseArt,.mapArt{image-rendering:auto!important;object-fit:
 button,[role="button"]{touch-action:manipulation}
 </style>
 
+
+<style id="wm-entrega-limpa-v2">
+#stage:has(.vowelHitLayer) .phaseBackHit,
+#stage:has(.vowelHitLayer) .phaseMusicHit,
+#stage:has(.vowelHitLayer) .phaseName,
+#stage:has(.vowelHitLayer) .phaseCount,
+#stage:has(.vowelHitLayer) .top,
+#stage:has(.vowelHitLayer) .progress,
+#stage:has(.vowelHitLayer) .stageTitle,
+#stage:has(.vowelHitLayer) .mascot{display:none!important}
+
+#stage:has(.vowelHitLayer) #stageArt{
+ width:100%!important;height:100%!important;object-fit:contain!important;
+ object-position:center!important;image-rendering:auto!important;filter:none!important;
+}
+#stage:has(.vowelHitLayer) .panel{
+ position:absolute!important;inset:0!important;background:transparent!important;
+ border:0!important;box-shadow:none!important;padding:0!important;margin:0!important;
+ overflow:hidden!important;pointer-events:none!important;
+}
+.vowelHitLayer{position:absolute!important;inset:0!important;z-index:80!important;pointer-events:none!important}
+.vowelPictureHit{
+ position:absolute!important;z-index:81!important;border:0!important;outline:0!important;
+ background:transparent!important;box-shadow:none!important;border-radius:0!important;
+ cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important;
+}
+.vowelPictureHit:hover,.vowelPictureHit:active,.vowelPictureHit.good,.vowelPictureHit.bad{
+ outline:0!important;box-shadow:none!important;background:transparent!important;
+}
+.vowelPictureHit.good{animation:wmCorrect .30s ease!important}
+.vowelPictureHit.bad{animation:shake .20s 2!important}
+@keyframes wmCorrect{50%{transform:scale(1.025);filter:brightness(1.08)}}
+#gameframe,.screen{overflow:hidden!important}
+.art,#stageArt{object-fit:contain!important;object-position:center!important;image-rendering:auto!important}
+</style>
+
 </head>
 <body><div id="shell"><main id="gameframe">
 <div id="toast" class="toast">Muito bem!</div>
@@ -424,7 +463,7 @@ button,[role="button"]{touch-action:manipulation}
 </section>
 
 <section id="map" class="screen">
-<img class="art" src="assets/mapa_final_hd.png" alt="">
+<img class="art" src="assets/mapa_final_hd_hq.webp" alt="">
 
 <button class="mapHot mapBack" onclick="show('setup')" aria-label="Voltar"></button>
 <div class="mapScore">⭐ <span id="mapScoreValue">0</span>/50</div>
@@ -450,14 +489,14 @@ button,[role="button"]{touch-action:manipulation}
 </main></div>
 <script>
 const worlds=["","FLORESTA DAS VOGAIS","VILA DOS SONS","MONTANHA DAS SÍLABAS","CASTELO DAS SÍLABAS","CASTELO DAS PALAVRAS"];
-const arts=["","floresta_vogais_pro.png","vila_hd.jpg","montanha.webp","castelo_silabas.webp","castelo_palavras.webp"];
+const arts=["","floresta_vogais_pro_hq.webp","vila_hd.jpg","montanha.webp","castelo_silabas.webp","castelo_palavras.webp"];
 const Q={
 1:[
-{p:"Encontre a única associação correta!",a:"A",art:"fase1_atividade1_A.png"},
-{p:"Encontre a única associação correta!",a:"E",art:"fase1_atividade2_E.png"},
-{p:"Encontre a única associação correta!",a:"I",art:"fase1_atividade3_I.png"},
-{p:"Encontre a única associação correta!",a:"O",art:"fase1_atividade4_O.png"},
-{p:"Encontre a única associação correta!",a:"U",art:"fase1_atividade5_U.png"}],
+{p:"Encontre a única associação correta!",a:"A",art:"wm_fase1_1_A_limpa_20261022_hq.webp"},
+{p:"Encontre a única associação correta!",a:"E",art:"wm_fase1_2_E_limpa_20261022_hq.webp"},
+{p:"Encontre a única associação correta!",a:"I",art:"wm_fase1_3_I_limpa_20261022_hq.webp"},
+{p:"Encontre a única associação correta!",a:"O",art:"wm_fase1_4_O_limpa_20261022_hq.webp"},
+{p:"Encontre a única associação correta!",a:"U",art:"wm_fase1_5_U_limpa_20261022_hq.webp"}],
 2:[
 {p:"Qual palavra começa com B?",pic:"⚽",o:["⚽ BOLA","🐱 GATO","🦆 PATO"],a:"⚽ BOLA"},
 {p:"Qual palavra começa com G?",pic:"🐱",o:["🐸 SAPO","🐱 GATO","🏠 CASA"],a:"🐱 GATO"},
@@ -686,8 +725,8 @@ function resetGame(){localStorage.removeItem("wm_aventura_alfabeto_final");locat
 window.addEventListener("load",()=>{setTimeout(()=>{let n=document.getElementById("playerName");if(n){n.value="";n.focus()}},120);setTimeout(()=>document.getElementById("playerName").focus(),180);try{let x=JSON.parse(localStorage.getItem("wm_aventura_alfabeto_final")||"null");if(x)Object.assign(S,x);S.music=false}catch(e){};document.getElementById("playerName").value="";document.getElementById("hudName").textContent=S.name;if(S.avatar){document.getElementById("mascotImg").src=`assets/avatar${S.avatar}.webp`;}document.querySelectorAll(".avatar").forEach((b,i)=>b.classList.toggle("sel",i+1===S.avatar));updateMap()});
 
 const PRELOAD_ASSETS=[
- "assets/tela_inicial_hd.jpg","assets/mapa_final_hd.png","assets/fase1_atividade1_A.png","assets/fase1_atividade2_E.png","assets/fase1_atividade3_I.png",
- "assets/fase1_atividade4_O.png","assets/fase1_atividade5_U.png",
+ "assets/tela_inicial_hd.jpg","assets/mapa_final_hd_hq.webp","assets/wm_fase1_1_A_limpa_20261022_hq.webp","assets/wm_fase1_2_E_limpa_20261022_hq.webp","assets/wm_fase1_3_I_limpa_20261022_hq.webp",
+ "assets/wm_fase1_4_O_limpa_20261022_hq.webp","assets/wm_fase1_5_U_limpa_20261022_hq.webp",
  "assets/vila_hd.jpg","assets/montanha.webp","assets/castelo_silabas.webp","assets/castelo_palavras.webp","assets/final.webp"
 ];
 window.addEventListener("load",()=>PRELOAD_ASSETS.forEach(src=>{const im=new Image();im.decoding="async";im.src=src;}));

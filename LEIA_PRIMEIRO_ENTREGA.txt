@@ -1,0 +1,11 @@
+AVENTURA DO ALFABETO — ENTREGA LIMPA V2
+
+- círculo verde de seleção removido;
+- Fase 1 sem nome Weksley, contador, seta ou ícones sobre a arte;
+- cinco artes da Fase 1 renomeadas para impedir cache de versões antigas;
+- imagens 1536x1024 e sem esticar;
+- feedback correto discreto, sem círculo;
+- cache desativado para a implantação de teste;
+- pronto para Netlify e GitHub Pages.
+
+Para testar corretamente, faça uma NOVA implantação no Netlify usando este ZIP.
