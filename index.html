@@ -1,142 +1,39 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#0878b9">
-<title>Aventura do Alfabeto — WM Jogos Educativos</title>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Aventura do Alfabeto — WM Jogos Educativos</title>
 <style>
-:root{--blue:#0a4387;--sky:#48bdf2;--green:#36c84d;--wood:#a85b1d;--cream:#fff1bf}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,Helvetica,sans-serif;background:#073c60}
-button,input{font:inherit}.app{position:relative;width:100vw;height:100dvh;overflow:hidden}.screen{position:absolute;inset:0;display:none}.screen.active{display:block}
-.coverBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
-.overlay{position:absolute;inset:0;background:linear-gradient(90deg,transparent 0 29%,rgba(0,35,60,.08) 29% 100%)}
-.setup{position:absolute;z-index:4;left:38%;top:12%;width:48%;height:78%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.7vh}
-.logoText{font-size:clamp(30px,4vw,64px);line-height:.9;text-align:center;font-weight:1000;color:#fff;text-shadow:0 5px 0 #123c79,0 0 15px #0008}.logoText b{color:#34d5ff}
-.subtitle{font-size:clamp(14px,1.35vw,23px);font-weight:800;text-align:center;color:#fff;text-shadow:0 2px 4px #000}
-.label{padding:6px 22px;background:linear-gradient(#c97a2d,#8a3d12);border:3px solid #6d300c;border-radius:14px;color:#fff;font-weight:1000;font-size:clamp(14px,1.4vw,23px);box-shadow:0 3px 0 #512000}
-.nameInput{width:min(600px,82%);height:clamp(54px,7vh,76px);border:5px solid var(--sky);border-radius:25px;background:#fff;color:#173c72;text-align:center;font-weight:900;font-size:clamp(20px,2vw,34px);outline:none;box-shadow:0 5px 0 #127fb2}
-.avatarGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:min(650px,92%)}
-.avatar{position:relative;aspect-ratio:1;border:5px solid #fff;border-radius:24px;background:linear-gradient(#8deaff,#fff);display:grid;place-items:center;cursor:pointer;box-shadow:0 5px 0 #157ca6;overflow:hidden;font-size:clamp(42px,5.5vw,86px)}
-.avatar[data-i="0"]{border-color:#ffd22e}.avatar[data-i="1"]{border-color:#ff70b8}.avatar[data-i="2"]{border-color:#45d6d5}.avatar[data-i="3"]{border-color:#aa6cff}
-.avatar.selected{box-shadow:inset 0 0 0 7px #35d157,0 5px 0 #157ca6}.avatar.selected:after{content:"✓";position:absolute;right:6px;top:6px;width:29%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:#35d157;color:white;border:3px solid white;font-size:.38em;font-weight:1000}
-.start{width:min(480px,64%);height:clamp(62px,8vh,84px);border:5px solid white;border-radius:40px;background:linear-gradient(#62e900,#159d00);box-shadow:0 8px 0 #087000;color:white;font-size:clamp(22px,2.4vw,38px);font-weight:1000;cursor:pointer}.start:active{transform:translateY(5px);box-shadow:0 3px 0 #087000}
-.soundSetup{position:absolute;left:2%;bottom:3%;z-index:6;width:60px;height:60px;border-radius:18px;border:4px solid white;background:#24a8e9;color:white;font-size:28px}
-
-/* MAPA: desenhado em HTML/CSS, não depende de screenshot borrado */
-.map{background:linear-gradient(#48c5ff 0 43%,#7fd15c 43% 100%)}.mountains{position:absolute;inset:18% 0 38%;background:linear-gradient(135deg,transparent 20%,#d9efff 21% 30%,#7698d8 31% 42%,transparent 43%) 0 0/33% 100%;opacity:.75}.river{position:absolute;left:0;right:0;bottom:0;height:38%;background:linear-gradient(165deg,transparent 0 35%,#30baf1 36% 54%,transparent 55%);opacity:.9}
-.mapTitle,.stageTitle{position:absolute;z-index:5;left:50%;top:3%;transform:translateX(-50%);padding:9px 32px;border:5px solid #70320c;border-radius:24px;background:linear-gradient(#c7792d,#9d4a16);color:#fff;font-size:clamp(23px,3vw,47px);font-weight:1000;text-shadow:0 3px 0 #4d1d08;white-space:nowrap}
-.hud{position:absolute;z-index:12;right:2%;top:2%;display:flex;gap:10px}.pill{background:#fff;border:4px solid var(--sky);border-radius:22px;padding:8px 15px;color:#123c75;font-weight:1000;font-size:clamp(14px,1.4vw,22px)}
-.music{width:58px;height:58px;border:4px solid white;border-radius:18px;background:#25a8e8;color:white;font-size:27px;box-shadow:0 4px 0 #096ca6}
-.worlds{position:absolute;z-index:5;left:5%;right:5%;top:19%;bottom:8%;display:grid;grid-template-columns:repeat(5,1fr);gap:2%;align-items:center}
-.world{position:relative;min-height:180px;border:6px solid white;border-radius:30px;background:linear-gradient(#7049ec,#322198);color:white;font-weight:1000;font-size:clamp(15px,1.55vw,25px);padding:18px 8px;box-shadow:0 9px 0 #201365;cursor:pointer}.world span{display:block;font-size:2.4em;margin-bottom:10px}.world.done{background:linear-gradient(#4dde65,#148d31);box-shadow:0 9px 0 #0a6720}.world.locked{filter:grayscale(.8);opacity:.62;cursor:not-allowed}
-
-/* FASES */
-.stage{background:radial-gradient(circle at 65% 30%,#b7f77e 0,#43ad5c 45%,#176f46 100%)}.forestDecor{position:absolute;inset:0;background:radial-gradient(circle at 15% 20%,#fff4 0 1%,transparent 1.2%) 0 0/70px 70px;opacity:.7}
-.back{position:absolute;z-index:15;left:1.5%;top:2%;width:64px;height:64px;border-radius:18px;border:4px solid white;background:#ffb21d;color:white;font-size:38px;font-weight:1000;box-shadow:0 4px 0 #d56d00;cursor:pointer}
-.prompt{position:absolute;z-index:7;top:15%;left:50%;transform:translateX(-50%);width:min(720px,65%);padding:10px 20px;border:5px solid var(--sky);border-radius:25px;background:#fffffff2;color:#153e79;font-size:clamp(17px,2vw,31px);font-weight:1000;text-align:center}
-.cards{position:absolute;z-index:7;left:12%;right:5%;top:27%;bottom:5%;display:grid;grid-template-columns:repeat(3,1fr);gap:2.5%;align-items:center}
-.logCard{position:relative;height:min(44vh,340px);border:9px solid #9a591c;border-radius:50%;background:radial-gradient(circle,#fff4c8 0,#f4d18a 72%,#d99a42 73%);box-shadow:0 9px 0 #67370e;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;padding:3%}
-.letter{font-size:clamp(50px,7vw,112px);font-weight:1000;line-height:.78;text-shadow:0 4px 0 white}.object{font-size:clamp(48px,6vw,96px);line-height:1}.word{margin-top:7px;padding:5px 14px;background:#efb561;border:3px solid #a65c19;border-radius:13px;color:#502509;font-size:clamp(14px,1.5vw,24px);font-weight:1000}.correct{outline:10px solid #31d05a}.wrong{animation:shake .22s 2}@keyframes shake{50%{transform:translateX(9px)}}
-.mascot{position:absolute;z-index:3;left:2%;bottom:2%;font-size:clamp(90px,13vw,205px);filter:drop-shadow(0 7px 4px #0005)}
-.feedback{position:absolute;z-index:30;left:50%;top:52%;transform:translate(-50%,-50%) scale(.7);opacity:0;pointer-events:none;padding:22px 38px;background:white;border:7px solid #31d05a;border-radius:28px;color:#13812c;font-size:clamp(24px,4vw,58px);font-weight:1000;transition:.2s}.feedback.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.quiz{position:absolute;z-index:7;left:14%;right:14%;top:25%;bottom:10%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:25px}.question{background:#fff;border:5px solid var(--sky);border-radius:25px;padding:16px 28px;text-align:center;color:#153e79;font-size:clamp(22px,2.5vw,38px);font-weight:1000}.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%}.answer{min-height:100px;border:5px solid #caa5ff;border-radius:24px;background:white;color:#173d77;font-size:clamp(21px,2.3vw,36px);font-weight:1000;cursor:pointer}
-.end{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(#49c8ff,#68cc69)}.endBox{width:min(750px,85%);padding:35px;border:7px solid #fff;border-radius:35px;background:#fffbe8;text-align:center;color:#173d77;box-shadow:0 12px 0 #178c50}.endBox h1{font-size:clamp(34px,5vw,70px);margin:0 0 10px}.endBox button{padding:15px 28px;border:0;border-radius:20px;background:#29b752;color:#fff;font-weight:1000;font-size:22px}
-@media(max-width:800px){.setup{left:26%;width:70%}.worlds{grid-template-columns:repeat(3,1fr);overflow:auto}.world{min-height:110px}.cards{left:5%;right:5%}.mascot{display:none}.prompt{width:72%}.back{width:52px;height:52px}.answers{gap:8px}}
-
-/* ===== CAPA INCORPORADA: sem duplicar a arte ===== */
-.setupImageOnly{background:#083d60}
-.setupImageOnly .coverBg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:#083d60}
-.hotName{position:absolute;z-index:20;left:37.0%;top:42.0%;width:31.5%;height:7.0%;border:0!important;outline:0;background:transparent!important;text-align:center;color:#173d77;font-weight:900;font-size:clamp(18px,2.1vw,34px);box-shadow:none!important}
-.hotName::placeholder{color:#6c6c6c;opacity:.95}
-.hotAvatars{position:absolute;z-index:21;left:35.7%;top:56.0%;width:37.4%;height:18%;display:grid;grid-template-columns:repeat(4,1fr);gap:2.6%}
-.avatarHot{position:relative;border:0;background:transparent;cursor:pointer;border-radius:18px}
-.avatarHot.selected{outline:5px solid #31d05a;outline-offset:-4px}
-.avatarHot.selected:after{content:"✓";position:absolute;right:3%;top:2%;width:28%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:#31d05a;color:#fff;border:3px solid #fff;font-weight:1000;font-size:clamp(15px,2vw,30px)}
-.startHot{position:absolute;z-index:21;left:28.2%;top:76.2%;width:32.5%;height:12.3%;border:0;background:transparent;cursor:pointer;border-radius:50px}
-.soundHot{position:absolute;z-index:21;left:2.1%;bottom:2.5%;width:7%;height:10%;border:0;background:transparent;cursor:pointer;color:transparent}
-@media(max-aspect-ratio:3/2){
- .hotName{left:37%;top:42%}.hotAvatars{left:35.7%;top:56%;width:37.4%}.startHot{left:28.2%;top:76.2%;width:32.5%}
-}
-</style></head>
-<body><main class="app">
-<section id="setupScreen" class="screen active setupImageOnly">
-  <img class="coverBg" src="assets/capa.jpg" alt="Aventura do Alfabeto">
-  <input id="playerName" class="hotName" placeholder="Digite seu nome" maxlength="18" autocomplete="off" aria-label="Nome do jogador">
-  <div class="hotAvatars" aria-label="Escolha seu personagem">
-    <button class="avatarHot" data-i="0" aria-label="Menino"></button>
-    <button class="avatarHot" data-i="1" aria-label="Menina"></button>
-    <button class="avatarHot" data-i="2" aria-label="Menino negro"></button>
-    <button class="avatarHot" data-i="3" aria-label="Menina negra"></button>
-  </div>
-  <button id="startBtn" class="startHot" aria-label="Começar"></button>
-  <button class="musicBtn soundHot" aria-label="Som"></button>
-</section>
-
-<section id="mapScreen" class="screen map">
- <div class="mountains"></div><div class="river"></div><div class="mapTitle">MAPA DA AVENTURA</div>
- <div class="hud"><span id="mapPlayer" class="pill"></span><span id="totalStars" class="pill">⭐ 0/45</span><button class="music musicBtn">♫</button></div>
- <div id="worlds" class="worlds"></div>
-</section>
-
-<section id="stageScreen" class="screen stage">
- <div class="forestDecor"></div><button id="backBtn" class="back" title="Voltar ao mapa">←</button>
- <div id="stageTitle" class="stageTitle"></div>
- <div class="hud"><span id="stagePlayer" class="pill"></span><span id="stageProgress" class="pill"></span><button class="music musicBtn">♫</button></div>
- <div id="mascot" class="mascot">👦🏻</div><div id="stageBody"></div><div id="feedback" class="feedback">MUITO BEM! ⭐</div>
-</section>
-
-<section id="endScreen" class="screen"><div class="end"><div class="endBox"><h1>🏆 GUARDIÃO DAS PALAVRAS</h1><h2 id="winner"></h2><p>Você concluiu toda a Aventura do Alfabeto!</p><button id="restartBtn">Jogar novamente</button></div></div></section>
-</main>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif;background:#083d60}button,input{font:inherit}.screen{display:none;position:fixed;inset:0}.screen.active{display:block}.frame{position:absolute;left:50%;top:50%;width:min(100vw,150vh);height:min(100vh,66.6667vw);transform:translate(-50%,-50%);overflow:hidden;background:#083d60}.art{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none}.nameInput{position:absolute;left:27.1%;top:42.3%;width:31.5%;height:6.4%;z-index:5;border:0;background:rgba(255,255,255,.03);outline:0;text-align:center;font-weight:900;font-size:clamp(15px,2vw,32px);color:#153a72}.nameInput::placeholder{color:#777}.avatars{position:absolute;left:23.8%;top:55.5%;width:41.2%;height:17.2%;display:grid;grid-template-columns:repeat(4,1fr);gap:1.7%;z-index:6}.avatar{border:0;background:transparent;border-radius:18px;cursor:pointer;touch-action:manipulation}.avatar.sel{outline:6px solid #2ed25b;outline-offset:-7px;box-shadow:inset 0 0 0 3px white}.start{position:absolute;left:27.9%;top:74.2%;width:31.8%;height:13.2%;border:0;background:transparent;z-index:6;cursor:pointer;border-radius:60px;touch-action:manipulation}.hint{position:absolute;left:25%;top:89%;width:40%;text-align:center;color:#fff;background:#003c76dd;border-radius:14px;padding:7px;font-weight:800;opacity:0;transition:.2s;z-index:8}.hint.show{opacity:1}
+.mapUI{position:absolute;inset:0;z-index:5}.mapBtn{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:20px;touch-action:manipulation}.mapBtn:hover,.mapBtn:focus-visible{box-shadow:0 0 0 6px #fff9,0 0 25px #ffe12c}.mapBtn.lock{cursor:not-allowed}.mapBtn.done:after{content:"✓";position:absolute;right:0;top:-10%;background:#2dcc57;color:#fff;border:4px solid #fff;border-radius:50%;width:30%;aspect-ratio:1;display:grid;place-items:center;font-weight:1000;font-size:clamp(15px,2vw,30px)}.hud{position:absolute;right:1.5%;top:1.5%;display:flex;gap:8px;z-index:20}.pill,.iconBtn{background:#fff;color:#12356b;border:3px solid #c9edff;border-radius:18px;padding:9px 15px;font-weight:900;font-size:clamp(13px,1.6vw,24px)}.iconBtn{cursor:pointer}.stage{background:#075d48}.stagebg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}.back{position:absolute;left:1.5%;top:2%;z-index:20;width:5.6%;aspect-ratio:1;border:4px solid #fff;border-radius:22%;background:linear-gradient(#ffd63b,#ff9d16);color:#fff;font-size:clamp(25px,3.5vw,54px);font-weight:1000;cursor:pointer}.title{position:absolute;top:2%;left:50%;transform:translateX(-50%);z-index:10;background:linear-gradient(#db8330,#9f4817);border:4px solid #71300c;color:#fff;padding:.7% 3%;border-radius:18px;font-size:clamp(17px,2.4vw,36px);font-weight:1000;white-space:nowrap;text-shadow:0 3px #4c1d08}.prompt{position:absolute;z-index:10;top:13%;left:50%;transform:translateX(-50%);width:58%;background:#fffffff2;border:5px solid #49bdf5;border-radius:24px;padding:1.1%;text-align:center;color:#12356b;font-size:clamp(16px,2vw,31px);font-weight:1000}.cards{position:absolute;z-index:10;left:19%;right:5%;top:26%;bottom:5%;display:grid;grid-template-columns:repeat(3,1fr);gap:3%}.card{position:relative;border:8px solid #9b5b1d;border-radius:50%;background:radial-gradient(circle,#fff4c9,#f1d18a 69%,#d98c32 70%);cursor:pointer;min-height:0;box-shadow:0 8px 0 #714012;overflow:hidden;touch-action:manipulation}.card .letter{position:absolute;left:8%;top:14%;font-size:clamp(36px,7vw,110px);font-weight:1000;color:#124b9b;text-shadow:0 4px #fff}.card img{position:absolute;right:4%;top:9%;width:56%;height:62%;object-fit:contain;pointer-events:none}.card .word{position:absolute;left:10%;right:10%;bottom:4%;background:#efb25d;border:3px solid #9a5a20;border-radius:10px;text-align:center;font-weight:1000;color:#4a210e;font-size:clamp(12px,1.5vw,23px);padding:3px}.card.ok{box-shadow:0 0 0 9px #2ed25b,0 8px 0 #187c36}.card.bad{animation:shake .3s}@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}.quiz{position:absolute;z-index:10;left:19%;right:7%;top:27%;bottom:8%;display:flex;flex-direction:column;justify-content:center;gap:5%}.question{background:#fffef4;border:5px solid #4abdf5;border-radius:24px;padding:2%;text-align:center;font-size:clamp(18px,2.4vw,36px);font-weight:1000;color:#12356b}.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:3%}.answer{border:6px solid #d3b2ff;border-radius:22px;background:#fff;padding:8%;font-size:clamp(18px,2.2vw,34px);font-weight:1000;cursor:pointer;box-shadow:0 7px #9c7ac6}.answer.ok{background:#d9ffd9;border-color:#2dcc57}.answer.bad{background:#ffe0e0;animation:shake .3s}.feedback{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.5);z-index:40;background:#2dcc57;color:#fff;border:6px solid #fff;border-radius:30px;padding:2% 5%;font-size:clamp(25px,4vw,60px);font-weight:1000;opacity:0;pointer-events:none;transition:.2s}.feedback.show{opacity:1;transform:translate(-50%,-50%) scale(1)}.endbox{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border:8px solid #ffd43a;border-radius:30px;padding:5%;text-align:center;color:#12356b;width:65%}.endbox h1{font-size:clamp(30px,5vw,72px);margin:.2em}.endbox button{background:#25bd32;color:white;border:0;border-radius:20px;padding:18px 35px;font-weight:1000;font-size:24px;cursor:pointer}@media(max-width:760px){.cards{left:8%;right:3%;gap:2%}.hud{gap:3px}.pill,.iconBtn{padding:5px 8px}.card{border-width:5px}}
+</style></head><body>
+<section id="setup" class="screen active"><div class="frame"><img class="art" src="assets/capa.jpg"><input id="name" class="nameInput" maxlength="18" placeholder="Digite seu nome" autocomplete="off"><div class="avatars"><button class="avatar" data-a="0" aria-label="Menino"></button><button class="avatar" data-a="1" aria-label="Menina"></button><button class="avatar" data-a="2" aria-label="Menino negro"></button><button class="avatar" data-a="3" aria-label="Menina negra"></button></div><button id="start" class="start" aria-label="Começar"></button><div id="hint" class="hint"></div></div></section>
+<section id="map" class="screen"><div class="frame"><img class="art" src="assets/capa.jpg"><div class="hud"><span id="mapName" class="pill"></span><span id="stars" class="pill">⭐ 0/25</span><button class="iconBtn music">♫</button></div><div id="mapUI" class="mapUI"></div></div></section>
+<section id="game" class="screen stage"><div class="frame"><img class="stagebg" src="assets/forest.svg"><button id="back" class="back" aria-label="Voltar">←</button><div id="title" class="title"></div><div class="hud"><span id="gameName" class="pill"></span><span id="progress" class="pill"></span><button class="iconBtn music">♫</button></div><div id="prompt" class="prompt"></div><div id="content"></div><div id="feedback" class="feedback">MUITO BEM! ⭐</div></div></section>
+<section id="end" class="screen"><div class="frame"><img class="stagebg" src="assets/forest.svg"><div class="endbox"><h1>🏆 GUARDIÃO DAS PALAVRAS</h1><h2 id="winner"></h2><p>Você completou toda a Aventura do Alfabeto!</p><button id="again">JOGAR NOVAMENTE</button></div></div></section>
 <script>
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const state={name:"",avatar:null,world:1,item:0,stars:0,unlocked:1,music:true};
-const avatars=["👦🏻","👧🏻","👦🏿","👧🏿"];
-const worlds=["Floresta das Vogais","Vila dos Sons","Montanha das Sílabas","Castelo das Sílabas","Castelo das Palavras"];
-function show(id){$$(".screen").forEach(s=>s.classList.remove("active"));$("#"+id).classList.add("active")}
-$$(".avatarHot").forEach(b=>b.addEventListener("click",()=>{$$(".avatarHot").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");state.avatar=+b.dataset.i}));
-$("#startBtn").addEventListener("click",()=>{const n=$("#playerName").value.trim();if(!n){alert("Digite seu nome para começar.");$("#playerName").focus();return}if(state.avatar===null){alert("Escolha um personagem para jogar.");return}state.name=n;$("#mapPlayer").textContent=n;$("#stagePlayer").textContent=n;$("#mascot").textContent=avatars[state.avatar];renderMap();show("mapScreen")});
-$(".musicBtn"); $$(".musicBtn").forEach(b=>b.addEventListener("click",()=>{state.music=!state.music;$$(".musicBtn").forEach(x=>x.textContent=state.music?"♫":"♪")}));
-$("#backBtn").addEventListener("click",()=>{renderMap();show("mapScreen")});
-$("#restartBtn").addEventListener("click",()=>location.reload());
-
-function renderMap(){const box=$("#worlds");box.innerHTML="";worlds.forEach((w,i)=>{const n=i+1,b=document.createElement("button");b.className="world"+(n<state.unlocked?" done":"")+(n>state.unlocked?" locked":"");b.innerHTML=`<span>${n>state.unlocked?"🔒":n<state.unlocked?"✓":n}</span>${w}`;if(n<=state.unlocked)b.onclick=()=>openWorld(n);box.appendChild(b)});$("#totalStars").textContent=`⭐ ${state.stars}/45`}
-
+const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
+const S={name:"",avatar:null,world:1,item:0,stars:0,unlocked:1,busy:false,music:false};
+const worlds=["FLORESTA DAS VOGAIS","VILA DOS SONS","MONTANHA DAS SÍLABAS","CASTELO DAS SÍLABAS","CASTELO DAS PALAVRAS"];
 const p1=[
- {opts:[["A","🐝","ABELHA",1],["E","⛪","IGREJA",0],["I","👁️","OLHO",0]]},
- {opts:[["A","🏝️","ILHA",0],["E","🐘","ELEFANTE",1],["I","🍇","UVA",0]]},
- {opts:[["A","👁️","OLHO",0],["E","🍇","UVA",0],["I","🏝️","ILHA",1]]},
- {opts:[["O","👁️","OLHO",1],["A","🐘","ELEFANTE",0],["E","🐝","ABELHA",0]]},
- {opts:[["U","🍇","UVA",1],["I","🐝","ABELHA",0],["O","🏝️","ILHA",0]]}
+ {correct:0,pairs:[["A","ABELHA","abelha"],["E","ILHA","ilha"],["I","OLHO","olho"],["O","UVA","uva"],["U","ELEFANTE","elefante"]]},
+ {correct:1,pairs:[["A","ILHA","ilha"],["E","ELEFANTE","elefante"],["I","UVA","uva"],["O","ABELHA","abelha"],["U","OLHO","olho"]]},
+ {correct:2,pairs:[["A","OLHO","olho"],["E","UVA","uva"],["I","IGREJA","ilha"],["O","ELEFANTE","elefante"],["U","ABELHA","abelha"]]},
+ {correct:3,pairs:[["A","UVA","uva"],["E","ABELHA","abelha"],["I","ELEFANTE","elefante"],["O","OLHO","olho"],["U","ILHA","ilha"]]},
+ {correct:4,pairs:[["A","ELEFANTE","elefante"],["E","OLHO","olho"],["I","ABELHA","abelha"],["O","ILHA","ilha"],["U","UVA","uva"]]}
 ];
-const quizzes=[
- [
-  ["Qual palavra começa com B?",["BOLA","GATO","PATO"],0],["Qual palavra começa com C?",["MALA","CASA","SAPO"],1],["Qual palavra começa com P?",["PATO","BOLA","GATO"],0],["Qual palavra começa com M?",["CASA","MALA","FADA"],1],["Qual palavra começa com G?",["GATO","PATO","BOLA"],0],
-  ["Qual palavra começa com F?",["MALA","FADA","CASA"],1],["Qual palavra começa com S?",["SAPO","GATO","PATO"],0],["Qual palavra começa com L?",["LUA","BOLA","CASA"],0],["Qual palavra começa com D?",["FADA","DADO","SAPO"],1],["Qual palavra começa com V?",["VACA","MALA","GATO"],0]
- ],
- [
-  ["Complete: BO + ?",["LA","TO","CA"],0],["Complete: CA + ?",["SA","PO","TO"],0],["Complete: GA + ?",["TO","LA","SA"],0],["Complete: PA + ?",["TO","CA","LA"],0],["Complete: MA + ?",["LA","TO","PO"],0],
-  ["Complete: SA + ?",["PO","LA","DA"],0],["Complete: DA + ?",["DO","TO","CA"],0],["Complete: LU + ?",["A","TO","SA"],0],["Complete: VA + ?",["CA","TO","PO"],0],["Complete: FA + ?",["DA","TO","LA"],0]
- ],
- [
-  ["Forme BOLA",["BO + LA","BA + LO","BU + LE"],0],["Forme CASA",["CO + SA","CA + SA","CU + SO"],1],["Forme GATO",["GA + TO","GO + TA","GU + TE"],0],["Forme PATO",["PA + TO","PO + TA","PE + TU"],0],["Forme MALA",["ME + LO","MA + LA","MI + LU"],1],
-  ["Forme SAPO",["SA + PO","SO + PA","SE + PU"],0],["Forme DADO",["DE + DO","DA + DO","DI + DU"],1],["Forme FADA",["FA + DA","FO + DE","FE + DU"],0],["Forme VACA",["VA + CA","VO + CO","VE + CU"],0],["Forme LUA",["LU + A","LA + U","LI + O"],0]
- ],
- [
-  ["Complete: B_LA",["O","A","U"],0],["Complete: C_SA",["A","O","I"],0],["Complete: G_TO",["A","E","I"],0],["Complete: P_TO",["A","E","O"],0],["Complete: M_LA",["A","E","I"],0],
-  ["Qual palavra é 🐱?",["GATO","PATO","SAPO"],0],["Qual palavra é 🏠?",["CASA","MALA","BOLA"],0],["Qual palavra é ⚽?",["BOLA","VACA","FADA"],0],["Qual palavra é 🦆?",["PATO","GATO","DADO"],0],["Qual palavra é 🐸?",["SAPO","CASA","MALA"],0]
- ]
+const qs=[
+ [["Qual palavra começa com B?","BOLA","GATO","PATO"],["Qual palavra começa com C?","CASA","SAPO","MALA"],["Qual palavra começa com G?","GATO","BOLA","PATO"],["Qual palavra começa com P?","PATO","CASA","GATO"],["Qual palavra começa com M?","MALA","SAPO","BOLA"]],
+ [["Qual é a sílaba inicial de BOLA?","BO","BA","LA"],["Qual é a sílaba inicial de CASA?","CA","SA","CO"],["Qual é a sílaba inicial de PATO?","PA","TO","PO"],["Qual é a sílaba inicial de GATO?","GA","TA","GO"],["Qual é a sílaba inicial de MALA?","MA","LA","MO"]],
+ [["Junte: BO + LA","BOLA","BALA","LOBO"],["Junte: CA + SA","CASA","SACA","CAMA"],["Junte: PA + TO","PATO","PATA","TAPA"],["Junte: GA + TO","GATO","GOTA","TOGA"],["Junte: MA + LA","MALA","LAMA","MOLA"]],
+ [["Complete: B _ L A","O","A","U"],["Complete: C A S _","A","O","E"],["Complete: P _ T O","A","E","I"],["Complete: G A T _","O","A","U"],["Complete: M A L _","A","O","E"]]
 ];
-
-function openWorld(n){state.world=n;state.item=0;$("#stageTitle").textContent=worlds[n-1].toUpperCase();show("stageScreen");renderActivity()}
-function renderActivity(){
- const body=$("#stageBody");body.innerHTML="";
- if(state.world===1){$("#stageProgress").textContent=`⭐ ${state.item}/5`;const prompt=document.createElement("div");prompt.className="prompt";prompt.textContent="ENCONTRE A ÚNICA ASSOCIAÇÃO CORRETA!";const cards=document.createElement("div");cards.className="cards";p1[state.item].opts.forEach(o=>{const b=document.createElement("button");b.className="logCard";b.innerHTML=`<span class="letter">${o[0]}</span><span class="object">${o[1]}</span><span class="word">${o[2]}</span>`;b.onclick=()=>answer(b,!!o[3],5);cards.appendChild(b)});body.append(prompt,cards)}
- else{const q=quizzes[state.world-2][state.item];$("#stageProgress").textContent=`⭐ ${state.item}/10`;const wrap=document.createElement("div");wrap.className="quiz";wrap.innerHTML=`<div class="question">${q[0]}</div><div class="answers"></div>`;q[1].forEach((a,i)=>{const b=document.createElement("button");b.className="answer";b.textContent=a;b.onclick=()=>answer(b,i===q[2],10);wrap.querySelector(".answers").appendChild(b)});body.appendChild(wrap)}
-}
-function answer(btn,ok,max){
- if(!ok){btn.classList.add("wrong");setTimeout(()=>btn.classList.remove("wrong"),500);return}
- btn.classList.add("correct");$("#feedback").classList.add("show");setTimeout(()=>{$("#feedback").classList.remove("show");state.item++;state.stars++;
- if(state.item>=max){if(state.world===5){$("#winner").textContent=state.name;show("endScreen");return}state.unlocked=Math.max(state.unlocked,state.world+1);openWorld(state.world+1)}else renderActivity()},650)
-}
+function show(id){$$(".screen").forEach(x=>x.classList.remove("active"));$("#"+id).classList.add("active")}
+$$(".avatar").forEach(b=>b.onclick=()=>{$$(".avatar").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");S.avatar=+b.dataset.a});
+$("#start").onclick=()=>{let n=$("#name").value.trim();if(!n)return hint("Digite seu nome para começar.");if(S.avatar===null)return hint("Escolha um personagem.");S.name=n;$("#mapName").textContent=n;$("#gameName").textContent=n;renderMap();show("map")};
+function hint(t){$("#hint").textContent=t;$("#hint").classList.add("show");setTimeout(()=>$("#hint").classList.remove("show"),1600)}
+const spots=[[68.4,18.5,14.7,15],[79.7,43,13.5,15],[84.1,72,14,16],[67.3,72,14,16],[84.2,17,14,16]];
+function renderMap(){let m=$("#mapUI");m.innerHTML="";worlds.forEach((w,i)=>{let b=document.createElement("button"),q=spots[i],n=i+1;b.className="mapBtn "+(n>S.unlocked?"lock ":"")+(n<S.unlocked?"done ":"");b.style.cssText=`left:${q[0]}%;top:${q[1]}%;width:${q[2]}%;height:${q[3]}%`;b.ariaLabel=w+(n>S.unlocked?" bloqueado":"");if(n<=S.unlocked)b.onclick=()=>openWorld(n);m.appendChild(b)});$("#stars").textContent=`⭐ ${S.stars}/25`}
+function openWorld(n){S.world=n;S.item=0;$("#title").textContent=worlds[n-1];show("game");renderActivity()}
+function renderActivity(){S.busy=false;$("#progress").textContent=`⭐ ${S.stars} • ${S.item+1}/5`;if(S.world===1)return renderP1();renderQuiz()}
+function renderP1(){let a=p1[S.item];$("#prompt").textContent="ENCONTRE A ÚNICA ASSOCIAÇÃO CORRETA!";let c=document.createElement("div");c.className="cards";a.pairs.forEach((x,i)=>{let b=document.createElement("button");b.className="card";b.innerHTML=`<span class="letter">${x[0]}</span><img src="assets/${x[2]}.svg" alt="${x[1]}"><span class="word">${x[1]}</span>`;b.onclick=()=>choose(b,i===a.correct);c.appendChild(b)});$("#content").replaceChildren(c)}
+function renderQuiz(){let q=qs[S.world-2][S.item];$("#prompt").textContent="ESCOLHA A RESPOSTA CORRETA";let d=document.createElement("div");d.className="quiz";let qq=document.createElement("div");qq.className="question";qq.textContent=q[0];let aa=document.createElement("div");aa.className="answers";q.slice(1).forEach((t,i)=>{let b=document.createElement("button");b.className="answer";b.textContent=t;b.onclick=()=>choose(b,i===0);aa.appendChild(b)});d.append(qq,aa);$("#content").replaceChildren(d)}
+function choose(b,ok){if(S.busy)return;if(!ok){b.classList.add("bad");setTimeout(()=>b.classList.remove("bad"),450);return}S.busy=true;b.classList.add("ok");$("#feedback").classList.add("show");setTimeout(()=>{$("#feedback").classList.remove("show");S.stars++;S.item++;if(S.item>=5){if(S.world===5){$("#winner").textContent=S.name;show("end");return}S.unlocked=Math.max(S.unlocked,S.world+1);openWorld(S.world+1)}else renderActivity()},650)}
+$("#back").onclick=()=>{renderMap();show("map")};$("#again").onclick=()=>location.reload();$$(".music").forEach(b=>b.onclick=()=>{S.music=!S.music;b.textContent=S.music?"♪":"♫"});$("#name").value="";
 </script></body></html>

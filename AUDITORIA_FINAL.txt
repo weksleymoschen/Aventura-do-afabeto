@@ -1,0 +1,30 @@
+AUDITORIA FINAL DO JOGO
+============================
+[OK] index.html na raiz
+[OK] sem distorção por object-fit fill
+[OK] 4 avatares clicáveis
+[OK] nome obrigatório
+[OK] avatar obrigatório
+[OK] 5 mundos
+[OK] fase 1 com 5 telas
+[OK] progressão automática
+[OK] mapa clicável
+[OK] imagens decorativas não bloqueiam clique
+[OK] Netlify pronto
+[OK] GitHub Pages pronto
+[OK] JavaScript válido
+[OK] sem assets ausentes
+
+Arquivos ausentes: nenhum
+
+TESTES E CORREÇÕES:
+- Interface construída em um frame único 3:2 para manter arte e cliques alinhados.
+- A imagem da capa/mapa é parte real da interface; os personagens, COMEÇAR e mundos têm áreas clicáveis.
+- Campo de nome e escolha de avatar são obrigatórios.
+- Fase 1 possui 5 atividades independentes; cada tela tem somente uma associação correta.
+- Ao acertar, a atividade seguinte abre automaticamente.
+- Ao concluir a fase, o jogo abre automaticamente o próximo mundo.
+- Fase 1 usa ilustrações SVG nítidas, sem ampliar bitmap pequeno.
+- Fundos não interceptam mouse/toque.
+- JavaScript passou no verificador de sintaxe do Node.
+- Pacote possui configuração para Netlify e GitHub Pages.
