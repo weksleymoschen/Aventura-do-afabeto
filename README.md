@@ -1,15 +1,28 @@
-# Aventura do Alfabeto — versão PRO
+# Aventura Encantada das Palavras
 
-Jogo de alfabetização para crianças de 4–6 anos: 5 fases, 25 atividades e pistas visuais.
+Jogo de alfabetização para crianças de aproximadamente 4 a 7 anos. Projeto estático em HTML, CSS e JavaScript, com cinco mundos, quinze desafios, salvamento local do progresso, efeitos sonoros sintetizados no navegador e fala em português do Brasil quando disponível.
 
-## Revisão visual e pedagógica
-- A → ABELHA (não maçã)
-- M → MALA (não macaco)
-- novas ilustrações 3D consistentes para abelha, bola, casa, dado, flor, gato, mala, pato, sapo e uva
-- pistas visuais integradas às atividades
-- transições entre fases preservadas
-- nome e 6 avatares somente na abertura; depois permanece apenas o escolhido
-- pronto para GitHub Pages
+## Abrir no computador
 
-## GitHub Pages
-Envie o conteúdo para a raiz do repositório. Depois: **Settings > Pages > Deploy from a branch > main > / (root)**.
+Abra `index.html` no Chrome ou Edge. Para testar em um servidor local, entre nesta pasta e execute:
+
+```bash
+python3 -m http.server 8080
+```
+
+Acesse `http://localhost:8080`.
+
+## Publicar no Netlify
+
+Arraste a pasta `aventura-encantada` para o Netlify Drop ou conecte o repositório. Não há etapa de build. O diretório publicado deve conter `index.html` e a pasta `assets`.
+
+## Recursos
+
+- Layout adaptável para desktop, tablet e celular.
+- Mapa com progressão entre cinco mundos.
+- Desafios de arrastar e soltar com mouse e toque, seleção de figuras, completar e ordenar palavras.
+- Pistas faladas e feedback positivo; estrelas não são retiradas.
+- Preferência de nome, personagem e estrelas salva neste navegador.
+- Cenários e avatares incluídos localmente em `assets`.
+
+O navegador pode exigir um clique inicial para liberar áudio e voz. A disponibilidade da voz em português depende das vozes instaladas no dispositivo.
