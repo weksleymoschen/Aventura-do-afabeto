@@ -1,6 +1,6 @@
 # Aventura Encantada das Palavras
 
-Jogo de alfabetização para crianças de aproximadamente 4 a 7 anos. Projeto estático em HTML, CSS e JavaScript, com cinco mundos, quinze desafios, salvamento local do progresso, efeitos sonoros sintetizados no navegador e fala em português do Brasil quando disponível.
+Jogo de alfabetização para crianças de aproximadamente 4 a 7 anos. Projeto estático em HTML, CSS e JavaScript, com cinco mundos, vinte e cinco desafios, progresso reiniciado a cada abertura, efeitos sonoros sintetizados no navegador e fala em português do Brasil quando disponível.
 
 ## Abrir no computador
 
@@ -20,9 +20,9 @@ Arraste a pasta `aventura-encantada` para o Netlify Drop ou conecte o repositór
 
 - Layout adaptável para desktop, tablet e celular.
 - Mapa com progressão entre cinco mundos.
-- Desafios de arrastar e soltar com mouse e toque, seleção de figuras, completar e ordenar palavras.
+- 25 desafios em cinco mundos: arrastar e soltar, memória de pares, completar palavras, ordenar letras e montar frases.
 - Pistas faladas e feedback positivo; estrelas não são retiradas.
-- Preferência de nome, personagem e estrelas salva neste navegador.
+- Nome e progresso não são guardados; cada nova abertura começa com o campo em branco e zero estrelas.
 - Cenários e avatares incluídos localmente em `assets`.
 
 O navegador pode exigir um clique inicial para liberar áudio e voz. A disponibilidade da voz em português depende das vozes instaladas no dispositivo.
